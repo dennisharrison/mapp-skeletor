@@ -1,0 +1,31 @@
+<head>
+  <title>Some App Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,500' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+  <!-- Empty Body -->
+</body>
+
+
+<template name="notFound">
+  {{#contentFor "headerTitle"}}
+    <h1 class="title">404 - Not Found</h1>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+
+      <p>The information you are trying to locate was not found. Please check the URL and try again.</p>
+
+    {{/ionContent}}
+  {{/ionView}}
+
+</template>
+
+<template name="loading">
+  {{#contentFor "headerTitle"}}
+    <h1 class="title">Loading...</h1>
+  {{/contentFor}}
+</template>
