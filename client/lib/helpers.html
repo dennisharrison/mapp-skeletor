@@ -1,0 +1,31 @@
+<template name='mmInputText'>
+  <label class="item item-input">
+    <span class="input-label">{{label}}</span>
+    <input type="{{type}}" name="{{fieldName}}" value="{{value}}" placeholder="{{#if placeholder}}{{placeholder}}{{else}}{{label}}{{/if}}">
+  </label>
+</template>
+
+<template name='mmInputToggle'>
+  {{#ionItem class='item-toggle'}}
+    {{label}}
+     <label class="toggle {{class}}">
+       <input type="checkbox" name='{{fieldName}}' {{checked}}>
+       <div class="track">
+         <div class="handle"></div>
+       </div>
+     </label>
+  {{/ionItem}}
+</template>
+
+<template name='mmInputSelect'>
+  <label class="item item-input item-select">
+    <div class="input-label">
+      {{label}}
+    </div>
+    <select name='{{fieldName}}'>
+      {{#each options}}
+        <option value='{{#if value}}{{value}}{{else}}{{label}}{{/if}}' selected='{{selected}}'>{{label}}</option>
+      {{/each}}
+    </select>
+  </label>
+</template>

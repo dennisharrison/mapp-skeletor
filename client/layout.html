@@ -16,6 +16,9 @@
                 Close {{> ionIcon icon="ios-arrow-right"}}
               </div>
               {{/showWhenSideMenuOpen}} -->
+              <a class="item item-icon-right" href='/' data-ion-menu-close>
+                Home {{> ionIcon icon="ios-home-outline"}}
+              </a>
               {{#if isInRole 'manage-users'}}
               <a class="item item-icon-right" href='/users' data-ion-menu-close>
                 Users {{> ionIcon icon="ios-person-outline"}}
@@ -40,19 +43,6 @@
           </div>
         {{/ionSideMenu}}
 
-        {{#ionSideMenu side="right"}}
-          <div class="bar bar-header bar-dark">
-            <h1 class="title">Right Menu</h1>
-          </div>
-          <div class="content has-header">
-            <div class="list">
-              <div class="item item-icon-left" data-ion-menu-close>
-                {{> ionIcon icon="ios-arrow-left"}} Close
-              </div>
-            </div>
-          </div>
-        {{/ionSideMenu}}
-
       {{/ionSideMenus}}
 
       {{#ionSideMenuContent}}
@@ -67,6 +57,5 @@
 
 
     {{/ionSideMenuContainer}}
-    {{> _tabs}}
   {{/ionBody}}
 </template>

@@ -18,6 +18,7 @@ Meteor.publish "allUsers", (options) ->
   else
     options = defaultOptions
 
+  console.log search
   _users = Meteor.users.find(search, options)
   return _users
 

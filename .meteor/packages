@@ -21,8 +21,8 @@ meteoric:ionicons-sass
 momentjs:moment
 digilord:sugarjs
 digilord:faker
-zimme:iron-router-active
 meteorhacks:kadira
 useraccounts:core
 useraccounts:ionic
 jparker:gravatar
+digilord:last-seen

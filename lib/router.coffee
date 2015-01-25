@@ -53,6 +53,15 @@ Router.map ->
       _users = Meteor.users.find({})
       return _users
 
+  @route 'user',
+    path: '/user/:id'
+    action: ->
+      Session.set('_editUser', @params.id)
+      @wait Meteor.subscribe('allUsers', {search: {_id: @params.id}})
+      @render 'user'
+    data: ->
+      return []
+
 
 
 mustBeSignedIn = (pause) ->

@@ -1,0 +1,28 @@
+<template name='user'>
+  {{#contentFor "headerTitle"}}
+    <h1 class="title">Edit</h1>
+  {{/contentFor}}
+
+  {{#contentFor "headerButtonLeft"}}
+    <a class='button button-icon' nav-direction="back" href="/users">Back</a>
+  {{/contentFor}}
+
+  {{#contentFor "headerButtonRight"}}
+    <button class="button button-icon done-button">Done</button>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+      {{#ionList}}
+        {{>mmInputText label='Username' fieldName='username' value=user.username type='text'}}
+        {{>mmInputText label='Password' fieldName='password1' value='' type='password'}}
+        {{>mmInputText label='First Name' fieldName='firstName' value=user.profile.firstName type='text'}}
+        {{>mmInputText label='Last Name' fieldName='lastName' value=user.profile.lastName type='text'}}
+        {{>mmInputSelect label='Sex' fieldName='sex' options=sexOptions}}
+        {{>mmInputText label='Birthday' fieldName='birthday' value=user.profile.birthday type='date' placeholder='mm/dd/yyyy'}}
+        {{>mmInputToggle label='Receive Invites' fieldName='receiveInvites' value=user.profile.receiveInvites}}
+        {{>mmInputToggle label='Receive Newsletter' fieldName='receiveNewsletter' value=user.profile.receiveNewsletter}}
+      {{/ionList}}
+    {{/ionContent}}
+  {{/ionView}}
+</template>

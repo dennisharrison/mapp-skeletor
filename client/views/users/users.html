@@ -7,16 +7,20 @@
     <button data-ion-menu-toggle="left" class="button button-icon icon ion-navicon"></button>
   {{/contentFor}}
 
+  {{#contentFor "headerButtonRight"}}
+    <button data-ion-menu-toggle="left" class="button button-icon icon ion-ios-personadd"></button>
+  {{/contentFor}}
+
   {{#ionView}}
-  {{#ionContent}}
-    {{#ionList class="my-class"}}
-      {{#each users}}
-        {{#ionItem buttonRight=true avatar=true}}
-          {{> _userRow}}
-        {{/ionItem}}
-      {{/each}}
-    {{/ionList}}
-  {{/ionContent}}
+    {{#ionContent}}
+      {{#ionList}}
+        {{#each _users}}
+          {{#ionItem buttonRight=true avatar=true href=url class='thin-red-border'}}
+            {{> _userRow}}
+          {{/ionItem}}
+        {{/each}}
+      {{/ionList}}
+    {{/ionContent}}
   {{/ionView}}
 </template>
 
@@ -24,9 +28,6 @@
   <img src="{{_gravatarURL}}">
   <h2>{{username}}</h2>
   <p>
-    {{profile.name}}
+    {{profile.name}} - {{> lastSeen}}
   </p>
-  <a href='/users/{{_id}}' class="button button-stable">
-    {{> ionIcon icon="ios-arrow-right"}}
-  </a>
 </template>
