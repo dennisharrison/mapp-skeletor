@@ -26,6 +26,7 @@ Router.map ->
       # Wait on collections
       # @wait Meteor.subscribe('someCollection')
       @render 'home'
+      return
     data: ->
       # Return some collections pointer
       return []
@@ -50,8 +51,8 @@ Router.map ->
       @wait Meteor.subscribe('allUsers')
       @render 'users'
     data: ->
-      _users = Meteor.users.find({})
-      return _users
+       _users = Meteor.users.find({})
+       return _users
 
   @route 'user',
     path: '/user/:id'
@@ -60,7 +61,7 @@ Router.map ->
       @wait Meteor.subscribe('allUsers', {search: {_id: @params.id}})
       @render 'user'
     data: ->
-      return []
+       return []
 
 
 

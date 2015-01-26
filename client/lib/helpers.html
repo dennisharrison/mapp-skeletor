@@ -29,3 +29,22 @@
     </select>
   </label>
 </template>
+
+<template name='mmNextPage'>
+    {{#ionItem href=url class='item-icon-right'}}
+      {{#if snippet}}
+      <h2>{{label}}</h2>
+      <p>
+        {{snippet}}
+      </p>
+      {{else}}
+      {{label}}
+      {{/if}}
+      {{#if url}}
+      {{> ionIcon icon='ios-arrow-right'}}
+      <!-- We are ENABLED! -->
+      {{else}}
+      {{> ionIcon icon='ios-arrow-right' class='mm-next-page-disabled'}}
+      {{/if}}
+    {{/ionItem}}
+</template>

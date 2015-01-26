@@ -4,12 +4,11 @@
   {{/contentFor}}
 
   {{#contentFor "headerButtonLeft"}}
-    <a class='button button-icon' nav-direction="back" href="/users">Back</a>
+    <a class='button button-icon' data-nav-direction="back" href="/users">Back</a>
   {{/contentFor}}
 
-  {{#contentFor "headerButtonRight"}}
-    <button class="button button-icon done-button">Done</button>
-  {{/contentFor}}
+  {{> contentFor region="headerButtonRight" template='_userDoneHeaderButton'}}
+
 
   {{#ionView}}
     {{#ionContent}}
@@ -22,7 +21,21 @@
         {{>mmInputText label='Birthday' fieldName='birthday' value=user.profile.birthday type='date' placeholder='mm/dd/yyyy'}}
         {{>mmInputToggle label='Receive Invites' fieldName='receiveInvites' value=user.profile.receiveInvites}}
         {{>mmInputToggle label='Receive Newsletter' fieldName='receiveNewsletter' value=user.profile.receiveNewsletter}}
+        {{>mmNextPage label='Media' url=mediaUrl snippet='You have 4 pictures and 6 videos.'}}
+        {{>mmNextPage label='Bio' snippet='lorem...'}}
       {{/ionList}}
+      <div class='card'>
+        <div class="item item-divider">
+          NOTE
+        </div>
+        <div class='item item-text-wrap'>
+          The password field is so that you can change your password. It is not required to change your information.
+        </div>
+      </div>
     {{/ionContent}}
   {{/ionView}}
+</template>
+
+<template name='_userDoneHeaderButton'>
+  <button class="button button-icon done-button">Done</button>
 </template>
