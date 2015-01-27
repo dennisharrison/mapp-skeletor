@@ -26,24 +26,17 @@ Router.map ->
       # Wait on collections
       # @wait Meteor.subscribe('someCollection')
       @render 'home'
-      return
-    data: ->
-      # Return some collections pointer
-      return []
+
 
   @route 'login',
     path: '/login'
     action: ->
       @render 'login'
-    data: ->
-      return []
 
   @route 'logout',
     path: '/logout'
     action: ->
       AccountsTemplates.logout()
-    data: ->
-      return []
 
   @route 'users',
     path: '/users'
@@ -60,8 +53,7 @@ Router.map ->
       Session.set('_editUser', @params.id)
       @wait Meteor.subscribe('allUsers', {search: {_id: @params.id}})
       @render 'user'
-    data: ->
-       return []
+
 
 
 
