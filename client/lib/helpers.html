@@ -6,9 +6,9 @@
 </template>
 
 <template name='mmInputToggle'>
-  {{#ionItem class='item-toggle'}}
+  {{#ionItem class='item-toggle item-text-wrap'}}
     {{label}}
-     <label class="toggle {{class}}">
+     <label class="toggle toggle-balanced {{class}}">
        <input type="checkbox" name='{{fieldName}}' {{checked}}>
        <div class="track">
          <div class="handle"></div>
@@ -24,7 +24,7 @@
     </div>
     <select name='{{fieldName}}'>
       {{#each options}}
-        <option value='{{#if value}}{{value}}{{else}}{{label}}{{/if}}' selected='{{selected}}'>{{label}}</option>
+        <option value='{{#if value}}{{value}}{{else}}{{label}}{{/if}}' {{selected}}>{{label}}</option>
       {{/each}}
     </select>
   </label>

@@ -5,12 +5,24 @@ Template.user.helpers
     return _user
 
   sexOptions: ->
-    _options = [
-      { label: 'Male', selected: false, value: 'male' },
-      { label: 'Female', selected: false, value: 'female' },
-      { label: 'Transgendered', selected: false, value: 'transgendered' },
-      { label: 'Not Listed', selected: false, value: 'not-listed'}
+    _editUser = Session.get('_editUser')
+    _user = Meteor.users.findOne({_id: _editUser})
+
+    optionsArray = [
+      'Male'
+      'Female'
+      'Transgendered'
+      'Not Listed'
     ]
+
+    _options = []
+    for item in optionsArray
+      obj =
+        label: item
+        value: item.dasherize()
+      if _user?.profile?.sex? and _user.profile?.sex is item.dasherize()
+        obj.selected = 'selected'
+      _options.push obj
 
     return _options
 
@@ -21,11 +33,20 @@ Template.user.helpers
 
 Template._userDoneHeaderButton.events
   'click .done-button': (event, template) ->
+#    The ID of the record we are working with
+    _id = Session.get('_editUser')
 #    Things we need data from
     _data = {}
+    _data._id = _id
     _inputElements = ['input', 'select', 'textarea']
     for type in _inputElements
       elements = $(type)
       for element in elements
         _data[element.name] = element.value
-    console.log 'Clicked done-button: ', _data
+        console.log element.value
+
+    Meteor.call 'updateUser', _data, (err, data) ->
+      if err
+        throw new Meteor.error("ERROR", err)
+      if data
+        Router.go '/users'
