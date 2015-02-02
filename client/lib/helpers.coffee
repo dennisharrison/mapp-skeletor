@@ -1,13 +1,10 @@
 Template.mmInputToggle.helpers
   checked: ->
-    if this.value is 'on'
+    if this.value is true
       return 'checked'
     else
       return''
 
 Template.mmInputToggle.events
-  'click .item-toggle.label.track.handle': (event, template) ->
+  'click label.toggle.toggle-balanced': (event, template) ->
     console.log this
-
-
-

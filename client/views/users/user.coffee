@@ -42,8 +42,12 @@ Template._userDoneHeaderButton.events
     for type in _inputElements
       elements = $(type)
       for element in elements
-        _data[element.name] = element.value
-        console.log element.value
+        console.log element
+        if element.type == 'checkbox'
+          _data[element.name] = $(element).prop('checked')
+        else
+          _data[element.name] = element.value
+        
 
     Meteor.call 'updateUser', _data, (err, data) ->
       if err
