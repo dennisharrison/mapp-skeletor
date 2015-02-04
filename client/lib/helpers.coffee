@@ -5,6 +5,17 @@ Template.mmInputToggle.helpers
     else
       return''
 
+Template.mmInputRichText.helpers
+	value: ->
+		console.log(this)
+		if this.value?
+
+			return new Spacebars.SafeString(this.value)
+
+Template.mmInputRichText.rendered = ->
+	$('textarea.mmInputRichTextArea').editable({
+      inlineMode: false
+    })
+
 Template.mmInputToggle.events
   'click label.toggle.toggle-balanced': (event, template) ->
-    console.log this

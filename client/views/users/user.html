@@ -21,8 +21,8 @@
         {{>mmInputText label='Birthday' fieldName='birthday' value=user.profile.birthday type='date' placeholder='mm/dd/yyyy'}}
         {{>mmInputToggle label='Receive Invites' fieldName='receiveInvites' value=user.profile.receiveInvites}}
         {{>mmInputToggle label='Receive Newsletter' fieldName='receiveNewsletter' value=user.profile.receiveNewsletter}}
-        {{>mmNextPage label='Media' url=mediaUrl snippet='You have 4 pictures and 6 videos.'}}
-        {{>mmNextPage label='Bio' snippet='lorem...'}}
+        {{>mmNextPage label='Media' url=mediaHandler.url snippet=mediaHandler.snippet}}
+        {{>mmNextPage label='Bio' url=bioHandler.url snippet=bioHandler.snippet}}
       {{/ionList}}
       <div class='card'>
         <div class="item item-divider">

@@ -1,0 +1,24 @@
+<template name='userBio'>
+  {{#contentFor "headerTitle"}}
+    <h1 class="title">Edit Bio</h1>
+  {{/contentFor}}
+
+  {{#contentFor "headerButtonLeft"}}
+    <a class='button button-icon' data-nav-direction="back" href="/users">Back</a>
+  {{/contentFor}}
+
+  {{> contentFor region="headerButtonRight" template='_userBioDoneHeaderButton'}}
+
+
+  {{#ionView}}
+    {{#ionContent}}
+      
+      {{>mmInputRichText fieldName='bio' value=user.profile.bio type='textarea'}}
+      
+    {{/ionContent}}
+  {{/ionView}}
+</template>
+
+<template name='_userBioDoneHeaderButton'>
+  <button class="button button-icon bio-done-button">Done</button>
+</template>

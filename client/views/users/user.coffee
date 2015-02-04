@@ -26,10 +26,37 @@ Template.user.helpers
 
     return _options
 
-  mediaUrl: ->
+  mediaHandler: ->
     _editUser = Session.get('_editUser')
-    _url = "/user/#{_editUser}/media"
-    return _url
+    _imageCount = 0
+    _videoCount = 0
+    _data =
+      url:"/user/#{_editUser}/media"  
+      snippet: "You have #{_imageCount} Images and #{_videoCount} Videos."
+    return _data
+
+  bioHandler: ->
+    _editUser = Session.get('_editUser')
+    _data =
+      url:"/user/#{_editUser}/bio"
+      snippet:"Just garbage for right now."
+    return _data
+
+Template._userBioDoneHeaderButton.events
+  'click .bio-done-button': (event, template) ->
+#    The ID of the record we are working with
+    _id = Session.get('_editUser')
+#    Things we need data from
+    _data = {}
+    _data._id = _id
+    _data['bio'] = $('textarea#edit-bio').editable('getHTML', false, true)
+
+    Meteor.call 'updateUser', _data, (err, data) ->
+      if err
+        throw new Meteor.error("ERROR", err)
+      if data
+        Router.go "/user/#{_id}"
+
 
 Template._userDoneHeaderButton.events
   'click .done-button': (event, template) ->

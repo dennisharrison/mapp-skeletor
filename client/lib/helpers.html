@@ -5,6 +5,15 @@
   </label>
 </template>
 
+<template name='mmInputRichText'>
+  <label class="item item-input show-overflow" data-snap-ignore="true">
+    {{#if label}}
+    <span class="input-label">{{label}}</span>
+    {{/if}}
+    <textarea class="mmInputRichTextArea" id="edit-{{fieldName}}">{{value}}</textarea>
+  </label>
+</template>
+
 <template name='mmInputToggle'>
   {{#ionItem class='item-toggle item-text-wrap'}}
     {{label}}
