@@ -4,6 +4,7 @@ Meteor.methods
     console.log data
     _id = data._id
     delete data._id
+    _user = Meteor.users.findOne({_id: _id})
 
 #    The password for a user is stored as a hash that we can't see
 #    Save off the value then remove it from the data to be stored.
@@ -24,7 +25,11 @@ Meteor.methods
       'bio'
     ]
 
-    data.profile = {}
+    if _user?.profile?
+      data.profile = _user.profile
+    else
+      data.profile = {}
+      
     for item in profileItems
       if data[item]?
         data.profile[item] = data[item]

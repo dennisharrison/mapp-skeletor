@@ -17,5 +17,11 @@ Template.mmInputRichText.rendered = ->
       inlineMode: false
     })
 
-Template.mmInputToggle.events
-  'click label.toggle.toggle-balanced': (event, template) ->
+Template.mmNextPage.helpers
+  classes: -> 
+    classes = ['item-icon-right']
+    if this.class?
+      customClasses = this.class.split(' ')
+      for klass in customClasses
+        classes.push(klass)
+    return classes.join(' ')

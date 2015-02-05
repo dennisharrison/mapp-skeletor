@@ -37,9 +37,16 @@ Template.user.helpers
 
   bioHandler: ->
     _editUser = Session.get('_editUser')
+    _user = Meteor.users.findOne({_id: _editUser})
+    
+    if _user?.profile?.bio?
+
+      _snippet = new Spacebars.SafeString(_user.profile.bio.stripTags())
+    else
+      _snippet = "Your Bio is empty ... sad bio."
     _data =
       url:"/user/#{_editUser}/bio"
-      snippet:"Just garbage for right now."
+      snippet:_snippet
     return _data
 
 Template._userBioDoneHeaderButton.events
@@ -67,7 +74,7 @@ Template._userDoneHeaderButton.events
     _data._id = _id
     _inputElements = ['input', 'select', 'textarea']
     for type in _inputElements
-      elements = $(type)
+      elements = $(".userEditWrapper").find(type)
       for element in elements
         console.log element
         if element.type == 'checkbox'
@@ -81,3 +88,30 @@ Template._userDoneHeaderButton.events
         throw new Meteor.error("ERROR", err)
       if data
         Router.go '/users'
+
+Template.user.events
+  'click .saveUserData': (event, template) ->
+    console.log("STUFF")
+    event.preventDefault()
+    self = $(this)
+#    The ID of the record we are working with
+    _id = Session.get('_editUser')
+#    Things we need data from
+    _data = {}
+    _data._id = _id
+    _inputElements = ['input', 'select', 'textarea']
+    for type in _inputElements
+      elements = $(".userEditWrapper").find(type)
+      for element in elements
+        console.log element
+        if element.type == 'checkbox'
+          _data[element.name] = $(element).prop('checked')
+        else
+          _data[element.name] = element.value
+        
+
+    Meteor.call 'updateUser', _data, (err, data) ->
+      if err
+        throw new Meteor.error("ERROR", err)
+      if data
+        Router.go self.attr("href")

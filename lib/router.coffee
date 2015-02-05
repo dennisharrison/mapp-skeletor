@@ -1,9 +1,12 @@
+# Router.use(Router.bodyParser.json())
+# Router.onBeforeAction(Iron.Router.bodyParser.json())
+
 Router.configure
   layoutTemplate: 'layout'
   # notFoundTemplate: 'notFound'
   loadingTemplate: 'loading'
   onBeforeAction: (pause) ->
-    except = ['_login','logout','home']
+    except = ['_login','logout','home', 'uploadFile']
     route = this.route.name
     # console.log 'Checking to see if we have a user.'
     # console.log except.none(route)
@@ -69,15 +72,39 @@ Router.map ->
       @wait Meteor.subscribe('allUsers', {search: {_id: @params.id}})
       @render 'userBio'
 
+  @route 'uploadFile',
+    #where: 'server'
+    path: '/uploadFile'
+    action: ->
+      console.log("TAMAGAHI")
+      if @request.method is 'POST'
+        console.log @request
+        # files = @request.files
+        # path = files.path
+        # name = files.name
+        # console.log files
+
+        # if Meteor.isServer
+        #   streamBuffers = Npm.require("stream-buffers")
+
+# Router.route('/uploadFile', {where: 'server'})
+#   .post( ->
+#     console.log "Got here!"
+#     console.log @request
+
+#     @response.writeHead(200, {"Content-Type": 'text/html'})
+#     @response.end('Uploaded!')
+#     )
 
 mustBeSignedIn = (pause) ->
   # console.log 'Inside mustBeSignedIn'
-  if Meteor.loggingIn()
-    return pause.next()
+  if Meteor.isClient
+    if Meteor.loggingIn()
+      return pause.next()
 
-  if Meteor.user() is null
-    console.log 'No user - Redirecting to login'
-    Router.go('/login')
-    pause.next()
-  else
-    pause.next()
+    if Meteor.user() is null
+      console.log 'No user - Redirecting to login'
+      Router.go('/login')
+      pause.next()
+    else
+      pause.next()

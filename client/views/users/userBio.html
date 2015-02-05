@@ -3,9 +3,7 @@
     <h1 class="title">Edit Bio</h1>
   {{/contentFor}}
 
-  {{#contentFor "headerButtonLeft"}}
-    <a class='button button-icon' data-nav-direction="back" href="/users">Back</a>
-  {{/contentFor}}
+  {{> contentFor region="headerButtonLeft" template='_userBioBackHeaderButton'}}
 
   {{> contentFor region="headerButtonRight" template='_userBioDoneHeaderButton'}}
 
@@ -21,4 +19,8 @@
 
 <template name='_userBioDoneHeaderButton'>
   <button class="button button-icon bio-done-button">Done</button>
+</template>
+
+<template name='_userBioBackHeaderButton'>
+  <a class='button button-icon' data-nav-direction="back" href="/user/{{id}}">Back</a>
 </template>

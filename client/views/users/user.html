@@ -1,17 +1,17 @@
 <template name='user'>
   {{#contentFor "headerTitle"}}
-    <h1 class="title">Edit</h1>
+    <h1 class="title" data-snap-ignore="true">Edit</h1>
   {{/contentFor}}
 
   {{#contentFor "headerButtonLeft"}}
-    <a class='button button-icon' data-nav-direction="back" href="/users">Back</a>
+    <a class='button button-icon' data-nav-direction="back" data-snap-ignore="true" href="/users">Back</a>
   {{/contentFor}}
 
   {{> contentFor region="headerButtonRight" template='_userDoneHeaderButton'}}
 
-
   {{#ionView}}
     {{#ionContent}}
+    <div class="userEditWrapper" data-snap-ignore="true">
       {{#ionList}}
         {{>mmInputText label='Username' fieldName='username' value=user.username type='text'}}
         {{>mmInputText label='Password' fieldName='password' value='' type='password'}}
@@ -21,8 +21,8 @@
         {{>mmInputText label='Birthday' fieldName='birthday' value=user.profile.birthday type='date' placeholder='mm/dd/yyyy'}}
         {{>mmInputToggle label='Receive Invites' fieldName='receiveInvites' value=user.profile.receiveInvites}}
         {{>mmInputToggle label='Receive Newsletter' fieldName='receiveNewsletter' value=user.profile.receiveNewsletter}}
-        {{>mmNextPage label='Media' url=mediaHandler.url snippet=mediaHandler.snippet}}
-        {{>mmNextPage label='Bio' url=bioHandler.url snippet=bioHandler.snippet}}
+        {{>mmNextPage label='Media' class="saveUserData" url=mediaHandler.url snippet=mediaHandler.snippet}}
+        {{>mmNextPage label='Bio' class="saveUserData" url=bioHandler.url snippet=bioHandler.snippet}}
       {{/ionList}}
       <div class='card'>
         <div class="item item-divider">
@@ -32,10 +32,11 @@
           The password field is so that you can change your password. It is not required to change your information.
         </div>
       </div>
+    </div>
     {{/ionContent}}
   {{/ionView}}
 </template>
 
 <template name='_userDoneHeaderButton'>
-  <button class="button button-icon done-button">Done</button>
+  <button class="button button-icon done-button" data-snap-ignore="true">Done</button>
 </template>

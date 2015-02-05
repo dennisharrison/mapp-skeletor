@@ -1,5 +1,5 @@
 <template name='mmInputText'>
-  <label class="item item-input">
+  <label class="item item-input" data-snap-ignore="true">
     <span class="input-label">{{label}}</span>
     <input type="{{type}}" name="{{fieldName}}" value="{{value}}" placeholder="{{#if placeholder}}{{placeholder}}{{else}}{{label}}{{/if}}">
   </label>
@@ -17,7 +17,7 @@
 <template name='mmInputToggle'>
   {{#ionItem class='item-toggle item-text-wrap'}}
     {{label}}
-     <label class="toggle toggle-balanced {{class}}">
+     <label class="toggle toggle-balanced {{class}}" data-snap-ignore="true">
        <input type="checkbox" name='{{fieldName}}' {{checked}}>
        <div class="track">
          <div class="handle"></div>
@@ -39,8 +39,8 @@
   </label>
 </template>
 
-<template name='mmNextPage'>
-    {{#ionItem href=url class='item-icon-right'}}
+<template name='mmNextPage' data-snap-ignore="true">
+    {{#ionItem href=url class=classes}}
       {{#if snippet}}
       <h2>{{label}}</h2>
       <p>
