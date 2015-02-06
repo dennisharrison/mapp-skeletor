@@ -17,5 +17,5 @@ s3 = new AWS.S3()
 list = s3.listObjectsSync
   Bucket: 'mapp-skeletor'
 
-for file in list.Contents
-	console.log(file)
+# for file in list.Contents
+# 	console.log(file)
