@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-
 var fs = require('fs');
 var walk = require('walk');
 var mkdirp = require('mkdirp');
@@ -19,12 +18,14 @@ var s3 = new AWS.S3();
 var _uploadedFiles = [];
 
 log.notice('Starting S3 file uploads...');
-log.inspect(config)
+log.inspect(config);
 
 if(!fs.existsSync(config.uploader.directory)){
+  log.warn('Creating ' + config.uploader.directory);
 	mkdirp(config.uploader.directory, function(err){
 		log.error("The directory " + config.uploader.directory + " was not created!");
-		process.exit(1)
+    log.error(err);
+		process.exit(1);
 	})
 }
 var walker = walk.walk(config.uploader.directory, { followLinks: false});
@@ -49,6 +50,6 @@ walker.on('end', function() {
 		s3.upload(params, options, function(err, data) {
 		  console.log(err, data);
 		});
-	})
-	log.inspect(_uploadedFiles);
-})
+	});
+	//log.inspect(_uploadedFiles);
+});

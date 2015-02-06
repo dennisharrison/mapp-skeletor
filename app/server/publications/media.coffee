@@ -31,5 +31,5 @@ if Meteor.isServer
         filename: newFilename
         userId: this.userId
         size: file.size
-
-      file.save('/Users/dennisharrison/temp/uploads/')
+      _uploadDirectory = Meteor.settings.uploader.directory
+      file.save(_uploadDirectory)
