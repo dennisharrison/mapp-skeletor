@@ -1,4 +1,5 @@
-Meteor.subscribe('media', {userId: Session.get('_editUser')})
+Meteor.subscribe('media', {"metadata.user": Session.get('_editUser')})
+
 Template.userMedia.helpers
 	user: ->
     _editUser = Session.get('_editUser')
@@ -7,7 +8,7 @@ Template.userMedia.helpers
   media: ->
     _editUser = Session.get('_editUser')
     if _editUser?
-    	_media = Media.find({userId: _editUser}).fetch()
+    	_media = Media.find({"metadata.user": _editUser}).fetch()
     	return _media
 
 Template._userMediaBackHeaderButton.helpers
@@ -51,7 +52,7 @@ Template._userMediaAddHeaderButton.events
         size: file.size
         type: file.type
         timestamp: Math.round(new Date().getTime() / 1000)
-        user: Meteor.user()._id
+        user: Session.get('_editUser')
         complete: false
       console.log 'Uploading File:' + fsFile.metadata.name
       data = Media.insert fsFile, (err, fileObj) ->
