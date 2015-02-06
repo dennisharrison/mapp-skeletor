@@ -12,7 +12,6 @@ mdg:camera
 less
 coffeescript
 cfs:standard-packages
-cfs:gridfs
 matb33:collection-hooks
 accounts-password
 meteoric:ionic
@@ -28,3 +27,5 @@ jparker:gravatar
 digilord:last-seen
 froala:editor
 peerlibrary:aws-sdk
+cfs:s3
+cfs:filesystem
