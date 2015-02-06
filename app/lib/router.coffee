@@ -76,13 +76,13 @@ Router.map ->
     #where: 'server'
     path: '/uploadFile'
     action: ->
-      console.log("TAMAGAHI")
-      if @request.method is 'POST'
-        console.log @request
+        # console.log("WHAT")
         # files = @request.files
+        # filenames = @request.filenames
         # path = files.path
         # name = files.name
         # console.log files
+        # console.log filenames
 
         # if Meteor.isServer
         #   streamBuffers = Npm.require("stream-buffers")

@@ -20,13 +20,13 @@ Template._userMediaAddHeaderButton.helpers
     _editUser = Session.get('_editUser')
     return _editUser
 
-# Template._userMediaAddHeaderButton.events
-# 	'click .media-add-button': (event, template) ->
-#     console.log("_userMediaAddHeaderButton")
-#     _input = template.find('input')
-#     $(_input).click()
+Template._userMediaAddHeaderButton.events
+	'click .media-add-button': (event, template) ->
+     console.log("_userMediaAddHeaderButton")
+     _input = template.find('input')
+     $(_input).click()
 
-#   'change #file': (event, template) ->
-#   	_form = template.find('form')
-#   	console.log $(_form)
-#   	$(_form).submit()
+   'change #file': (event, template) ->
+   	_form = template.find('form')
+   	console.log $(_form)
+   	$(_form).submit()

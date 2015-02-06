@@ -11,7 +11,6 @@
   {{#ionView}}
     {{#ionContent}}
       <div class="userMediaWrapper" data-snap-ignore="true">
-        {{> fileUpload}}
       {{#if media}}
         {{#each media}}
 
@@ -33,54 +32,9 @@
 
 <template name='_userMediaAddHeaderButton'>
   <button data-snap-ignore="true" class="button button-icon media-add-button">Add</button>
+    <form action="/uploadFile" method="POST"><input type="file" class='hidden no-select'></form>
 </template>
 
 <template name='_userMediaBackHeaderButton'>
   <a class='button button-icon' data-snap-ignore="true" data-nav-direction="back" href="/user/{{id}}">Back</a>
-</template>
-
-<template name="fileUpload">
-  <form>
-    <legend>
-      <h3>Upload Files</h3>
-    </legend>
- 
-    {{#FileUploader method="uploadFile" size="1024*1024*5"}}
-      <input type="file" multiple />
- 
-      <table class="table">
-        <thead>
-          <th>Name</th>
-          <th>Size</th>
-          <th style="width: 150px;">Upload Progress</th>
-          <th style="width: 300px;">Status</th>
-        </thead>
- 
-        <tbody>
-          {{#each files}}
-            {{> fileUploadRow}}
-          {{else}}
-            <tr><td colspan="4"><h5>No files selected</h5></td></tr>
-          {{/each}}
-        </tbody>
-      </table>
-    {{/FileUploader}}
-  </form>
-</template>
- 
-<template name="fileUploadRow">
-  <tr>
-    <td>{{name}}</td>
-    <td>{{size}}</td>
-    <td>
-      <div class="progress progress-striped {{uploadCompleteClass}}">
-        <div class="bar" style="width: {{uploadProgress}}%">
-          <span style="padding: 2px; float: left; color: #000;">
-            {{uploadProgress}}%
-          </span>
-        </div>
-      </div>
-    </td>
-    <td>{{status}}</td>
-  </tr>
 </template>
