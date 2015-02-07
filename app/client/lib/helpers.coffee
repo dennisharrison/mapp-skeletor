@@ -1,3 +1,5 @@
+$.Editable.DEFAULTS.key = false
+
 Template.mmInputToggle.helpers
   checked: ->
     if this.value is true
@@ -13,12 +15,16 @@ Template.mmInputRichText.helpers
 			return new Spacebars.SafeString(this.value)
 
 Template.mmInputRichText.rendered = ->
+
 	$('textarea.mmInputRichTextArea').editable({
+      theme: 'custom'
       inlineMode: false
-    })
+      minHeight: 300
+      maxHeight: Math.max(document.documentElement.clientHeight, window.innerHeight || 0)-80
+  })
 
 Template.mmNextPage.helpers
-  classes: -> 
+  classes: ->
     classes = ['item-icon-right']
     if this.class?
       customClasses = this.class.split(' ')
