@@ -20,9 +20,7 @@ Template.mmInputRichText.rendered = ->
     inlineMode: false
     minHeight: 300
     maxHeight: Math.max(document.documentElement.clientHeight, window.innerHeight or 0) - 80
-
-  $('textarea.mmInputRichTextArea').on 'editable.focus', (e, editor) ->
-    console.log("GOT FOCUS")
+    buttons: ['bold', 'italic', 'underline', 'fontSize', 'color', 'align', 'insertUnorderedList', 'insertOrderedList', 'removeFormat']
 
 
 
