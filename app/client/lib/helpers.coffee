@@ -15,13 +15,16 @@ Template.mmInputRichText.helpers
 			return new Spacebars.SafeString(this.value)
 
 Template.mmInputRichText.rendered = ->
+  $('textarea.mmInputRichTextArea').editable
+    theme: 'custom'
+    inlineMode: false
+    minHeight: 300
+    maxHeight: Math.max(document.documentElement.clientHeight, window.innerHeight or 0) - 80
 
-	$('textarea.mmInputRichTextArea').editable({
-      theme: 'custom'
-      inlineMode: false
-      minHeight: 300
-      maxHeight: Math.max(document.documentElement.clientHeight, window.innerHeight || 0)-80
-  })
+  $('textarea.mmInputRichTextArea').on 'editable.focus', (e, editor) ->
+    console.log("GOT FOCUS")
+
+
 
 Template.mmNextPage.helpers
   classes: ->
