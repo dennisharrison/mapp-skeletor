@@ -1,5 +1,6 @@
-mediaStore = new FS.Store.FileSystem "media"
-
+mediaStore = new FS.Store.FileSystem "media",
+  path: Meteor.settings.uploader.directory #Default is "/cfs/files" path
+  maxTries: 5 #optional, default 5
 
 @Media = new FS.Collection "media",
   stores: [mediaStore]
