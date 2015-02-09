@@ -29,13 +29,13 @@ Meteor.methods
       data.profile = _user.profile
     else
       data.profile = {}
-      
+
     for item in profileItems
       if data[item]?
         data.profile[item] = data[item]
         delete data[item]
 
-    if password?
+    if password? and password isnt ''
       if Meteor.isServer
         Accounts.setPassword _id, password
 

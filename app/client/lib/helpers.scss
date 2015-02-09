@@ -2,6 +2,13 @@
   color: lighten(#444, 50%)
 }
 
+.view {
+  -webkit-backface-visibility: hidden;
+  -webkit-transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
 .richTextEditor {
 	overflow: visible !important;
   text-overflow: clip !important;

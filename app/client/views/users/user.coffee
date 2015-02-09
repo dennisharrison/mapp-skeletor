@@ -31,14 +31,14 @@ Template.user.helpers
     _imageCount = 0
     _videoCount = 0
     _data =
-      url:"/user/#{_editUser}/media"  
+      url:"/user/#{_editUser}/media"
       snippet: "You have #{_imageCount} Images and #{_videoCount} Videos."
     return _data
 
   bioHandler: ->
     _editUser = Session.get('_editUser')
     _user = Meteor.users.findOne({_id: _editUser})
-    
+
     if _user?.profile?.bio?
 
       _snippet = new Spacebars.SafeString(_user.profile.bio.stripTags())
@@ -81,7 +81,7 @@ Template._userDoneHeaderButton.events
           _data[element.name] = $(element).prop('checked')
         else
           _data[element.name] = element.value
-        
+
 
     Meteor.call 'updateUser', _data, (err, data) ->
       if err
@@ -108,7 +108,7 @@ Template.user.events
           _data[element.name] = $(element).prop('checked')
         else
           _data[element.name] = element.value
-        
+
 
     Meteor.call 'updateUser', _data, (err, data) ->
       if err

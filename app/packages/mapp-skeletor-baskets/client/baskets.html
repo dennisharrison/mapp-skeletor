@@ -1,0 +1,87 @@
+<template name="baskets">
+  {{#contentFor "headerTitle"}}
+      <h1 class="title">Baskets</h1>
+  {{/contentFor}}
+
+  {{#contentFor "headerButtonLeft"}}
+      <button data-ion-menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  {{/contentFor}}
+
+  {{#contentFor "headerButtonRight"}}
+      <button data-ion-menu-toggle="left" class="button button-icon icon ion-ios-cart-outline"></button>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+      {{#ionList}}
+        {{#each _baskets}}
+          {{> _basketListItem}}
+        {{/each}}
+      {{/ionList}}
+    {{/ionContent}}
+  {{/ionView}}
+</template>
+
+<template name="_basketListItem">
+  {{#ionItem buttonRight=true avatar=false href=url class='item-icon-right'}}
+    {{title}}
+    {{> ionIcon icon='ios-arrow-right'}}
+  {{/ionItem}}
+</template>
+
+<template name="basketEdit">
+  {{#contentFor "headerTitle"}}
+      <h1 class="title" data-snap-ignore="true">Edit Basket</h1>
+  {{/contentFor}}
+
+  {{> contentFor region="headerButtonLeft" template='_basketBackHeaderButton'}}
+
+  {{> contentFor region="headerButtonRight" template='_basketDoneHeaderButton'}}
+
+  {{#ionView}}
+    {{#ionContent}}
+        <div class="basketEditWrapper" data-snap-ignore="true">
+          {{#ionList}}
+            {{>mmInputText label='Title' fieldName='title' value=_basket.title type='text'}}
+            {{>mmInputToggle label='Share' fieldName='makePublic' value=_basket.makePublic}}
+            {{>mmNextPage label='Description' class="saveBasketData" url=descriptionHandler.url snippet=descriptionHandler.snippet}}
+          {{/ionList}}
+        </div>
+    {{/ionContent}}
+  {{/ionView}}
+</template>
+
+<template name='_basketBackHeaderButton'>
+    <a class='button button-icon backButton' data-nav-direction="back" data-snap-ignore="true" href="">Back</a>
+</template>
+
+<template name='_basketDoneHeaderButton'>
+    <button class="button button-icon done-button" data-nav-direction="back" data-snap-ignore="true">Done</button>
+</template>
+
+<template name='basketDescription'>
+  {{#contentFor "headerTitle"}}
+      <h1 class="title" data-snap-ignore="true">Edit Description</h1>
+  {{/contentFor}}
+
+  {{> contentFor region="headerButtonLeft" template='_basketDescriptionBackHeaderButton'}}
+
+  {{> contentFor region="headerButtonRight" template='_basketDescriptionDoneHeaderButton'}}
+
+
+  {{#ionView}}
+    {{#ionContent}}
+
+      {{>mmInputRichText fieldName='Description' value=_basket.description type='textarea'}}
+
+    {{/ionContent}}
+  {{/ionView}}
+</template>
+
+<template name='_basketDescriptionDoneHeaderButton'>
+    <button class="button button-icon description-done-button" data-nav-direction="back" data-snap-ignore="true">Done</button>
+</template>
+
+<template name='_basketDescriptionBackHeaderButton'>
+    <a class='button button-icon' data-nav-direction="back" href="/user/{{id}}" data-snap-ignore="true">Back</a>
+</template>
