@@ -2,6 +2,7 @@ Router.map ->
   @route 'baskets',
     path: '/baskets'
     action: ->
+      Session.set("lastBasketsUrl", @request.url)
       # Wait on collections
       @wait Meteor.subscribe('baskets')
       @render 'baskets'
@@ -9,8 +10,19 @@ Router.map ->
   @route 'basket',
     path: '/basket/:id'
     action: ->
-      # Wait on collections
+      _lastBasketsUrl = Session.get("lastBasketsUrl")
+      if _lastBasketsUrl?
+        console.log(_lastBasketsUrl)
+      else
+        console.log("No Baskets!")
+        _userId = Meteor.userId()
+        if _userId?
+          Session.set("lastBasketsUrl", "/user/#{_userId}baskets/")
+        else
+          Session.set("lastBasketsUrl", "/baskets")
+
       Session.set("_basketId", @params.id)
+      # Wait on collections
       @wait Meteor.subscribe('baskets', {_id: @params.id})
       @render 'basketEdit'
 
@@ -24,6 +36,7 @@ Router.map ->
   @route 'userBaskets',
     path: '/user/:id/baskets'
     action: ->
+      Session.set("lastBasketsUrl", @request.url)
       # Wait on collections
       @wait Meteor.subscribe('baskets', {userId: @params.id})
       @render 'baskets'

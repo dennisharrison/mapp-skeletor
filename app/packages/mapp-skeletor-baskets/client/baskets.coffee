@@ -23,9 +23,14 @@ Template.basketDescription.helpers
   _basket: ->
     Baskets.findOne({_id: Session.get("_basketId")})
 
-Template._basketBackHeaderButton.events
-  'click .backButton': (event, template) ->
-    history.back()
+Template._basketBackHeaderButton.helpers
+  _url: ->
+    Session.get("lastBasketsUrl")
+
+
+Template._basketDescriptionBackHeaderButton.helpers
+  _basketId: ->
+    Session.get("_basketId")
 
 Template.baskets.helpers
   _baskets: ->
@@ -72,7 +77,7 @@ saveBasketData = (url) ->
       if url?
         Router.go url
       else
-        history.back()
+        Router.go Session.get("lastBasketsUrl")
 
 
 Template._basketDoneHeaderButton.events

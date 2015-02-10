@@ -52,7 +52,7 @@
 </template>
 
 <template name='_basketBackHeaderButton'>
-    <a class='button button-icon backButton' data-nav-direction="back" data-snap-ignore="true" href="">Back</a>
+    <a class='button button-icon backButton' data-nav-direction="back" data-snap-ignore="true" href="{{_url}}">Back</a>
 </template>
 
 <template name='_basketDoneHeaderButton'>
@@ -83,5 +83,5 @@
 </template>
 
 <template name='_basketDescriptionBackHeaderButton'>
-    <a class='button button-icon' data-nav-direction="back" href="/user/{{id}}" data-snap-ignore="true">Back</a>
+    <a class='button button-icon' data-nav-direction="back" href="/basket/{{_basketId}}" data-snap-ignore="true">Back</a>
 </template>
