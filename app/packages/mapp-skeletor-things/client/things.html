@@ -1,0 +1,87 @@
+<template name="things">
+  {{#contentFor "headerTitle"}}
+      <h1 class="title">Things</h1>
+  {{/contentFor}}
+
+  {{#contentFor "headerButtonLeft"}}
+      <button data-ion-menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  {{/contentFor}}
+
+  {{#contentFor "headerButtonRight"}}
+      <button data-ion-menu-toggle="left" class="button button-icon icon ion-ios-cart-outline"></button>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+      {{#ionList}}
+        {{#each _things}}
+          {{> _thingListItem}}
+        {{/each}}
+      {{/ionList}}
+    {{/ionContent}}
+  {{/ionView}}
+</template>
+
+<template name="_thingListItem">
+  {{#ionItem buttonRight=true avatar=false href=url class='item-icon-right'}}
+    {{title}}
+    {{> ionIcon icon='ios-arrow-right'}}
+  {{/ionItem}}
+</template>
+
+<template name="thingEdit">
+  {{#contentFor "headerTitle"}}
+      <h1 class="title" data-snap-ignore="true">Edit Thing</h1>
+  {{/contentFor}}
+
+  {{> contentFor region="headerButtonLeft" template='_thingBackHeaderButton'}}
+
+  {{> contentFor region="headerButtonRight" template='_thingDoneHeaderButton'}}
+
+  {{#ionView}}
+    {{#ionContent}}
+        <div class="thingEditWrapper" data-snap-ignore="true">
+          {{#ionList}}
+            {{>mmInputText label='Title' fieldName='title' value=_thing.title type='text'}}
+            {{>mmInputToggle label='Share' fieldName='makePublic' value=_thing.makePublic}}
+            {{>mmNextPage label='Description' class="saveThingData" url=descriptionHandler.url snippet=descriptionHandler.snippet}}
+          {{/ionList}}
+        </div>
+    {{/ionContent}}
+  {{/ionView}}
+</template>
+
+<template name='_thingBackHeaderButton'>
+    <a class='button button-icon backButton' data-nav-direction="back" data-snap-ignore="true" href="">Back</a>
+</template>
+
+<template name='_thingDoneHeaderButton'>
+    <button class="button button-icon done-button" data-nav-direction="back" data-snap-ignore="true">Done</button>
+</template>
+
+<template name='thingDescription'>
+  {{#contentFor "headerTitle"}}
+      <h1 class="title" data-snap-ignore="true">Edit Description</h1>
+  {{/contentFor}}
+
+  {{> contentFor region="headerButtonLeft" template='_thingDescriptionBackHeaderButton'}}
+
+  {{> contentFor region="headerButtonRight" template='_thingDescriptionDoneHeaderButton'}}
+
+
+  {{#ionView}}
+    {{#ionContent}}
+
+      {{>mmInputRichText fieldName='Description' value=_thing.description type='textarea'}}
+
+    {{/ionContent}}
+  {{/ionView}}
+</template>
+
+<template name='_thingDescriptionDoneHeaderButton'>
+    <button class="button button-icon description-done-button" data-nav-direction="back" data-snap-ignore="true">Done</button>
+</template>
+
+<template name='_thingDescriptionBackHeaderButton'>
+    <a class='button button-icon' data-nav-direction="back" href="/user/{{id}}" data-snap-ignore="true">Back</a>
+</template>

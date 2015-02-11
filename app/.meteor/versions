@@ -66,6 +66,7 @@ livedata@1.0.12
 localstorage@1.0.2
 logging@1.0.6
 mapp-skeletor:baskets@0.0.1
+mapp-skeletor:things@0.0.1
 matb33:collection-hooks@0.7.9
 mdg:camera@1.1.3
 meteor@1.1.4
