@@ -49,22 +49,6 @@ Template.user.helpers
       snippet:_snippet
     return _data
 
-Template._userBioDoneHeaderButton.events
-  'click .bio-done-button': (event, template) ->
-#    The ID of the record we are working with
-    _id = Session.get('_editUser')
-#    Things we need data from
-    _data = {}
-    _data._id = _id
-    _data['bio'] = $('textarea#edit-bio').editable('getHTML', false, true)
-
-    Meteor.call 'updateUser', _data, (err, data) ->
-      if err
-        throw new Meteor.error("ERROR", err)
-      if data
-        Router.go "/user/#{_id}"
-
-
 Template._userDoneHeaderButton.events
   'click .done-button': (event, template) ->
 #    The ID of the record we are working with
@@ -76,7 +60,6 @@ Template._userDoneHeaderButton.events
     for type in _inputElements
       elements = $(".userEditWrapper").find(type)
       for element in elements
-        console.log element
         if element.type == 'checkbox'
           _data[element.name] = $(element).prop('checked')
         else
@@ -91,7 +74,6 @@ Template._userDoneHeaderButton.events
 
 Template.user.events
   'click .saveUserData': (event, template) ->
-    console.log("STUFF")
     event.preventDefault()
     self = $(this)
 #    The ID of the record we are working with
@@ -103,7 +85,6 @@ Template.user.events
     for type in _inputElements
       elements = $(".userEditWrapper").find(type)
       for element in elements
-        console.log element
         if element.type == 'checkbox'
           _data[element.name] = $(element).prop('checked')
         else

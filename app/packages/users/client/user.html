@@ -23,6 +23,7 @@
         {{>mmInputToggle label='Receive Newsletter' fieldName='receiveNewsletter' value=user.profile.receiveNewsletter}}
         {{>mmNextPage label='Media' class="saveUserData" url=mediaHandler.url snippet=mediaHandler.snippet}}
         {{>mmNextPage label='Bio' class="saveUserData" url=bioHandler.url snippet=bioHandler.snippet}}
+        {{>rolesNextPage}}
       {{/ionList}}
       <div class='card'>
         <div class="item item-divider">

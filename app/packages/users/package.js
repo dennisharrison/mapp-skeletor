@@ -9,12 +9,18 @@ var createThreeAmigos = function(dir, baseName) {
   return _array;
 };
 
-var basket = createThreeAmigos('client', 'baskets')
+var user = createThreeAmigos('client', 'user');
+var users = createThreeAmigos('client', 'users');
+var userMedia = createThreeAmigos('client', 'userMedia');
+var userBio = createThreeAmigos('client', 'userBio');
+var userRoles = createThreeAmigos('client', 'userRoles');
+
+
 
 Package.describe({
-  summary: "A collection that contains baskets that are owned by users.",
+  summary: "User management for a sample application.",
   version: "0.0.1",
-  name: "mapp-skeletor:baskets",
+  name: "mapp-skeletor:users",
   homepage: "https://github.com/dennisharrison/mapp-skeletor",
   git: "https://github.com/dennisharrison/mapp-skeletor.git"
 });
@@ -26,8 +32,17 @@ Package.onUse(function (api) {
   api.use(['digilord:sugarjs@1.4.1'], ['client', 'server']);
   api.use(['iron:router@1.0.7'], ['client', 'server']);
   api.use(['meteoric:ionic@0.1.13'], ['client']);
-  api.addFiles(basket, 'client');
+  api.use(['alanning:roles@1.2.13']['client', 'server']);
+  api.addFiles(['lib/userCollection.coffee'], ['client','server']);
   api.addFiles(['lib/routes.coffee'], ['client','server']);
-  api.addFiles(['collections/baskets.coffee'], ['client','server']);
-  api.addFiles(['server/baskets.coffee'], ['server']);
+  api.addFiles(['server/publications/allUsers.coffee'], ['server']);
+  api.addFiles(['server/publications/roles.coffee'], ['server']);
+
+  api.addFiles(user, 'client');
+  api.addFiles(users, 'client');
+  api.addFiles(userMedia, 'client');
+  api.addFiles(userBio, 'client');
+  api.addFiles(userRoles, 'client');
+
+
 });

@@ -31,3 +31,11 @@
     {{profile.name}} - {{> lastSeen}}
   </p>
 </template>
+
+<template name="usersAdminButton">
+  {{#if isInRole 'manage-users'}}
+  <a class="item item-icon-right" href='/users' data-ion-menu-close>
+    Users {{> ionIcon icon="ios-person-outline"}}
+  </a>
+  {{/if}}
+</template>
