@@ -13,6 +13,8 @@ var user = createThreeAmigos('client', 'user');
 var users = createThreeAmigos('client', 'users');
 var userMedia = createThreeAmigos('client', 'userMedia');
 var userBio = createThreeAmigos('client', 'userBio');
+var userRoles = createThreeAmigos('client', 'userRoles');
+
 
 
 Package.describe({
@@ -38,6 +40,7 @@ Package.onUse(function (api) {
   api.addFiles(users, 'client');
   api.addFiles(userMedia, 'client');
   api.addFiles(userBio, 'client');
+  api.addFiles(userRoles, 'client');
 
 
 });
