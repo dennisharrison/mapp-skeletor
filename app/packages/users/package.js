@@ -9,7 +9,11 @@ var createThreeAmigos = function(dir, baseName) {
   return _array;
 };
 
-var basket = createThreeAmigos('client', 'things')
+var user = createThreeAmigos('client', 'user');
+var users = createThreeAmigos('client', 'users');
+var userMedia = createThreeAmigos('client', 'userMedia');
+var userBio = createThreeAmigos('client', 'userBio');
+
 
 Package.describe({
   summary: "User management for a sample application.",
@@ -26,8 +30,14 @@ Package.onUse(function (api) {
   api.use(['digilord:sugarjs@1.4.1'], ['client', 'server']);
   api.use(['iron:router@1.0.7'], ['client', 'server']);
   api.use(['meteoric:ionic@0.1.13'], ['client']);
-  api.addFiles(basket, 'client');
+  api.use(['alanning:roles@1.2.13']['client', 'server']);
+  api.addFiles(['lib/userCollection.coffee'], ['client','server']);
   api.addFiles(['lib/routes.coffee'], ['client','server']);
-  api.addFiles(['collections/things.coffee'], ['client','server']);
-  api.addFiles(['server/things.coffee'], ['server']);
+  api.addFiles(['server/publications/allUsers.coffee'], ['server']);
+  api.addFiles(user, 'client');
+  api.addFiles(users, 'client');
+  api.addFiles(userMedia, 'client');
+  api.addFiles(userBio, 'client');
+
+
 });
