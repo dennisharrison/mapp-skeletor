@@ -23,10 +23,10 @@
 </template>
 
 <template name="_thingListItem">
-  {{#ionItem buttonRight=true avatar=false href=url class='item-icon-right'}}
-    {{title}}
-    {{> ionIcon icon='ios-arrow-right'}}
-  {{/ionItem}}
+    <a class="item item-icon-right" href="{{url}}" data-snap-ignore="true" defaultBehavior="link">
+      {{title}}
+        <i class="icon ion-ios-arrow-right"></i>
+    </a>
 </template>
 
 <template name="thingEdit">

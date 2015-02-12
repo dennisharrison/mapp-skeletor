@@ -31,3 +31,4 @@ cfs:s3
 cfs:filesystem
 mapp-skeletor:baskets
 mapp-skeletor:things
+hammer:jquery

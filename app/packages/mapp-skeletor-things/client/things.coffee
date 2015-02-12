@@ -1,6 +1,48 @@
+# This is to rig up touching and holding of different things - yeah, it's awesome.
+touchDefaultState = true
+performDefaultAction = () ->
+  if touchDefaultState is true
+    console.log("I should do the default thing here!")
+    target = $(event.target)
+    if target.is("a")
+      Router.go target.attr('href')
+
+
+# Initialize hammer on the item we need the event from.
+Template._thingListItem.rendered = () ->
+  $(".item").hammer()
+
+# Capture hammer events alongside normal events.
+Template._thingListItem.events
+  'press .item': (event, template) ->
+    event.stopImmediatePropagation()
+    event.preventDefault()
+    event.stopPropagation()
+    touchDefaultState = false
+    alert("PRESSED")
+
+  'click .item': (event, template) ->
+    event.stopImmediatePropagation()
+    event.preventDefault()
+    event.stopPropagation()
+
+  'mousedown .item': (event, template) ->
+    event.stopImmediatePropagation()
+    event.preventDefault()
+    event.stopPropagation()
+    touchDefaultState = true
+
+  'mouseup .item': (event, template) ->
+    event.stopImmediatePropagation()
+    event.preventDefault()
+    event.stopPropagation()
+    performDefaultAction()
+
+
 Template._thingListItem.helpers
   url: ->
     "/thing/#{this._id}"
+
 
 Template.thingEdit.helpers
   _thing: ->
