@@ -60,7 +60,6 @@ Template._userDoneHeaderButton.events
     for type in _inputElements
       elements = $(".userEditWrapper").find(type)
       for element in elements
-        console.log element
         if element.type == 'checkbox'
           _data[element.name] = $(element).prop('checked')
         else
@@ -75,7 +74,6 @@ Template._userDoneHeaderButton.events
 
 Template.user.events
   'click .saveUserData': (event, template) ->
-    console.log("STUFF")
     event.preventDefault()
     self = $(this)
 #    The ID of the record we are working with
@@ -87,7 +85,6 @@ Template.user.events
     for type in _inputElements
       elements = $(".userEditWrapper").find(type)
       for element in elements
-        console.log element
         if element.type == 'checkbox'
           _data[element.name] = $(element).prop('checked')
         else

@@ -29,3 +29,10 @@ Router.map ->
       Session.set('_editUser', @params.id)
       @wait Meteor.subscribe('allUsers', {search: {_id: @params.id}})
       @render 'userBio'
+
+  @route 'userRoles',
+    path: '/user/:id/roles'
+    action: ->
+      Session.set('_editUser', @params.id)
+      @wait Meteor.subscribe('allUsers', {search: {_id: @params.id}})
+      @render 'userRoles'

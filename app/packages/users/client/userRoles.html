@@ -1,0 +1,37 @@
+<template name='userRoles'>
+  {{#contentFor "headerTitle"}}
+  <h1 class="title" data-snap-ignore="true">Edit Roles</h1>
+  {{/contentFor}}
+
+  {{> contentFor region="headerButtonLeft" template='_userRolesBackHeaderButton'}}
+
+  {{> contentFor region="headerButtonRight" template='_userRolesDoneHeaderButton'}}
+
+
+  {{#ionView}}
+    {{#ionContent}}
+      {{#each roles}}
+        {{> _roleRow}}
+      {{/each}}
+    {{/ionContent}}
+  {{/ionView}}
+</template>
+
+<template name="_roleRow">
+  {{>mmInputToggle label=label fieldName=fieldName value=value}}
+</template>
+
+<template name='_userRolesDoneHeaderButton'>
+  <button class="button button-icon roles-done-button" data-nav-direction=“back” data-snap-ignore="true">Done</button>
+</template>
+
+<template name='_userRolesBackHeaderButton'>
+  <a class='button button-icon' data-nav-direction="back" href="/user/{{id}}" data-snap-ignore="true">Back</a>
+</template>
+
+
+<template name="rolesNextPage">
+  {{#if isInRole 'manage-users'}}
+  {{>mmNextPage label='Roles' class="saveUserData" url=rolesHandler.url snippet=rolesHandler.snippet}}
+  {{/if}}
+</template>
