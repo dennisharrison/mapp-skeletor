@@ -25,7 +25,7 @@ Package.onUse(function (api) {
   api.use(['coffeescript'], ['client','server']);
   api.use(['digilord:sugarjs@1.4.1'], ['client', 'server']);
   api.use(['iron:router@1.0.7'], ['client', 'server']);
-  api.use(['meteoric:ionic@0.1.13'], ['client']);
+  api.use(['meteoric:ionic@0.1.11'], ['client']);
   api.addFiles(basket, 'client');
   api.addFiles(['lib/routes.coffee'], ['client','server']);
   api.addFiles(['collections/baskets.coffee'], ['client','server']);
