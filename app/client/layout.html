@@ -19,11 +19,7 @@
               <a class="item item-icon-right" href='/' data-ion-menu-close>
                 Home {{> ionIcon icon="ios-home-outline"}}
               </a>
-              {{#if isInRole 'manage-users'}}
-              <a class="item item-icon-right" href='/users' data-ion-menu-close>
-                Users {{> ionIcon icon="ios-person-outline"}}
-              </a>
-              {{/if}}
+              {{> usersAdminButton}}
               <div class="item item-icon-right">
                 Baskets {{> ionIcon icon="ios-cart-outline"}}
               </div>
