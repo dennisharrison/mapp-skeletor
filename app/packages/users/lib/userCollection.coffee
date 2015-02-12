@@ -1,7 +1,7 @@
 Meteor.methods
   updateUser: (data) ->
     password = null
-    console.log data
+#    console.log data
     _id = data._id
     delete data._id
     _user = Meteor.users.findOne({_id: _id})
@@ -40,3 +40,12 @@ Meteor.methods
         Accounts.setPassword _id, password
 
     Meteor.users.update({_id: _id}, {$set: data})
+
+    return [null, true]
+
+  updateUserRoles: (userId, roles) ->
+    if Roles.userIsInRole(Meteor.userId(), 'admin')
+      _result = Roles.addUsersToRoles(userId, roles)
+      return [null, _result]
+    else
+      return ['Must be an admin to change a users roles.', null]

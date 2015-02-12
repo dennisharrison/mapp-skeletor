@@ -36,6 +36,8 @@ Package.onUse(function (api) {
   api.addFiles(['lib/userCollection.coffee'], ['client','server']);
   api.addFiles(['lib/routes.coffee'], ['client','server']);
   api.addFiles(['server/publications/allUsers.coffee'], ['server']);
+  api.addFiles(['server/publications/roles.coffee'], ['server']);
+
   api.addFiles(user, 'client');
   api.addFiles(users, 'client');
   api.addFiles(userMedia, 'client');
