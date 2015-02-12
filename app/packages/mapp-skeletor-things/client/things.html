@@ -8,7 +8,7 @@
   {{/contentFor}}
 
   {{#contentFor "headerButtonRight"}}
-      <button data-ion-menu-toggle="left" class="button button-icon icon ion-ios-cart-outline"></button>
+      <a class='button button-icon icon ion-ios-cart-outline' data-nav-direction="forward" data-snap-ignore="true" href="/things/new"></a>
   {{/contentFor}}
 
   {{#ionView}}
@@ -43,7 +43,6 @@
         <div class="thingEditWrapper" data-snap-ignore="true">
           {{#ionList}}
             {{>mmInputText label='Title' fieldName='title' value=_thing.title type='text'}}
-            {{>mmInputToggle label='Share' fieldName='makePublic' value=_thing.makePublic}}
             {{>mmNextPage label='Description' class="saveThingData" url=descriptionHandler.url snippet=descriptionHandler.snippet}}
           {{/ionList}}
         </div>
@@ -52,7 +51,7 @@
 </template>
 
 <template name='_thingBackHeaderButton'>
-    <a class='button button-icon backButton' data-nav-direction="back" data-snap-ignore="true" href="">Back</a>
+    <a class='button button-icon backButton' data-nav-direction="back" data-snap-ignore="true" href="{{_url}}">Back</a>
 </template>
 
 <template name='_thingDoneHeaderButton'>
@@ -83,5 +82,5 @@
 </template>
 
 <template name='_thingDescriptionBackHeaderButton'>
-    <a class='button button-icon' data-nav-direction="back" href="/user/{{id}}" data-snap-ignore="true">Back</a>
+    <a class='button button-icon' data-nav-direction="back" href="/thing/{{_thingId}}" data-snap-ignore="true">Back</a>
 </template>

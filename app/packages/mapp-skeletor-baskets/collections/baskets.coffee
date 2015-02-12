@@ -17,3 +17,7 @@ Meteor.methods
     _basket = Baskets.findOne({_id: _id})
 
     Baskets.update({_id: _id}, {$set: data})
+
+  insertBasket: (data) ->
+    console.log data
+    Baskets.insert(data)

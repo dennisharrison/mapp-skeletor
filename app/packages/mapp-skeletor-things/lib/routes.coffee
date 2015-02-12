@@ -2,6 +2,7 @@ Router.map ->
   @route 'things',
     path: '/things'
     action: ->
+      Session.set("lastThingsUrl", @request.url)
       # Wait on collections
       @wait Meteor.subscribe('things')
       @render 'things'
@@ -9,9 +10,26 @@ Router.map ->
   @route 'thing',
     path: '/thing/:id'
     action: ->
-      # Wait on collections
+      _lastThingsUrl = Session.get("lastThingsUrl")
+      if _lastThingsUrl?
+        console.log(_lastThingsUrl)
+      else
+        console.log("No Things!")
+        _userId = Meteor.userId()
+        if _userId?
+          Session.set("lastThingsUrl", "/user/#{_userId}things/")
+        else
+          Session.set("lastThingsUrl", "/things")
+
       Session.set("_thingId", @params.id)
+      # Wait on collections
       @wait Meteor.subscribe('things', {_id: @params.id})
+      @render 'thingEdit'
+
+  @route 'newThing',
+    path: '/things/new'
+    action: ->
+      Session.set("_thingId", null)
       @render 'thingEdit'
 
   @route 'thingDescription',
@@ -24,6 +42,7 @@ Router.map ->
   @route 'userThings',
     path: '/user/:id/things'
     action: ->
+      Session.set("lastThingsUrl", @request.url)
       # Wait on collections
       @wait Meteor.subscribe('things', {userId: @params.id})
       @render 'things'

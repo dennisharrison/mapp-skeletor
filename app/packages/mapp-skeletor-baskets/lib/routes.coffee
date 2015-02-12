@@ -26,6 +26,12 @@ Router.map ->
       @wait Meteor.subscribe('baskets', {_id: @params.id})
       @render 'basketEdit'
 
+  @route 'newBasket',
+    path: '/baskets/new'
+    action: ->
+      Session.set("_basketId", null)
+      @render 'basketEdit'
+
   @route 'basketDescription',
     path: '/basket/:id/description'
     action: ->
