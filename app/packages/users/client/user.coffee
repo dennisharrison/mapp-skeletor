@@ -60,7 +60,6 @@ Template._userDoneHeaderButton.events
     for type in _inputElements
       elements = $(".userEditWrapper").find(type)
       for element in elements
-        console.log element
         if element.type == 'checkbox'
           _data[element.name] = $(element).prop('checked')
         else

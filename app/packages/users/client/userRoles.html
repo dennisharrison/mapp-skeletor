@@ -22,17 +22,16 @@
 </template>
 
 <template name='_userRolesDoneHeaderButton'>
-  <button class="button button-icon roles-done-button" data-snap-ignore="true">Done</button>
+  <button class="button button-icon roles-done-button" data-nav-direction=“back” data-snap-ignore="true">Done</button>
 </template>
 
 <template name='_userRolesBackHeaderButton'>
   <a class='button button-icon' data-nav-direction="back" href="/user/{{id}}" data-snap-ignore="true">Back</a>
 </template>
 
-<template name='_userRolesSnapoff'>
-  <button class="button button-icon snap-off-button" data-snap-ignore="true">SnapOff</button>
-</template>
 
 <template name="rolesNextPage">
+  {{#if isInRole 'manage-users'}}
   {{>mmNextPage label='Roles' class="saveUserData" url=rolesHandler.url snippet=rolesHandler.snippet}}
+  {{/if}}
 </template>

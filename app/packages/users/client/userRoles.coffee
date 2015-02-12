@@ -34,7 +34,6 @@ Template._userRolesDoneHeaderButton.events
         throw new Meteor.error("ERROR", err)
       if data
         Router.go "/user/#{_id}"
-#        Router.go "/user/#{_id}"
 
 Template.rolesNextPage.helpers
   rolesHandler: ->
@@ -43,13 +42,10 @@ Template.rolesNextPage.helpers
 
     if _user?.roles?
       _count = _user.roles.length
-      if _count > 1
-        roles = 'roles'
-      else
-        roles = 'role'
-      _snippet = "You have #{_count} #{roles} assigned."
+      _snippet = "#{_count} roles assigned."
     else
-      _snippet = "You have not been assigned any roles"
+      _snippet = "0 roles assigned."
+
     _data =
       url:"/user/#{_editUser}/roles"
       snippet:_snippet

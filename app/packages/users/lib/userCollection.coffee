@@ -45,7 +45,12 @@ Meteor.methods
 
   updateUserRoles: (userId, roles) ->
     if Roles.userIsInRole(Meteor.userId(), 'admin')
-      _result = Roles.addUsersToRoles(userId, roles)
-      return [null, _result]
+      _usersRoles = Roles.getRolesForUser(userId)
+      for role in _usersRoles
+        if not roles.some(role)
+          Roles.removeUsersFromRoles(userId, role)
+
+      Roles.addUsersToRoles(userId, roles)
+      return [null, true]
     else
       return ['Must be an admin to change a users roles.', null]
