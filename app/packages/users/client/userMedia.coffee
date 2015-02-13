@@ -8,7 +8,7 @@ Template.userMedia.helpers
   media: ->
     _editUser = Session.get('_editUser')
     if _editUser?
-    	_media = Media.find({"metadata.user": _editUser}).fetch()
+    	_media = Media.find({"metadata.user": _editUser}, {sort: {updatedAt: 1}}).fetch()
     	return _media
 
 Template._userMediaBackHeaderButton.helpers
@@ -33,6 +33,10 @@ Template._userMediaAddHeaderButton.helpers
 #   	$(_form).submit()
 
 
+Template._mediaRow.helpers
+  isMobile: ->
+    navigator.userAgent.match(/(ip(hone|od|ad))/i)
+
 Template._userMediaAddHeaderButton.events
   'click .media-add-button': (event, template) ->
     console.log("_userMediaAddHeaderButton")
@@ -40,12 +44,11 @@ Template._userMediaAddHeaderButton.events
     $(_input).click()
 
   'change input[type=file]': (event,template) ->
-    files = event.currentTarget.files;
-    # console.log parent_id, template.data
-    uploaded_files = []
     console.log 'Upload started'
+
     FS.Utility.eachFile event, (file) ->
       fsFile = new FS.File(file)
+      console.log Object.keys(fsFile.original)
       fsFile.metadata =
         name: file.name
         size: file.size
@@ -53,6 +56,7 @@ Template._userMediaAddHeaderButton.events
         timestamp: Math.round(new Date().getTime() / 1000)
         user: Session.get('_editUser')
         complete: false
+        from_ios: navigator.userAgent.match(/(ip(hone|od|ad))/i)
       console.log 'Uploading File:' + fsFile.metadata.name
       data = Media.insert fsFile, (err, fileObj) ->
         if err?

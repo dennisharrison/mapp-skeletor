@@ -13,7 +13,7 @@
       <div class="userMediaWrapper" data-snap-ignore="true">
       {{#if media}}
         {{#each media}}
-          <img src='{{url store="thumbs"}}' title='{{metadata.name}}'>
+          {{> _mediaRow}}
         {{/each}}
       {{else}}
         <div class='card'>
@@ -37,4 +37,12 @@
 
 <template name='_userMediaBackHeaderButton'>
   <a class='button button-icon' data-snap-ignore="true" data-nav-direction="back" href="/user/{{id}}">Back</a>
+</template>
+
+<template name="_mediaRow">
+  {{#if isMobile}}
+  <img src='{{url store="thumbs"}}' title='{{metadata.name}}'>
+  {{else}}
+  <img src='{{url store="fullMobile"}}' title='{{metadata.name}}'>
+  {{/if}}
 </template>
