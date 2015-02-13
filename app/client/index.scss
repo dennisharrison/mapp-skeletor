@@ -40,6 +40,27 @@
   right: 5px;
 }
 
+body { -webkit-touch-callout: none !important; }
+a { -webkit-user-select: none !important; }
+
+.item[style] {
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#ActionSheetHacker {
+  z-index: 999;
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background-color: transparent;
+}
+
 // .thin-red-border {
 //   img {
 //     border: 1px solid red;
