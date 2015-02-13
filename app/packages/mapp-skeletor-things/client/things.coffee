@@ -1,12 +1,12 @@
 # This is to rig up touching and holding of different things - yeah, it's awesome.
 touchDefaultState = true
-performDefaultAction = () ->
+performDefaultAction = (event) ->
   if touchDefaultState is true
     console.log("I should do the default thing here!")
     target = $(event.target)
-    if target.is("a")
+    defaultAction = target.attr("defaultAction")
+    if defaultAction is "link"
       Router.go target.attr('href')
-
 
 # Initialize hammer on the item we need the event from.
 Template._thingListItem.rendered = () ->
@@ -15,11 +15,41 @@ Template._thingListItem.rendered = () ->
 # Capture hammer events alongside normal events.
 Template._thingListItem.events
   'press .item': (event, template) ->
-    event.stopImmediatePropagation()
-    event.preventDefault()
-    event.stopPropagation()
+#    event.stopImmediatePropagation()
+#    event.preventDefault()
+#    event.stopPropagation()
     touchDefaultState = false
-    alert("PRESSED")
+#    alert("YO")
+    IonActionSheet.show
+      titleText: 'ActionSheet Example'
+      buttons: [
+        { text: 'Share <i class="icon ion-share"></i>' }
+        { text: 'Move <i class="icon ion-arrow-move"></i>' }
+      ]
+      destructiveText: 'Delete'
+      cancelText: 'Cancel'
+      cancel: ->
+        console.log 'Cancelled!'
+
+      buttonClicked: (index) ->
+        if index == 0
+          console.log 'Shared!'
+        if index == 1
+          console.log 'Moved!'
+
+      destructiveButtonClicked: ->
+        console.log 'Destructive Action!'
+    $('.action-sheet-backdrop').append("<div id='ActionSheetHacker'></div>")
+    $('#ActionSheetHacker').on 'click', (e) ->
+      event.preventDefault()
+      event.stopPropagation()
+      event.stopImmediatePropagation()
+      $("#ActionSheetHacker").remove()
+    if navigator.userAgent.match(/(ip(hone|od|ad))/i)
+      #iOS triggers another click here than any other device!
+    else
+      $("#ActionSheetHacker").click()
+
 
   'click .item': (event, template) ->
     event.stopImmediatePropagation()
@@ -33,10 +63,7 @@ Template._thingListItem.events
     touchDefaultState = true
 
   'mouseup .item': (event, template) ->
-    event.stopImmediatePropagation()
-    event.preventDefault()
-    event.stopPropagation()
-    performDefaultAction()
+    performDefaultAction(event)
 
 
 Template._thingListItem.helpers
