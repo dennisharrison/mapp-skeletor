@@ -40,15 +40,12 @@
   right: 5px;
 }
 
-body { -webkit-touch-callout: none !important; }
-a { -webkit-user-select: none !important; }
 
-.item[style] {
-  -webkit-touch-callout: none !important;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+
+
+
+.item {
+  cursor: pointer;
 }
 
 #ActionSheetHacker {

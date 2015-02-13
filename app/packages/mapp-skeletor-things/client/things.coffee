@@ -11,8 +11,6 @@ performDefaultAction = (event) ->
 # Initialize hammer on the item we need the event from.
 Template._thingListItem.rendered = () ->
   $(".item").hammer()
-  #$(".item").attr("style", "-webkit-touch-callout: none !important;")
-  #$(".item").hammer({domEvents:true})
 
 # Capture hammer events alongside normal events.
 Template._thingListItem.events
@@ -53,9 +51,7 @@ Template._thingListItem.events
       $("#ActionSheetHacker").click()
 
 
-
   'click .item': (event, template) ->
-    #performDefaultAction(event)
     event.stopImmediatePropagation()
     event.preventDefault()
     event.stopPropagation()
@@ -67,7 +63,7 @@ Template._thingListItem.events
     touchDefaultState = true
 
   'mouseup .item': (event, template) ->
-    #performDefaultAction(event)
+    performDefaultAction(event)
 
 
 Template._thingListItem.helpers
