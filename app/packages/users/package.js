@@ -33,10 +33,17 @@ Package.onUse(function (api) {
   api.use(['iron:router@1.0.7'], ['client', 'server']);
   api.use(['meteoric:ionic@0.1.11'], ['client']);
   api.use(['alanning:roles@1.2.13']['client', 'server']);
+
+  api.use('cfs:standard-packages@0.5.3', ['client','server']);
+  api.use('cfs:filesystem@0.1.1',['client','server']);
+  api.use(['cfs:graphicsmagick@0.0.17'], 'server');
+
   api.addFiles(['lib/userCollection.coffee'], ['client','server']);
   api.addFiles(['lib/routes.coffee'], ['client','server']);
   api.addFiles(['server/publications/allUsers.coffee'], ['server']);
   api.addFiles(['server/publications/roles.coffee'], ['server']);
+  api.addFiles(['server/publications/media.coffee'], ['server']);
+  api.addFiles(['server/userMedia.coffee'], ['server']);
 
   api.addFiles(user, 'client');
   api.addFiles(users, 'client');

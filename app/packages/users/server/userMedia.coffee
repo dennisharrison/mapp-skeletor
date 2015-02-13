@@ -2,8 +2,15 @@ mediaStore = new FS.Store.FileSystem "media",
   path: Meteor.settings.uploader.directory #Default is "/cfs/files" path
   maxTries: 5 #optional, default 5
 
+thumbs = new FS.Store.FileSystem "thumbs", {
+  transformWrite: (fileObj, readStream, writeStream) ->
+    # Transform the image into a 32x32px thumbnail
+    gm(readStream, fileObj.name()).resize('64', '64').stream().pipe(writeStream);
+  }
+
+
 @Media = new FS.Collection "media",
-  stores: [mediaStore]
+  stores: [mediaStore, thumbs]
 
 Media.allow
   insert: (userId, doc) ->

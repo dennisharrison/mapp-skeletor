@@ -12,11 +12,6 @@ Template._userRolesBackHeaderButton.helpers
     _editUser = Session.get('_editUser')
     return _editUser
 
-Template._userRolesSnapoff.events
-  'click .snap-off-button': (event, template) ->
-    IonSideMenu.snapper.disable()
-
-
 Template._userRolesDoneHeaderButton.events
   'click .roles-done-button': (event, template) ->
 #    The ID of the record we are working with

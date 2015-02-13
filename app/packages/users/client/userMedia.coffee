@@ -42,7 +42,6 @@ Template._userMediaAddHeaderButton.events
   'change input[type=file]': (event,template) ->
     files = event.currentTarget.files;
     # console.log parent_id, template.data
-
     uploaded_files = []
     console.log 'Upload started'
     FS.Utility.eachFile event, (file) ->
@@ -56,9 +55,9 @@ Template._userMediaAddHeaderButton.events
         complete: false
       console.log 'Uploading File:' + fsFile.metadata.name
       data = Media.insert fsFile, (err, fileObj) ->
-        console.log err
-        return
-
-      console.log 'Upload complete!'
+        if err?
+          console.log err
+        if fileObj?
+          console.log 'Upload complete!'
 
       return

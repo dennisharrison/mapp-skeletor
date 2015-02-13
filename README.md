@@ -7,6 +7,9 @@
 3. Deploy
 4. Profit :)
 
+### GraphicsMagic
+On OSX `brew install graphicsmagick`
+
 ## Example settings.json
 Place settings.json in app directory
 ```json
