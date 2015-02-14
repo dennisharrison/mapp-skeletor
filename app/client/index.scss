@@ -35,10 +35,7 @@
 .hidden {
   display: none;
 }
-.media-add-button {
-  position: absolute;
-  right: 5px;
-}
+
 
 
 
@@ -56,6 +53,22 @@
   left: 0px;
   right: 0px;
   background-color: transparent;
+}
+
+#FileUploader {
+  cursor: pointer;
+  opacity:1;
+  width:0px;
+  height:0px;
+  position: absolute;
+  z-index: 9999999;
+}
+
+.media-add-button {
+//  position: absolute;
+//  right: 5px;
+//  bottom: 5px;
+//  top: 5px;
 }
 
 // .thin-red-border {
