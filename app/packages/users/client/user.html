@@ -21,8 +21,8 @@
         {{>mmInputText label='Birthday' fieldName='birthday' value=user.profile.birthday type='date' placeholder='mm/dd/yyyy'}}
         {{>mmInputToggle label='Receive Invites' fieldName='receiveInvites' value=user.profile.receiveInvites}}
         {{>mmInputToggle label='Receive Newsletter' fieldName='receiveNewsletter' value=user.profile.receiveNewsletter}}
-        {{>mmNextPage label='Media' class="saveUserData" url=mediaHandler.url snippet=mediaHandler.snippet}}
         {{>mmNextPage label='Bio' class="saveUserData" url=bioHandler.url snippet=bioHandler.snippet}}
+        {{>mm_media_control url=mediaUrl}}
         {{>rolesNextPage}}
       {{/ionList}}
       <div class='card'>

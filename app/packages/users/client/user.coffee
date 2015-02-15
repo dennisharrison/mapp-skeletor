@@ -1,8 +1,21 @@
+userMediaSetup =
+  mm_media_route_path: "/user/:id/media"
+  mm_media_route_name: 'userMedia'
+  mm_media_route_template: 'mm_media'
+  mm_media_back_header_button_url_base: '/user'
+
+Meteor.startup ->
+  CreateMediaRoutes(userMediaSetup)
+
 Template.user.helpers
   user: ->
     _editUser = Session.get('_editUser')
     _user = Meteor.users.findOne({_id: _editUser})
     return _user
+
+  mediaUrl: ->
+    _editUser = Session.get('_editUser')
+    "/user/#{_editUser}/media"
 
   sexOptions: ->
     _editUser = Session.get('_editUser')
@@ -25,15 +38,6 @@ Template.user.helpers
       _options.push obj
 
     return _options
-
-  mediaHandler: ->
-    _editUser = Session.get('_editUser')
-    _imageCount = 0
-    _videoCount = 0
-    _data =
-      url:"/user/#{_editUser}/media"
-      snippet: "You have #{_imageCount} Images and #{_videoCount} Videos."
-    return _data
 
   bioHandler: ->
     _editUser = Session.get('_editUser')

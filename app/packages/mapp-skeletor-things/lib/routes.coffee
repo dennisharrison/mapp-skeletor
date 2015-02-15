@@ -11,13 +11,10 @@ Router.map ->
     path: '/thing/:id'
     action: ->
       _lastThingsUrl = Session.get("lastThingsUrl")
-      if _lastThingsUrl?
-        console.log(_lastThingsUrl)
-      else
-        console.log("No Things!")
+      if not _lastThingsUrl?
         _userId = Meteor.userId()
         if _userId?
-          Session.set("lastThingsUrl", "/user/#{_userId}things/")
+          Session.set("lastThingsUrl", "/user/#{_userId}/things/")
         else
           Session.set("lastThingsUrl", "/things")
 

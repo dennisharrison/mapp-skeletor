@@ -1,3 +1,13 @@
+thingsMediaSetup =
+  mm_media_route_path: "/thing/:id/media"
+  mm_media_route_name: 'thingMedia'
+  mm_media_route_template: 'mm_media'
+  mm_media_back_header_button_url_base: '/thing'
+
+Meteor.startup ->
+  CreateMediaRoutes(thingsMediaSetup)
+
+
 # This is to rig up touching and holding of different things - yeah, it's awesome.
 touchDefaultState = true
 performDefaultAction = (event) ->
@@ -75,6 +85,10 @@ Template.thingEdit.helpers
   _thing: ->
     Things.findOne({_id: Session.get("_thingId")})
 
+  mediaUrl: ->
+    _thingId = Session.get("_thingId")
+    "/thing/#{_thingId}/media"
+
   descriptionHandler: ->
     _thingId = Session.get("_thingId")
     _thing = Things.findOne({_id: _thingId})
@@ -87,6 +101,10 @@ Template.thingEdit.helpers
       url:"/thing/#{_thingId}/description"
       snippet:_snippet
     return _data
+
+
+
+
 
 Template.thingDescription.helpers
   _thing: ->
@@ -165,13 +183,10 @@ saveThingData = (url) ->
 
 lastThingsUrl = () ->
   _lastThingsUrl = Session.get("lastThingsUrl")
-  if _lastThingsUrl?
-    console.log(_lastThingsUrl)
-  else
-    console.log("No Things!")
+  if not _lastThingsUrl?
     _userId = Meteor.userId()
     if _userId?
-      _lastThingsUrl = "/user/#{_userId}things/"
+      _lastThingsUrl = "/user/#{_userId}/things/"
       Session.set("lastThingsUrl", _lastThingsUrl)
     else
       _lastThingsUrl = "/things"

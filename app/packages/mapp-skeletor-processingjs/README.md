@@ -1,9 +1,9 @@
 mapp-skeletor:baskets
 ============
 
-A things collection for meteor, owned by users and inside of baskets.
+A Processing.js wrapper for meteor
 
-Add this package with `meteor add mapp-skeletor:things` to get access to these amazing things!
+Add this package with `meteor add mapp-skeletor:processingjs` to get access to Prcoessing.js
 
 --
 ## License

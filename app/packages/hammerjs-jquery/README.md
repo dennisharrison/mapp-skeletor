@@ -1,9 +1,9 @@
 mapp-skeletor:baskets
 ============
 
-A baskets collection for meteor, owned by users.
+A hammer.js wrapper w/ jQuery plugin for meteor
 
-Add this package with `meteor add mapp-skeletor:baskets` to get access to these amazing baskets!
+Add this package with `meteor add hammerjs:jquery` to get access to $('element').hammer()
 
 --
 ## License
