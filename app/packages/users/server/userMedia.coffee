@@ -2,18 +2,18 @@ mediaStore = new FS.Store.FileSystem "media",
   path: Meteor.settings.uploader.directory #Default is "/cfs/files" path
   maxTries: 5 #optional, default 5
   transFormWrite: (fileObj, readStream, writeStream) ->
-    gm(readStream, fileObj.name).autoOrient().stream().pipe(writeStream)
+#    gm(readStream, fileObj.name).autoOrient().stream().pipe(writeStream)
 
 thumbs = new FS.Store.FileSystem "thumbs", {
   transformWrite: (fileObj, readStream, writeStream) ->
-    gm(readStream, fileObj.name).autoOrient().stream().pipe(writeStream); # Fix orientation
+#    gm(readStream, fileObj.name).autoOrient().stream().pipe(writeStream); # Fix orientation
     gm(readStream, fileObj.name).resize('96').stream().pipe(writeStream); # Retain aspect ratio at 96px tall
 
 }
 
 fullMobile = new FS.Store.FileSystem "fullMobile", {
   transformWrite: (fileObj, readStream, writeStream) ->
-    gm(readStream, fileObj.name).autoOrient().stream().pipe(writeStream); # Fix orientation
+#    gm(readStream, fileObj.name).autoOrient().stream().pipe(writeStream); # Fix orientation
     gm(readStream, fileObj.name).resize('460').stream().pipe(writeStream); # iPhone 5+ screen width
 
 }

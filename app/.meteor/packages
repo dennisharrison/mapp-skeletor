@@ -34,4 +34,4 @@ meteoric:ionicons-sass@0.1.5
 mapp-skeletor:users
 hammer:jquery
 cfs:graphicsmagick
-mapp-skeletor:processingjs
+ccorcos:clientside-image-manipulation

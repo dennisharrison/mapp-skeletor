@@ -9,6 +9,7 @@ blaze@2.0.4
 blaze-tools@1.0.2
 boilerplate-generator@1.0.2
 callback-hook@1.0.2
+ccorcos:clientside-image-manipulation@1.0.1
 cfs:access-point@0.1.43
 cfs:base-package@0.0.27
 cfs:collection@0.5.3
@@ -68,7 +69,6 @@ livedata@1.0.12
 localstorage@1.0.2
 logging@1.0.6
 mapp-skeletor:baskets@0.0.1
-mapp-skeletor:processingjs@1.4.8
 mapp-skeletor:things@0.0.1
 mapp-skeletor:users@0.0.1
 matb33:collection-hooks@0.7.9
