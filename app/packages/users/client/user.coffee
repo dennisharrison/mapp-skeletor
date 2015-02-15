@@ -1,10 +1,11 @@
-Template.user.rendered = ->
-  _editUser = Session.get('_editUser')
-  Session.set('mm_media_back_header_button_url', "/user/#{_editUser}")
-  Session.set('mm_media_route_path', "/user/#{_editUser}/media")
-  Session.set('mm_media_route_name', "userMedia")
-  Session.set('mm_media_route_template', "mm_media")
-  Session.set('mediaOwnerId', _editUser)
+userMediaSetup =
+  mm_media_route_path: "/user/:id/media"
+  mm_media_route_name: 'userMedia'
+  mm_media_route_template: 'mm_media'
+  mm_media_back_header_button_url_base: '/user'
+
+Meteor.startup ->
+  CreateMediaRoutes(userMediaSetup)
 
 Template.user.helpers
   user: ->

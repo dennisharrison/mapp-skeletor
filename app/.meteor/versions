@@ -9,7 +9,7 @@ blaze@2.0.4
 blaze-tools@1.0.2
 boilerplate-generator@1.0.2
 callback-hook@1.0.2
-ccorcos:clientside-image-manipulation@1.0.0
+ccorcos:clientside-image-manipulation@1.0.1
 cfs:access-point@0.1.43
 cfs:base-package@0.0.27
 cfs:collection@0.5.3

@@ -9,7 +9,7 @@ var createThreeAmigos = function(dir, baseName) {
   return _array;
 };
 
-var basket = createThreeAmigos('client', 'things')
+var thing = createThreeAmigos('client', 'things')
 
 Package.describe({
   summary: "A collection that contains things that are inside baskets.",
@@ -26,7 +26,9 @@ Package.onUse(function (api) {
   api.use(['digilord:sugarjs@1.4.1'], ['client', 'server']);
   api.use(['iron:router@1.0.7'], ['client', 'server']);
   api.use(['meteoric:ionic@0.1.11'], ['client']);
-  api.addFiles(basket, 'client');
+  api.use('mapp-skeletor:media@0.0.1', ['client', 'server']);
+
+  api.addFiles(thing, 'client');
   api.addFiles(['lib/routes.coffee'], ['client','server']);
   api.addFiles(['collections/things.coffee'], ['client','server']);
   api.addFiles(['server/things.coffee'], ['server']);
