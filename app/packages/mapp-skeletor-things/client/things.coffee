@@ -85,6 +85,10 @@ Template.thingEdit.helpers
   _thing: ->
     Things.findOne({_id: Session.get("_thingId")})
 
+  mediaUrl: ->
+    _thingId = Session.get("_thingId")
+    "/thing/#{_thingId}/media"
+
   descriptionHandler: ->
     _thingId = Session.get("_thingId")
     _thing = Things.findOne({_id: _thingId})

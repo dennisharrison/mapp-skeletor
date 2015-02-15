@@ -22,7 +22,7 @@
         {{>mmInputToggle label='Receive Invites' fieldName='receiveInvites' value=user.profile.receiveInvites}}
         {{>mmInputToggle label='Receive Newsletter' fieldName='receiveNewsletter' value=user.profile.receiveNewsletter}}
         {{>mmNextPage label='Bio' class="saveUserData" url=bioHandler.url snippet=bioHandler.snippet}}
-        {{>mm_media_control}}
+        {{>mm_media_control url=mediaUrl}}
         {{>rolesNextPage}}
       {{/ionList}}
       <div class='card'>

@@ -13,6 +13,10 @@ Template.user.helpers
     _user = Meteor.users.findOne({_id: _editUser})
     return _user
 
+  mediaUrl: ->
+    _editUser = Session.get('_editUser')
+    "/user/#{_editUser}/media"
+
   sexOptions: ->
     _editUser = Session.get('_editUser')
     _user = Meteor.users.findOne({_id: _editUser})
