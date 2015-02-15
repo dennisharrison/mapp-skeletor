@@ -1,25 +1,74 @@
+setupOrientation =
+  1:
+    degrees: '0'
+    mirror: ''
+  2:
+    degrees: '0'
+    mirror: 'vertical'
+  3:
+    degrees: '180'
+    mirror: ''
+  4:
+    degrees: '180'
+    mirror: 'vertical'
+  5:
+    degrees: '90'
+    mirror: 'vertical'
+  6:
+    degrees: '90'
+    mirror: ''
+  7:
+    degrees: '270'
+    mirror: 'vertical'
+  8:
+    degrees: '270'
+    mirror: ''
+
+rotateOperation = (gmObject, degrees) ->
+  if degrees.toString() is '0'
+    return gmObject
+
+  return gmObject.rotate('black', degrees)
+
+resizeOperation = (gmObject, pixels) ->
+  if pixels.toString() is '0'
+    return gmObject
+
+  return gmObject.resize(pixels)
+
+mirrorOperation = (gmObject, direction) ->
+  if direction is 'horizontal'
+    return gmObject.flop()
+
+  if direction is 'vertical'
+    return gmObject.flip()
+
+  return gmObject
+
+
+fixOrientationAndResize = (readStream, fileObj, size) ->
+  gmObj = gm(readStream, fileObj.name)
+  if fileObj.metadata.exif?.Orientation?
+    manipRecipe = setupOrientation[fileObj.metadata.exif.Orientation]
+    rotation = rotateOperation(gmObj, manipRecipe.degrees)
+    gmObj = mirrorOperation(rotation, manipRecipe.mirror)
+
+  return resizeOperation(gmObj, size)
+
 mediaStore = new FS.Store.FileSystem "media",
   path: Meteor.settings.uploader.directory #Default is "/cfs/files" path
   maxTries: 5 #optional, default 5
-  #transFormWrite: (fileObj, readStream, writeStream) ->
+  transFormWrite: (fileObj, readStream, writeStream) ->
+    fixOrientationAndResize(readStream, fileObj, '0').stream().pipe(writeStream)
 
 thumbs = new FS.Store.FileSystem "thumbs", {
   transformWrite: (fileObj, readStream, writeStream) ->
-#    gm(readStream, fileObj.name).autoOrient().stream().pipe(writeStream); # Fix orientation
-    gm(readStream, fileObj.name).resize('96').stream().pipe(writeStream); # Retain aspect ratio at 96px tall
-
+    fixOrientationAndResize(readStream, fileObj, '96').stream().pipe(writeStream)
 }
 
 fullMobile = new FS.Store.FileSystem "fullMobile", {
   transformWrite: (fileObj, readStream, writeStream) ->
-#    gm(readStream, fileObj.name).autoOrient().stream().pipe(writeStream); # Fix orientation
-    console.log("Stuff is happening")
-    if fileObj.metadata.exif?.Orientation? and fileObj.metadata.exif.Orientation is 6
-      console.log("We got 6!")
-      console.log(fileObj)
-      gm(readStream, fileObj.name).rotate('black', 90).resize('460').stream().pipe(writeStream)
-    #gm(readStream, fileObj.name).resize('460').stream().pipe(writeStream); # iPhone 5+ screen width
-
+    fixOrientationAndResize(readStream, fileObj, '460').stream().pipe(writeStream)
 }
 
 
