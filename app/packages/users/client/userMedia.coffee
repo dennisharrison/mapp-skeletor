@@ -89,13 +89,6 @@ dataURItoFile = (dataURI, fileLabel) ->
 Template._userMediaAddHeaderButton.events
   'click .media-add-button': (event, template) ->
     console.log("_userMediaAddHeaderButton")
-#    inputter = document.createElement("input")
-#    inputter.setAttribute("type", "file")
-#    inputter.setAttribute("class", "")
-#    inputter.setAttribute("id", "FileUploader")
-#    $("#MediaHeaderAddWrapper").append(inputter)
-#    $(inputter.click()
-
     _input = template.find("input")
     $(_input).click()
 
@@ -121,81 +114,3 @@ Template._userMediaAddHeaderButton.events
           console.log 'Upload complete!'
 
       return
-
-#  'change input[type=file]': (event,template) ->
-#    origFile = event.target.files[0]
-#    label = origFile.name.split(".").remove(origFile.name.split(".").last())
-#    tempImage = new Image()
-#    tempImage.src = URL.createObjectURL(origFile)
-#
-#    tempImage.onload = () ->
-#      canvas = convertImageToCanvas(tempImage)
-#      #image = convertCanvasToImage(canvas)
-#      #$(".userMediaWrapper").append(image)
-#      newBlob = dataURItoBlob(canvas.toDataURL())
-#      newFileExtension = newBlob.type.split("/").last()
-#
-#
-#      #console.log(origFile)
-#      #console.log(newFile)
-#
-#      fsFile = new FS.File(newBlob)
-#      alert("We have fsFile!")
-#      fsFile.metadata =
-#        name: label + "." + newFileExtension
-#        size: newBlob.size
-#        type: newBlob.type
-#        timestamp: Math.round(new Date().getTime() / 1000)
-#        user: Session.get('_editUser')
-#        complete: false
-#        from_ios: navigator.userAgent.match(/(ip(hone|od|ad))/i)
-#      console.log 'Uploading File: ' + fsFile.metadata.name
-#      data = Media.insert fsFile, (err, fileObj) ->
-#        if err?
-#          console.log err
-#        if fileObj?
-#          console.log(fileObj)
-#          console.log 'Upload complete!'
-#
-#      return
-
-#  'change input[type=file]': (event,template) ->
-#    console.log 'Upload started'
-#    file = e.target.files[0]
-#    if not file? then return
-#
-#    data = processImage file, (data) ->
-#      img = new FS.File(data)
-#
-#      img.metadata =
-#        user:Session.get('_editUser')
-#        complete: false
-#        timestamp: Math.round(new Date().getTime() / 1000)
-#
-#      Media.insert img, (err, fileObj) ->
-#        if err
-#          alert(err)
-#
-#    FS.Utility.eachFile event, (file) ->
-#      data = processImage file, (data) ->
-#        fsFile = new FS.File(data)
-#        console.log Object.keys(fsFile.original)
-#        fsFile.metadata =
-#          name: file.name
-#          size: fsFile.size()
-#          type: fsFile.type()
-#          timestamp: Math.round(new Date().getTime() / 1000)
-#          user: Session.get('_editUser')
-#          complete: false
-#          from_ios: navigator.userAgent.match(/(ip(hone|od|ad))/i)
-#        console.log 'Uploading File:' + fsFile.metadata.name
-#        alert("Inserting" + fsFile.size())
-#        Media.insert fsFile, (err, fileObj) ->
-#          if err?
-#            alert(err)
-#            console.log err
-#          if fileObj?
-#            alert("upload complete!")
-#            console.log 'Upload complete!'
-#
-#      return
