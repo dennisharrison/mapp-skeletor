@@ -32,6 +32,7 @@ Package.onUse(function (api) {
   api.use('cfs:filesystem@0.1.1',['client','server']);
   api.use(['cfs:graphicsmagick@0.0.17'], 'server');
 
+  api.addFiles(['lib/binaryFile.js'], 'client');
   api.addFiles(['lib/exif.js'], 'client');
   api.addFiles(['lib/routes.coffee'], 'client');
   api.addFiles(['server/publications/media.coffee'], ['server']);
