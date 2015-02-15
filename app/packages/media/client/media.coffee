@@ -15,9 +15,10 @@ Template._userMediaBackHeaderButton.helpers
 Template.mm_media_control.helpers
   snippet: ->
     _mediaOwnerId = Session.get('mediaOwnerId')
+    _mediaCount = Media.find({"metadata.owner":_mediaOwnerId}).count()
     _imageCount = 0
     _videoCount = 0
-    "You have #{_imageCount} Images and #{_videoCount} Videos."
+    "You have #{_mediaCount} Media items"
 
 Template._mediaRow.helpers
   isMobile: ->
