@@ -47,7 +47,7 @@ mirrorOperation = (gmObject, direction) ->
 
 
 fixOrientationAndResize = (readStream, fileObj, size) ->
-  gmObj = gm(readStream, fileObj.name)
+  gmObj = gm(readStream, fileObj.name).noProfile()
   if fileObj.metadata.exif?.Orientation?
     manipRecipe = setupOrientation[fileObj.metadata.exif.Orientation]
     rotation = rotateOperation(gmObj, manipRecipe.degrees)
