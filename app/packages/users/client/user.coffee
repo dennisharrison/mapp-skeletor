@@ -1,3 +1,11 @@
+Template.user.rendered = ->
+  _editUser = Session.get('_editUser')
+  Session.set('mm_media_back_header_button_url', "/user/#{_editUser}")
+  Session.set('mm_media_route_path', "/user/#{_editUser}/media")
+  Session.set('mm_media_route_name', "userMedia")
+  Session.set('mm_media_route_template', "mm_media")
+  Session.set('mediaOwnerId', _editUser)
+
 Template.user.helpers
   user: ->
     _editUser = Session.get('_editUser')
@@ -25,15 +33,6 @@ Template.user.helpers
       _options.push obj
 
     return _options
-
-  mediaHandler: ->
-    _editUser = Session.get('_editUser')
-    _imageCount = 0
-    _videoCount = 0
-    _data =
-      url:"/user/#{_editUser}/media"
-      snippet: "You have #{_imageCount} Images and #{_videoCount} Videos."
-    return _data
 
   bioHandler: ->
     _editUser = Session.get('_editUser')

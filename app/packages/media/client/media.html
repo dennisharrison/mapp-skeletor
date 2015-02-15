@@ -1,4 +1,4 @@
-<template name='userMedia'>
+<template name="mm_media">
   {{#contentFor "headerTitle"}}
     <h1 class="title" data-snap-ignore="true">Edit Media</h1>
   {{/contentFor}}
@@ -31,12 +31,12 @@
 </template>
 
 <template name='_userMediaAddHeaderButton'>
-    <input data-snap-ignore="true" id="FileUploader" type="file" class=''/>
+  <input data-snap-ignore="true" id="FileUploader" type="file" class=''/>
   <button data-snap-ignore="true" class="button button-icon media-add-button pull-right">Add</button>
 </template>
 
 <template name='_userMediaBackHeaderButton'>
-  <a class='button button-icon' data-snap-ignore="true" data-nav-direction="back" href="/user/{{id}}">Back</a>
+  <a class='button button-icon' data-snap-ignore="true" data-nav-direction="back" href="{{url}}">Back</a>
 </template>
 
 <template name="_mediaRow">
@@ -45,4 +45,8 @@
   {{else}}
   <img src='{{url store="fullMobile"}}' title='{{metadata.name}}'>
   {{/if}}
+</template>
+
+<template name="mm_media_control">
+  {{>mmNextPage label='Media' class="saveUserData" url=url snippet=snippet}}
 </template>

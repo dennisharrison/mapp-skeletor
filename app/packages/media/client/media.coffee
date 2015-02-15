@@ -1,26 +1,27 @@
-Meteor.subscribe('media', {"metadata.user": Session.get('_editUser')})
+Meteor.subscribe('media', {"metadata.owner": Session.get('mediaOwnerId')})
 
-Template.userMedia.helpers
-	user: ->
-    _editUser = Session.get('_editUser')
-    _user = Meteor.users.findOne({_id: _editUser})
-    return _user
+Template.mm_media.helpers
   media: ->
-    _editUser = Session.get('_editUser')
-    if _editUser?
-    	_media = Media.find({"metadata.user": _editUser}, {sort: {updatedAt: 1}}).fetch()
+    _mediaOwnerId = Session.get('mediaOwnerId')
+    if _mediaOwnerId?
+    	_media = Media.find({"metadata.owner": _mediaOwnerId}, {sort: {updatedAt: 1}}).fetch()
     	return _media
 
 Template._userMediaBackHeaderButton.helpers
-	id: ->
-    _editUser = Session.get('_editUser')
-    return _editUser
+  url: ->
+    Session.get('mm_media_back_header_button_url')
 
-Template._userMediaAddHeaderButton.helpers
-	id: ->
-    _editUser = Session.get('_editUser')
-    return _editUser
 
+Template.mm_media_control.helpers
+  url: ->
+   Session.get('mm_media_route_path')
+
+
+  snippet: ->
+    _mediaOwnerId = Session.get('mediaOwnerId')
+    _imageCount = 0
+    _videoCount = 0
+    "You have #{_imageCount} Images and #{_videoCount} Videos."
 
 Template._mediaRow.helpers
   isMobile: ->
@@ -103,7 +104,7 @@ Template._userMediaAddHeaderButton.events
         size: file.size
         type: file.type
         timestamp: Math.round(new Date().getTime() / 1000)
-        user: Session.get('_editUser')
+        owner: Session.get('mediaOwnerId')
         complete: false
         from_ios: navigator.userAgent.match(/(ip(hone|od|ad))/i)
       console.log 'Uploading File:' + fsFile.metadata.name
