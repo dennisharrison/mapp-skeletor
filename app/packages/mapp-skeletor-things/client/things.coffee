@@ -179,10 +179,7 @@ saveThingData = (url) ->
 
 lastThingsUrl = () ->
   _lastThingsUrl = Session.get("lastThingsUrl")
-  if _lastThingsUrl?
-    console.log(_lastThingsUrl)
-  else
-    console.log("No Things!")
+  if not _lastThingsUrl?
     _userId = Meteor.userId()
     if _userId?
       _lastThingsUrl = "/user/#{_userId}/things/"

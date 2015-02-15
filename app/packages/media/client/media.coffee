@@ -14,7 +14,7 @@ Template._userMediaBackHeaderButton.helpers
 
 Template.mm_media_control.helpers
   url: ->
-   Session.get('mm_media_route_path')
+   "#{Session.get('mm_media_back_header_button_url')}/media"
 
 
   snippet: ->
