@@ -10,13 +10,14 @@ Router.map ->
   @route 'thing',
     path: '/thing/:id'
     action: ->
-      _lastThingsUrl = Session.get("lastThingsUrl")
+      _relationshipBackToParentUrl = Session.get('relationshipBackToParentUrl')
+      if _relationshipBackToParentUrl?
+        Session.set("lastThingsUrl", _relationshipBackToParentUrl)
+
       if not _lastThingsUrl?
-        _userId = Meteor.userId()
-        if _userId?
-          Session.set("lastThingsUrl", "/user/#{_userId}/things/")
-        else
-          Session.set("lastThingsUrl", "/things")
+        _lastThingsUrl = "/things"
+        Session.set("lastThingsUrl", _lastThingsUrl)
+
 
       Session.set("_thingId", @params.id)
       # Wait on collections

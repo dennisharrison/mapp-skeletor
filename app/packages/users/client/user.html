@@ -24,6 +24,13 @@
         {{>mmNextPage label='Bio' class="saveUserData" url=bioHandler.url snippet=bioHandler.snippet}}
         {{>mm_media_control url=mediaUrl}}
         {{>rolesNextPage}}
+        {{#ionItem buttonRight=true class="sub_list"}}
+            <h2>Baskets</h2>
+            <a class="button button-icon" href="{{newBasketUrl}}" data-nav-direction="forward" data-snap-ignore="true">
+                <i class="icon ion-ios-plus-outline"></i>
+            </a>
+          {{>embeddedBasketsIndex}}
+        {{/ionItem}}
       {{/ionList}}
       <div class='card'>
         <div class="item item-divider">

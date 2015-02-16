@@ -1,21 +1,16 @@
 console.log "Adding baskets"
 
-Meteor.publish 'baskets', (options) ->
+Meteor.publish 'baskets', (search, options) ->
   # define some defaults here
-  search = {}
   defaultOptions =
     sort:
       title: 1
 
-  if Object.isObject options
-    if options.search
-      Object.merge(search, options.search)
+  if not Object.isObject(search)
+    search = {}
 
-    if options.options
-      Object.merge(defaultOptions, options.options)
-
-  else
+  if not Object.isObject(options)
     options = defaultOptions
 
-  _baskets = Baskets.find(search, options)
-  return _baskets
+  _data = Baskets.find(search, options)
+  return _data

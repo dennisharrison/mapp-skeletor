@@ -1,6 +1,6 @@
-console.log "Adding things"
+console.log "Adding relationships"
 
-Meteor.publish 'things', (search, options) ->
+Meteor.publish 'relationships', (search, options) ->
   # define some defaults here
   defaultOptions =
     sort:
@@ -12,5 +12,5 @@ Meteor.publish 'things', (search, options) ->
   if not Object.isObject(options)
     options = defaultOptions
 
-  _data = Things.find(search, options)
+  _data = Relationships.find(search, options)
   return _data

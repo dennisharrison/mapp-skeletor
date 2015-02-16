@@ -13,6 +13,10 @@ Template.user.helpers
     _user = Meteor.users.findOne({_id: _editUser})
     return _user
 
+  newBasketUrl: ->
+    _editUser = Session.get('_editUser')
+    "/user/#{_editUser}/newBasket"
+
   mediaUrl: ->
     _editUser = Session.get('_editUser')
     "/user/#{_editUser}/media"

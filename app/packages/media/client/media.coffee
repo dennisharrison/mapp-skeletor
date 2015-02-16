@@ -4,7 +4,7 @@ Template.mm_media.helpers
   media: ->
     _mediaOwnerId = Session.get('mediaOwnerId')
     if _mediaOwnerId?
-    	_media = Media.find({"metadata.owner": _mediaOwnerId}, {sort: {updatedAt: 1}}).fetch()
+    	_media = Media.find({"metadata.owner": _mediaOwnerId}).fetch().sortBy('updatedAt')
     	return _media
 
 Template._userMediaBackHeaderButton.helpers

@@ -34,7 +34,7 @@ Meteor.subscribe('allUsers')
 Template.users.helpers
   _users: ->
     _users = []
-    _usersRaw = Meteor.users.find({},{sort: {username: 1}}).fetch()
+    _usersRaw = Meteor.users.find({},{sort: {username: 1}}).fetch().sortBy('username')
     for _user in _usersRaw
       _user.url = "/user/#{_user._id}"
       _users.push _user

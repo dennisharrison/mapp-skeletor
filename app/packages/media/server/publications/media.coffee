@@ -1,22 +1,17 @@
-Meteor.publish 'media', (options) ->
+Meteor.publish 'media', (search, options) ->
   # define some defaults here
-  search = {}
   defaultOptions =
     sort:
-      filename: 1
+      title: 1
 
-  if Object.isObject options
-    if options.search
-      Object.merge(search, options.search)
+  if not Object.isObject(search)
+    search = {}
 
-    if options.options
-      Object.merge(defaultOptions, options.options)
-
-  else
+  if not Object.isObject(options)
     options = defaultOptions
 
-  _media = Media.find(search, options)
-  return _media
+  _data = Media.find(search, options)
+  return _data
 
 if Meteor.isServer
   Meteor.methods

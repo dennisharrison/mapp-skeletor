@@ -2,7 +2,6 @@ Router.map ->
   @route 'baskets',
     path: '/baskets'
     action: ->
-      Session.set("lastBasketsUrl", @request.url)
       # Wait on collections
       @wait Meteor.subscribe('baskets')
       @render 'baskets'
@@ -10,20 +9,26 @@ Router.map ->
   @route 'basket',
     path: '/basket/:id'
     action: ->
-      _lastBasketsUrl = Session.get("lastBasketsUrl")
-      if _lastBasketsUrl?
-        console.log(_lastBasketsUrl)
-      else
-        console.log("No Baskets!")
-        _userId = Meteor.userId()
-        if _userId?
-          Session.set("lastBasketsUrl", "/user/#{_userId}baskets/")
-        else
-          Session.set("lastBasketsUrl", "/baskets")
+      _relationshipBackToParentUrl = Session.get('relationshipBackToParentUrl')
+      if _relationshipBackToParentUrl?
+        Session.set("lastBasketsUrl", _relationshipBackToParentUrl)
+
+      if not _lastBasketsUrl?
+        _lastBasketsUrl = "/baskets"
+        Session.set("lastBasketsUrl", _lastBasketsUrl)
 
       Session.set("_basketId", @params.id)
       # Wait on collections
       @wait Meteor.subscribe('baskets', {_id: @params.id})
+      @wait Meteor.subscribe('relationships', {parentCollection: 'Baskets', parentId: @params.id})
+      _relationShips = Relationships.find({},{fields:{childId: 1}}).fetch()
+      _relationShipsArray = []
+
+      for item in _relationShips
+        _relationShipsArray.push item.childId
+
+      if _relationShipsArray.length isnt 0
+        @wait Meteor.subscribe('things', {_id: {$in: _relationShipsArray}})
       @render 'basketEdit'
 
   @route 'newBasket',
@@ -46,3 +51,14 @@ Router.map ->
       # Wait on collections
       @wait Meteor.subscribe('baskets', {userId: @params.id})
       @render 'baskets'
+
+  @route 'basketNewThing',
+    path: '/basket/:id/newThing'
+    action: ->
+      Session.set('_thingId', null)
+      Session.set('_basketId', @params.id)
+      Session.set('relationshipBackToParentUrl', "/basket/#{@params.id}")
+      Session.set('relationshipParentCollection', "Baskets")
+      Session.set('relationshipParentId', @params.id)
+      @wait Meteor.subscribe('baskets', {_id: @params.id})
+      @render 'thingEdit'

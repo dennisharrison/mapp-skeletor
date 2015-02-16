@@ -80,6 +80,9 @@ fullMobile = new FS.Store.FileSystem "fullMobile", {
     }
   }
 
+Meteor.startup ->
+  Media.files._ensureIndex({"metadata.owner": 1})
+
 Media.allow
   insert: (userId, doc) ->
     # return userId && (doc.user == userId)

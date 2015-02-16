@@ -87,18 +87,26 @@ Template.thingEdit.helpers
 
   mediaUrl: ->
     _thingId = Session.get("_thingId")
-    "/thing/#{_thingId}/media"
+    if _thingId?
+      return "/thing/#{_thingId}/media"
+    else
+      return ''
 
   descriptionHandler: ->
     _thingId = Session.get("_thingId")
     _thing = Things.findOne({_id: _thingId})
+
+    if _thingId?
+      _url = "/thing/#{_thingId}/description"
+    else
+      _url = ''
 
     if _thing?.description?
       _snippet = new Spacebars.SafeString(_thing.description.stripTags())
     else
       _snippet = "Your Description is empty ..."
     _data =
-      url:"/thing/#{_thingId}/description"
+      url:_url
       snippet:_snippet
     return _data
 
@@ -119,9 +127,9 @@ Template._thingDescriptionBackHeaderButton.helpers
   _thingId: ->
     Session.get("_thingId")
 
-Template.things.helpers
+Template.embeddedThingsIndex.helpers
   _things: ->
-    return Things.find()
+    return Things.find({}).fetch().sortBy('title')
 
 
 Template._thingDescriptionDoneHeaderButton.events
@@ -141,6 +149,7 @@ Template._thingDescriptionDoneHeaderButton.events
         Router.go "/thing/#{_thingId}"
 
 saveThingData = (url) ->
+  Session.set('thisFormIsDirty', null)
   #    Create the data object to be used for update/insert.
   _data = {}
   #    Check for an ID, if we have one then append it to data.
@@ -161,42 +170,63 @@ saveThingData = (url) ->
 
   #    Determine if we need to insert or update.
   if _data._id?
-    Meteor.call 'updateThing', _data, (err, data) ->
-      if err
-        throw new Meteor.error("ERROR", err)
-      if data
-        if url?
-          Router.go url
-        else
-          Router.go lastThingsUrl()
+    _id = _data._id
+    delete _data._id
+    Things.update({_id: _id}, {$set: _data})
+    if url?
+      Router.go url
   else
-    Meteor.call 'insertThing', _data, (err, data) ->
-      console.log data
-      if err
-        throw new Meteor.error("ERROR", err)
-      if data
-        if url?
-          Router.go url
-        else
-          Router.go lastThingsUrl()
+    _thingId = Things.insert(_data)
+    Session.set('_thingId', _thingId)
+    buildRelationship('Things', _thingId)
+    if url?
+      Router.go url
 
+
+buildRelationship = (childCollection, childId) ->
+  parentCollection = Session.get('relationshipParentCollection')
+  parentId = Session.get('relationshipParentId')
+
+  if not parentCollection? or not parentId?
+    console.warn "Both parentCollection & parentId session variables need to be defined to create a relationship."
+    return false
+
+  _data =
+    parentCollection: parentCollection
+    parentId: parentId
+    childCollection: childCollection
+    childId: childId
+    userId: Meteor.userId()
+
+  Relationships.insert(_data)
+  Session.set('relationshipParentCollection', null)
+  Session.set('relationshipParentId', null)
+  return true
 
 lastThingsUrl = () ->
+  _relationshipBackToParentUrl = Session.get('relationshipBackToParentUrl')
+  if _relationshipBackToParentUrl?
+    Session.set("lastThingsUrl", _relationshipBackToParentUrl)
+    return _relationshipBackToParentUrl
+
   _lastThingsUrl = Session.get("lastThingsUrl")
   if not _lastThingsUrl?
-    _userId = Meteor.userId()
-    if _userId?
-      _lastThingsUrl = "/user/#{_userId}/things/"
-      Session.set("lastThingsUrl", _lastThingsUrl)
-    else
-      _lastThingsUrl = "/things"
-      Session.set("lastThingsUrl", _lastThingsUrl)
+    _lastThingsUrl = "/things"
+    Session.set("lastThingsUrl", _lastThingsUrl)
   return _lastThingsUrl
 
 
 Template._thingDoneHeaderButton.events
   'click .done-button': (event, template) ->
+
     saveThingData()
+
+Template._thingDoneHeaderButton.helpers
+  thisFormIsDirty: ->
+    Session.get('thisFormIsDirty')
+
+Template.thingEdit.rendered = () ->
+  Session.set('thisFormIsDirty', null)
 
 Template.thingEdit.events
   'click .saveThingData': (event, template) ->
@@ -204,3 +234,7 @@ Template.thingEdit.events
     _url = ui.attr("href")
     event.preventDefault()
     saveThingData(_url)
+
+
+  'keyup input': (event, template) ->
+    Session.set('thisFormIsDirty', true)

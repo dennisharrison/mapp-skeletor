@@ -13,11 +13,7 @@
 
   {{#ionView}}
     {{#ionContent}}
-      {{#ionList}}
-        {{#each _baskets}}
-          {{> _basketListItem}}
-        {{/each}}
-      {{/ionList}}
+      {{> embeddedBasketsIndex}}
     {{/ionContent}}
   {{/ionView}}
 </template>
@@ -45,10 +41,25 @@
             {{>mmInputText label='Title' fieldName='title' value=_basket.title type='text'}}
             {{>mmInputToggle label='Share' fieldName='makePublic' value=_basket.makePublic}}
             {{>mmNextPage label='Description' class="saveBasketData" url=descriptionHandler.url snippet=descriptionHandler.snippet}}
+            {{#ionItem buttonRight=true class="sub_list"}}
+              <h2>Things</h2>
+                <a class="button button-icon" href="{{newThingUrl}}" data-nav-direction="forward" data-snap-ignore="true">
+                    <i class="icon ion-ios-plus-outline"></i>
+                </a>
+              {{>embeddedThingsIndex}}
+            {{/ionItem}}
           {{/ionList}}
         </div>
     {{/ionContent}}
   {{/ionView}}
+</template>
+
+<template name="embeddedBasketsIndex">
+  {{#ionList}}
+    {{#each _baskets}}
+      {{> _basketListItem}}
+    {{/each}}
+  {{/ionList}}
 </template>
 
 <template name='_basketBackHeaderButton'>
@@ -56,7 +67,9 @@
 </template>
 
 <template name='_basketDoneHeaderButton'>
-    <button class="button button-icon done-button" data-nav-direction="back" data-snap-ignore="true">Done</button>
+  {{#if thisFormIsDirty}}
+    <button class="button button-icon done-button" data-nav-direction="back" data-snap-ignore="true">Save</button>
+  {{/if}}
 </template>
 
 <template name='basketDescription'>

@@ -1,4 +1,4 @@
-Meteor.publish "allUsers", (options) ->
+Meteor.publish "allUsers", (search, options) ->
   if Roles.userIsInRole(this.userId, ['manage-users']) isnt true
     return false
 
@@ -8,18 +8,14 @@ Meteor.publish "allUsers", (options) ->
     sort:
       username: 1
 
-  if Object.isObject options
-    if options.search
-      Object.merge(search, options.search)
+  if not Object.isObject(search)
+    search = {}
 
-    if options.options
-      Object.merge(defaultOptions, options.options)
-
-  else
+  if not Object.isObject(options)
     options = defaultOptions
 
-  _users = Meteor.users.find(search, options)
-  return _users
+  _data = Meteor.users.find(search, options)
+  return _data
 
 Meteor.users.allow
   # insert: (userId, doc) ->

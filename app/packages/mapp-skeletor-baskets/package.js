@@ -29,5 +29,8 @@ Package.onUse(function (api) {
   api.addFiles(basket, 'client');
   api.addFiles(['lib/routes.coffee'], ['client','server']);
   api.addFiles(['collections/baskets.coffee'], ['client','server']);
+  api.addFiles(['collections/relationships.coffee'], ['client','server']);
+
   api.addFiles(['server/baskets.coffee'], ['server']);
+  api.addFiles(['server/relationships.coffee'], ['server']);
 });

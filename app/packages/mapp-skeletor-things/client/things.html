@@ -10,16 +10,20 @@
   {{#contentFor "headerButtonRight"}}
       <a class='button button-icon icon ion-ios-cart-outline' data-nav-direction="forward" data-snap-ignore="true" href="/things/new"></a>
   {{/contentFor}}
-
   {{#ionView}}
     {{#ionContent}}
+      {{> embeddedThingsIndex }}
+    {{/ionContent}}
+  {{/ionView}}
+
+</template>
+
+<template name="embeddedThingsIndex">
       {{#ionList}}
         {{#each _things}}
           {{> _thingListItem}}
         {{/each}}
       {{/ionList}}
-    {{/ionContent}}
-  {{/ionView}}
 </template>
 
 <template name="_thingListItem">
@@ -44,7 +48,7 @@
           {{#ionList}}
             {{>mmInputText label='Title' fieldName='title' value=_thing.title type='text'}}
             {{>mmNextPage label='Description' class="saveThingData" url=descriptionHandler.url snippet=descriptionHandler.snippet}}
-            {{>mm_media_control url=mediaUrl}}
+            {{>mm_media_control class="saveThingData" url=mediaUrl}}
           {{/ionList}}
         </div>
     {{/ionContent}}
@@ -56,7 +60,9 @@
 </template>
 
 <template name='_thingDoneHeaderButton'>
-    <button class="button button-icon done-button" data-nav-direction="back" data-snap-ignore="true">Done</button>
+    {{#if thisFormIsDirty}}
+      <button class="button button-icon done-button" data-nav-direction="back" data-snap-ignore="true">Save</button>
+    {{/if}}
 </template>
 
 <template name='thingDescription'>
@@ -85,3 +91,5 @@
 <template name='_thingDescriptionBackHeaderButton'>
     <a class='button button-icon' data-nav-direction="back" href="/thing/{{_thingId}}" data-snap-ignore="true">Back</a>
 </template>
+
+
