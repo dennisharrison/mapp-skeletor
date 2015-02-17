@@ -70,6 +70,7 @@ localstorage@1.0.2
 logging@1.0.6
 mapp-skeletor:baskets@0.0.1
 mapp-skeletor:media@0.0.1
+mapp-skeletor:relationships@0.0.1
 mapp-skeletor:things@0.0.1
 mapp-skeletor:user-history@0.0.1
 mapp-skeletor:users@0.0.1

@@ -1,124 +1,3 @@
-# This is to rig up touching and holding of different things - yeah, it's awesome.
-touchDefaultState = true
-performDefaultAction = (event) ->
-  if touchDefaultState is true
-    console.log("I should do the default thing here!")
-    target = $(event.currentTarget)
-    defaultAction = target.attr("defaultAction")
-    if defaultAction is "link"
-      _userHistory.goToUrl(target.attr('href'))
-
-# Initialize hammer on the item we need the event from.
-Template._basketListItem.rendered = () ->
-  $(".item").hammer()
-
-Template._basketListItem.events
-  'press .item': (event, template) ->
-    touchDefaultState = false
-    IonActionSheet.show
-      titleText: 'ActionSheet Example'
-      buttons: [
-        { text: 'Share <i class="icon ion-share"></i>' }
-        { text: 'Move <i class="icon ion-arrow-move"></i>' }
-      ]
-      destructiveText: 'Delete'
-      cancelText: 'Cancel'
-      cancel: ->
-        console.log 'Cancelled!'
-
-      buttonClicked: (index) ->
-        if index == 0
-          console.log 'Shared!'
-        if index == 1
-          console.log 'Moved!'
-
-      destructiveButtonClicked: ->
-        console.log 'Destructive Action!'
-    $('.action-sheet-backdrop').append("<div id='ActionSheetHacker'></div>")
-    $('#ActionSheetHacker').on 'click', (e) ->
-      event.preventDefault()
-      event.stopPropagation()
-      event.stopImmediatePropagation()
-      $("#ActionSheetHacker").remove()
-    if navigator.userAgent.match(/(ip(hone|od|ad))/i)
-      #iOS triggers another click here than any other device!
-    else
-      $("#ActionSheetHacker").click()
-
-
-  'click .item': (event, template) ->
-    event.stopImmediatePropagation()
-    event.preventDefault()
-    event.stopPropagation()
-
-  'mousedown .item': (event, template) ->
-    event.stopImmediatePropagation()
-    event.preventDefault()
-    event.stopPropagation()
-    touchDefaultState = true
-
-  'mouseup .item': (event, template) ->
-    performDefaultAction(event)
-
-Template._basketListItem.helpers
-  url: ->
-    "/basket/#{this._id}"
-
-Template.basketEdit.helpers
-  _basket: ->
-    Baskets.findOne({_id: Session.get("_basketId")})
-
-  newThingUrl: ->
-    _basketId = Session.get("_basketId")
-    "/basket/#{_basketId}/newThing"
-
-  descriptionHandler: ->
-    _basketId = Session.get("_basketId")
-    _basket = Baskets.findOne({_id: _basketId})
-
-    if _basket?.description?
-      _snippet = new Spacebars.SafeString(_basket.description.stripTags())
-    else
-      _snippet = "Your Description is empty ..."
-    _data =
-      url:"/basket/#{_basketId}/description"
-      snippet:_snippet
-    return _data
-
-Template.basketDescription.helpers
-  _basket: ->
-    Baskets.findOne({_id: Session.get("_basketId")})
-
-Template._basketBackHeaderButton.events
-  'click .back-button': (event, template) ->
-    _userHistory.goBack()
-
-
-Template._basketDescriptionBackHeaderButton.helpers
-  _basketId: ->
-    Session.get("_basketId")
-
-Template.embeddedBasketsIndex.helpers
-  _baskets: ->
-    return Baskets.find({}).fetch().sortBy('title')
-
-
-Template._basketDescriptionDoneHeaderButton.events
-  'click .description-done-button': (event, template) ->
-    #    The ID of the record we are working with
-    _basketId = Session.get('_basketId')
-    #    Things we need data from
-    _data = {}
-    _data._id = _basketId
-    _data.userId = Meteor.userId()
-    _data['description'] = $('textarea#edit-Description').editable('getHTML', false, true)
-
-    Meteor.call 'updateBasket', _data, (err, data) ->
-      if err
-        throw new Meteor.error("ERROR", err)
-      if data
-        _userHistory.goToUrl("/basket/#{_basketId}")
-
 saveBasketData = (url) ->
   Session.set('thisFormIsDirty', null)
   #    Create the data object to be used for update/insert.
@@ -153,36 +32,76 @@ saveBasketData = (url) ->
     if url?
       _userHistory.goToUrl(url)
 
-buildRelationship = (childCollection, childId) ->
-  parentCollection = Session.get('relationshipParentCollection')
-  parentId = Session.get('relationshipParentId')
 
-  if not parentCollection? or not parentId?
-    console.warn "Both parentCollection & parentId session variables need to be defined to create a relationship."
-    return false
+# Baskets Index
+Template.embeddedBasketsIndex.helpers
+  _baskets: ->
+    return Baskets.find({}).fetch().sortBy('title')
 
-  _data =
-    parentCollection: parentCollection
-    parentId: parentId
-    childCollection: childCollection
-    childId: childId
-    userId: Meteor.userId()
+# Basket List Item
+Template._basketListItem.helpers
+  url: ->
+    "/basket/#{this._id}"
 
-  Relationships.insert(_data)
-  Session.set('relationshipParentCollection', null)
-  Session.set('relationshipParentId', null)
-  return true
+# Initialize hammer on Basket List Items
+Template._basketListItem.rendered = () ->
+  $(".item").hammer()
 
-Template._basketDoneHeaderButton.events
-  'click .done-button': (event, template) ->
-    saveBasketData()
+Template._basketListItem.events
+  'press .item': (event, template) ->
+    touchDefaultState = false
+    showActionSheet({buttons:[], event:event, meteorObject:this, collection:Baskets, destructionCallback:removeWithRelations, titleText: "'#{this.title}'"})
 
-Template._basketDoneHeaderButton.helpers
-  thisFormIsDirty: ->
-    Session.get('thisFormIsDirty')
+  'click .item': (event, template) ->
+    event.stopImmediatePropagation()
+    event.preventDefault()
+    event.stopPropagation()
+
+  'mousedown .item': (event, template) ->
+    event.stopImmediatePropagation()
+    event.preventDefault()
+    event.stopPropagation()
+    switch event.which
+      when 1
+        #console.log 'Left Mouse button pressed.'
+        touchDefaultState = true
+      when 2
+        #console.log 'Middle Mouse button pressed.'
+        break
+      when 3
+        #console.log 'Right Mouse button pressed.'
+        showActionSheet({buttons:[], event:event, meteorObject:this, collection:Baskets, destructionCallback:removeWithRelations, titleText: "'#{this.title}'"})
+
+  'mouseup .item': (event, template) ->
+    performDefaultAction(event)
+
+
+# Basket view/edit/new
+Template.basketEdit.helpers
+  _basket: ->
+    Baskets.findOne({_id: Session.get("_basketId")})
+
+  newThingUrl: ->
+    _basketId = Session.get("_basketId")
+    "/basket/#{_basketId}/newThing"
+
+  descriptionHandler: ->
+    _basketId = Session.get("_basketId")
+    _basket = Baskets.findOne({_id: _basketId})
+
+    if _basket?.description?
+      _snippet = new Spacebars.SafeString(_basket.description.stripTags())
+    else
+      _snippet = "Your Description is empty ..."
+    _data =
+      url:"/basket/#{_basketId}/description"
+      snippet:_snippet
+    return _data
+
 
 Template.basketEdit.rendered = () ->
   Session.set('thisFormIsDirty', null)
+
 
 Template.basketEdit.events
   'click .saveBasketData': (event, template) ->
@@ -196,3 +115,43 @@ Template.basketEdit.events
 
   'click .toggle': (event, template) ->
     Session.set('thisFormIsDirty', true)
+
+Template._basketDoneHeaderButton.helpers
+  thisFormIsDirty: ->
+    Session.get('thisFormIsDirty')
+
+Template._basketBackHeaderButton.events
+  'click .back-button': (event, template) ->
+    _userHistory.goBack()
+
+Template._basketDoneHeaderButton.events
+  'click .done-button': (event, template) ->
+    saveBasketData()
+
+
+# Basket sub-screen edit/view
+Template.basketDescription.helpers
+  _basket: ->
+    Baskets.findOne({_id: Session.get("_basketId")})
+
+
+Template._basketDescriptionBackHeaderButton.events
+  'click .back-button': (event, template) ->
+    _userHistory.goBack()
+
+
+Template._basketDescriptionDoneHeaderButton.events
+  'click .description-done-button': (event, template) ->
+    #    The ID of the record we are working with
+    _basketId = Session.get('_basketId')
+    #    Things we need data from
+    _data = {}
+    _data._id = _basketId
+    _data.userId = Meteor.userId()
+    _data['description'] = $('textarea#edit-Description').editable('getHTML', false, true)
+
+    Meteor.call 'updateBasket', _data, (err, data) ->
+      if err
+        throw new Meteor.error("ERROR", err)
+      if data
+        _userHistory.goBack()

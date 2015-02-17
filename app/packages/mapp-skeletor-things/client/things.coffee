@@ -22,29 +22,35 @@ performDefaultAction = (event) ->
 Template._thingListItem.rendered = () ->
   $(".item").hammer()
 
-# Capture hammer events alongside normal events.
-Template._thingListItem.events
-  'press .item': (event, template) ->
-    touchDefaultState = false
-    IonActionSheet.show
-      titleText: 'ActionSheet Example'
-      buttons: [
-        { text: 'Share <i class="icon ion-share"></i>' }
-        { text: 'Move <i class="icon ion-arrow-move"></i>' }
-      ]
-      destructiveText: 'Delete'
-      cancelText: 'Cancel'
-      cancel: ->
-        console.log 'Cancelled!'
+showActionSheet = (options) ->
+  event = options.event
+  buttons = options.buttons or []
+  meteorObject = options.meteorObject
+  destructionCallback = options.destructionCallback or () ->
+  titleText = options.titleText or ''
+  collection = options.collection
 
-      buttonClicked: (index) ->
-        if index == 0
-          console.log 'Shared!'
-        if index == 1
-          console.log 'Moved!'
+  console.log(event.currentTarget)
+  console.log(meteorObject)
+  IonActionSheet.show
+    titleText: titleText
+    buttons: buttons
+    destructiveText: 'Delete'
+    cancelText: 'Cancel'
+    cancel: ->
+      console.log 'Cancelled!'
 
-      destructiveButtonClicked: ->
-        console.log 'Destructive Action!'
+    buttonClicked: (index) ->
+      if index == 0
+        console.log 'Shared!'
+      if index == 1
+        console.log 'Moved!'
+
+    destructiveButtonClicked: ->
+      console.log 'Destructive Action!'
+      destructionCallback(meteorObject, collection)
+      $(".action-sheet-backdrop").click()
+
     $('.action-sheet-backdrop').append("<div id='ActionSheetHacker'></div>")
     $('#ActionSheetHacker').on 'click', (e) ->
       event.preventDefault()
@@ -56,6 +62,11 @@ Template._thingListItem.events
     else
       $("#ActionSheetHacker").click()
 
+# Capture hammer events alongside normal events.
+Template._thingListItem.events
+  'press .item': (event, template) ->
+    touchDefaultState = false
+    showActionSheet({buttons:[], event:event, meteorObject:this, collection:Things, destructionCallback:removeWithRelations, titleText: "'#{this.title}'"})
 
   'click .item': (event, template) ->
     event.stopImmediatePropagation()
@@ -66,7 +77,24 @@ Template._thingListItem.events
     event.stopImmediatePropagation()
     event.preventDefault()
     event.stopPropagation()
-    touchDefaultState = true
+    switch event.which
+      when 1
+        console.log 'Left Mouse button pressed.'
+        touchDefaultState = true
+      when 2
+        console.log 'Middle Mouse button pressed.'
+      when 3
+        console.log 'Right Mouse button pressed.'
+        buttonsArray = [
+            { text: 'Share <i class="icon ion-share"></i>' }
+            { text: 'Move <i class="icon ion-arrow-move"></i>' }
+        ]
+
+        #showActionSheet({buttons:[], event:event, meteorObject:this, destructionCallback:destructionCallback, titleText: "#{this.title}"})
+        showActionSheet({buttons:[], event:event, meteorObject:this, collection:Things, destructionCallback:removeWithRelations, titleText: "'#{this.title}'"})
+      else
+        console.log 'You have a strange Mouse!'
+    return
 
   'mouseup .item': (event, template) ->
     performDefaultAction(event)
@@ -142,7 +170,27 @@ Template._thingDescriptionDoneHeaderButton.events
       if err
         throw new Meteor.error("ERROR", err)
       if data
-        Router.go "/thing/#{_thingId}"
+        _userHistory.goToUrl("/thing/#{_thingId}")
+
+removeWithRelations = (_doc, _Collection) ->
+  _id = _doc._id
+  _Collection.remove({_id: _id})
+  _asChild = Relationships.find({childId: _id}).fetch()
+  _asParent = Relationships.find({parentId: _id}).fetch()
+  _possibleOrphans = []
+
+  for _isChild in _asChild
+    Relationships.remove({_id: _isChild._id})
+
+  for _isParent in _asParent
+    _possibleOrphans.push(_isParent)
+    Relationships.remove({_id: _isParent._id})
+
+  for _possibleOrphan in _possibleOrphans
+    _checkRelationships = Relationships.find({childId: _possibleOrphan.childId}).fetch()
+    if _checkRelationships.length is 0
+      window[_possibleOrphan.childCollection].remove({_id:_possibleOrphan.childId})
+
 
 saveThingData = (url) ->
   Session.set('thisFormIsDirty', null)
@@ -170,13 +218,13 @@ saveThingData = (url) ->
     delete _data._id
     Things.update({_id: _id}, {$set: _data})
     if url?
-      Router.go url
+      _userHistory.goToUrl(url)
   else
     _thingId = Things.insert(_data)
     Session.set('_thingId', _thingId)
     buildRelationship('Things', _thingId)
     if url?
-      Router.go url
+      _userHistory.goToUrl(url)
 
 
 buildRelationship = (childCollection, childId) ->
