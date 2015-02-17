@@ -89,7 +89,6 @@ Template.user.rendered = () ->
   Session.set('thisFormIsDirty', null)
 
 
-
 Template.user.events
   'keyup input': (event, template) ->
     console.log("You know")

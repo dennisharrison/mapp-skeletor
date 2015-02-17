@@ -71,9 +71,14 @@ fullMobile = new FS.Store.FileSystem "fullMobile", {
     fixOrientationAndResize(readStream, fileObj, '460').stream().pipe(writeStream)
 }
 
+mediaFull = new FS.Store.FileSystem "mediaFull", {
+  transformWrite: (fileObj, readStream, writeStream) ->
+    fixOrientationAndResize(readStream, fileObj, '0').stream().pipe(writeStream)
+}
+
 
 @Media = new FS.Collection "media",
-  stores: [mediaStore, thumbs, fullMobile],
+  stores: [mediaStore, thumbs, fullMobile, mediaFull],
   filter: {
     allow: {
       contentTypes: ['image/*'] # allow only images in this FS.Collection

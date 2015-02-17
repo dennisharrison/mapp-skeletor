@@ -26,6 +26,7 @@ Package.onUse(function (api) {
   api.use(['digilord:sugarjs@1.4.1'], ['client', 'server']);
   api.use(['iron:router@1.0.7'], ['client', 'server']);
   api.use(['meteoric:ionic@0.1.11'], ['client']);
+  api.use(['fourseven:scss@1.2.3'], ['client', 'server']);
   api.use(['alanning:roles@1.2.13']['client', 'server']);
 
   api.use('cfs:standard-packages@0.5.3', ['client','server']);
@@ -37,7 +38,6 @@ Package.onUse(function (api) {
   api.addFiles(['lib/routes.coffee'], 'client');
   api.addFiles(['server/publications/media.coffee'], ['server']);
   api.addFiles(['server/media.coffee'], ['server']);
-
   api.addFiles(media, 'client');
 
   api.export('CreateMediaRoutes','client');

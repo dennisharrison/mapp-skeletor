@@ -1,4 +1,4 @@
-@showActionSheet = (options) ->
+showActionSheet = (options) ->
   event = options.event
   buttons = options.buttons or []
   meteorObject = options.meteorObject
@@ -38,8 +38,9 @@
     else
       $("#ActionSheetHacker").click()
 
-@touchDefaultState = true
-@performDefaultAction = (event) ->
+touchDefaultState = true
+
+performDefaultAction = (event) ->
   if touchDefaultState is true
     console.log("I should do the default thing here!")
     target = $(event.currentTarget)

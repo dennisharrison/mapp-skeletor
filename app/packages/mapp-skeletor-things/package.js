@@ -27,6 +27,9 @@ Package.onUse(function (api) {
   api.use(['iron:router@1.0.7'], ['client', 'server']);
   api.use(['meteoric:ionic@0.1.11'], ['client']);
   api.use('mapp-skeletor:media@0.0.1', ['client', 'server']);
+  api.use(['mapp-skeletor:user-history@0.0.1'], ['client', 'server']);
+  api.use(['mapp-skeletor:relationships@0.0.1'], ['client', 'server']);
+  api.use(['mapp-skeletor:gestures@0.0.1'], ['client']);
 
   api.addFiles(thing, 'client');
   api.addFiles(['lib/routes.coffee'], ['client','server']);

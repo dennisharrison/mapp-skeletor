@@ -7,13 +7,9 @@ Template.mm_media.helpers
     	_media = Media.find({"metadata.owner": _mediaOwnerId}).fetch().sortBy('updatedAt')
     	return _media
 
-Template._userMediaBackHeaderButton.helpers
-  url: ->
-    Session.get('mm_media_back_header_button_url')
-
 Template._userMediaBackHeaderButton.events
-'click .back-button': (event, template) ->
-  _userHistory.goBack()
+  'click .back-button': (event, template) ->
+    _userHistory.goBack()
 
 
 Template.mm_media_control.helpers
@@ -24,10 +20,48 @@ Template.mm_media_control.helpers
     _videoCount = 0
     "You have #{_mediaCount} Media items"
 
+Template.mediaFullView.helpers
+  _mediaItem: ->
+    _mediaFullViewId = Session.get('mediaFullViewId')
+    _mediaItem = Media.findOne({_id:_mediaFullViewId})
+    console.log(_mediaItem)
+    return _mediaItem
+
 Template._mediaRow.helpers
   isMobile: ->
     navigator.userAgent.match(/(ip(hone|od|ad))/i)
 
+# Initialize hammer on Basket List Items
+Template._mediaRow.rendered = () ->
+  $(".mediaItem").hammer()
+
+Template._mediaRow.events
+  'press .mediaItem': (event, template) ->
+    touchDefaultState = false
+    showActionSheet({buttons:[], event:event, meteorObject:this, collection:Media, destructionCallback:removeWithRelations, titleText: "'#{this.metadata.name}'"})
+
+  'click .mediaItem': (event, template) ->
+    event.stopImmediatePropagation()
+    event.preventDefault()
+    event.stopPropagation()
+
+  'mousedown .mediaItem': (event, template) ->
+    event.stopImmediatePropagation()
+    event.preventDefault()
+    event.stopPropagation()
+    switch event.which
+      when 1
+        #console.log 'Left Mouse button pressed.'
+        touchDefaultState = true
+      when 2
+        #console.log 'Middle Mouse button pressed.'
+        break
+      when 3
+        #console.log 'Right Mouse button pressed.'
+        showActionSheet({buttons:[], event:event, meteorObject:this, collection:Media, destructionCallback:removeWithRelations, titleText: "'#{this.metadata.name}'"})
+
+  'mouseup .mediaItem': (event, template) ->
+    performDefaultAction(event)
 
 Template._userMediaAddHeaderButton.events
   'click .media-add-button': (event, template) ->

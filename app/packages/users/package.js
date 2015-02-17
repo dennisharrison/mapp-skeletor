@@ -33,6 +33,9 @@ Package.onUse(function (api) {
   api.use('meteoric:ionic@0.1.11', ['client']);
   api.use('alanning:roles@1.2.13', ['client', 'server']);
   api.use('mapp-skeletor:media@0.0.1', ['client', 'server']);
+  api.use(['mapp-skeletor:user-history@0.0.1'], ['client', 'server']);
+  api.use(['mapp-skeletor:relationships@0.0.1'], ['client', 'server']);
+  api.use(['mapp-skeletor:gestures@0.0.1'], ['client']);
 
   api.addFiles(['lib/userCollection.coffee'], ['client','server']);
   api.addFiles(['lib/routes.coffee'], ['client','server']);
