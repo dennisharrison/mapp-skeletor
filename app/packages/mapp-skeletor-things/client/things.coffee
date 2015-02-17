@@ -13,10 +13,10 @@ touchDefaultState = true
 performDefaultAction = (event) ->
   if touchDefaultState is true
     console.log("I should do the default thing here!")
-    target = $(event.target)
+    target = $(event.currentTarget)
     defaultAction = target.attr("defaultAction")
     if defaultAction is "link"
-      Router.go target.attr('href')
+      _userHistory.goToUrl(target.attr('href'))
 
 # Initialize hammer on the item we need the event from.
 Template._thingListItem.rendered = () ->
@@ -25,11 +25,7 @@ Template._thingListItem.rendered = () ->
 # Capture hammer events alongside normal events.
 Template._thingListItem.events
   'press .item': (event, template) ->
-#    event.stopImmediatePropagation()
-#    event.preventDefault()
-#    event.stopPropagation()
     touchDefaultState = false
-#    alert("YO")
     IonActionSheet.show
       titleText: 'ActionSheet Example'
       buttons: [
@@ -118,9 +114,9 @@ Template.thingDescription.helpers
   _thing: ->
     Things.findOne({_id: Session.get("_thingId")})
 
-Template._thingBackHeaderButton.helpers
-  _url: ->
-    lastThingsUrl()
+Template._thingBackHeaderButton.events
+  'click .back-button': (event, template) ->
+    _userHistory.goBack()
 
 
 Template._thingDescriptionBackHeaderButton.helpers

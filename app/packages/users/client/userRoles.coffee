@@ -12,6 +12,10 @@ Template._userRolesBackHeaderButton.helpers
     _editUser = Session.get('_editUser')
     return _editUser
 
+Template._userRolesBackHeaderButton.events
+  'click .back-button': (event, template) ->
+    _userHistory.goBack()
+
 Template._userRolesDoneHeaderButton.events
   'click .roles-done-button': (event, template) ->
 #    The ID of the record we are working with
@@ -28,7 +32,7 @@ Template._userRolesDoneHeaderButton.events
       if err
         throw new Meteor.error("ERROR", err)
       if data
-        Router.go "/user/#{_id}"
+        _userHistory.goToUrl("/user/#{_id}")
 
 Template.rolesNextPage.helpers
   rolesHandler: ->

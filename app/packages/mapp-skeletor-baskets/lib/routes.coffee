@@ -9,14 +9,6 @@ Router.map ->
   @route 'basket',
     path: '/basket/:id'
     action: ->
-      _relationshipBackToParentUrl = Session.get('relationshipBackToParentUrl')
-      if _relationshipBackToParentUrl?
-        Session.set("lastBasketsUrl", _relationshipBackToParentUrl)
-
-      if not _lastBasketsUrl?
-        _lastBasketsUrl = "/baskets"
-        Session.set("lastBasketsUrl", _lastBasketsUrl)
-
       Session.set("_basketId", @params.id)
       # Wait on collections
       @wait Meteor.subscribe('baskets', {_id: @params.id})
@@ -47,7 +39,6 @@ Router.map ->
   @route 'userBaskets',
     path: '/user/:id/baskets'
     action: ->
-      Session.set("lastBasketsUrl", @request.url)
       # Wait on collections
       @wait Meteor.subscribe('baskets', {userId: @params.id})
       @render 'baskets'
@@ -57,7 +48,6 @@ Router.map ->
     action: ->
       Session.set('_thingId', null)
       Session.set('_basketId', @params.id)
-      Session.set('relationshipBackToParentUrl', "/basket/#{@params.id}")
       Session.set('relationshipParentCollection', "Baskets")
       Session.set('relationshipParentId', @params.id)
       @wait Meteor.subscribe('baskets', {_id: @params.id})

@@ -18,14 +18,10 @@
 </template>
 
 <template name='_userBioDoneHeaderButton'>
-  <button class="button button-icon bio-done-button" data-snap-ignore="true">Done</button>
+  <button class="button button-icon bio-done-button" data-nav-direction="back" data-snap-ignore="true">Done</button>
 </template>
 
 <template name='_userBioBackHeaderButton'>
-  <a class='button button-icon' data-nav-direction="back" href="/user/{{id}}" data-snap-ignore="true">Back</a>
-</template>
-
-<template name='_userBioSnapoff'>
-    <button class="button button-icon snap-off-button" data-snap-ignore="true">SnapOff</button>
+  <button class='button button-icon back-button' data-nav-direction="back" data-snap-ignore="true">Back</button>
 </template>
 

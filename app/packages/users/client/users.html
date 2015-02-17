@@ -15,9 +15,7 @@
     {{#ionContent}}
       {{#ionList}}
         {{#each _users}}
-          {{#ionItem buttonRight=true avatar=true href=url class='thin-red-border'}}
-            {{> _userRow}}
-          {{/ionItem}}
+          {{> _userListItem}}
         {{/each}}
       {{/ionList}}
     {{/ionContent}}
@@ -25,11 +23,19 @@
 </template>
 
 <template name='_userRow'>
-  <img src="{{_gravatarURL}}">
-  <h2>{{username}}</h2>
-  <p>
-    {{profile.name}} - {{> lastSeen}}
-  </p>
+
+
+</template>
+
+<template name="_userListItem">
+    <div class="item item-avatar item-button-right item-icon-right" href="{{url}}" data-snap-ignore="true" defaultAction="link">
+        <img src="{{_gravatarURL}}">
+        <h2>{{username}}</h2>
+        <p>
+          {{profile.name}} - {{> lastSeen}}
+        </p>
+        <i class="icon ion-ios-arrow-right"></i>
+    </div>
 </template>
 
 <template name="usersAdminButton">

@@ -11,6 +11,10 @@ Template._userMediaBackHeaderButton.helpers
   url: ->
     Session.get('mm_media_back_header_button_url')
 
+Template._userMediaBackHeaderButton.events
+'click .back-button': (event, template) ->
+  _userHistory.goBack()
+
 
 Template.mm_media_control.helpers
   snippet: ->

@@ -16,4 +16,6 @@ Package.onUse(function (api) {
   api.addFiles(['client/history.coffee'], ['client']);
   api.addFiles(['collections/history.coffee'], ['client','server']);
   api.addFiles(['server/history.coffee'], ['server']);
+
+  api.export('userHistory', ['client']);
 });

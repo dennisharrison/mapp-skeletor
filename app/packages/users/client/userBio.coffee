@@ -9,9 +9,9 @@ Template._userBioBackHeaderButton.helpers
     _editUser = Session.get('_editUser')
     return _editUser
 
-Template._userBioSnapoff.events
-  'click .snap-off-button': (event, template) ->
-    IonSideMenu.snapper.disable()
+Template._userBioBackHeaderButton.events
+  'click .back-button': (event, template) ->
+    _userHistory.goBack()
 
 
 Template._userBioDoneHeaderButton.events
@@ -27,4 +27,4 @@ Template._userBioDoneHeaderButton.events
       if err
         throw new Meteor.error("ERROR", err)
       if data
-        Router.go "/user/#{_id}"
+        _userHistory.goToUrl("/user/#{_id}")

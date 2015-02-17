@@ -22,11 +22,11 @@
         {{>mmInputToggle label='Receive Invites' fieldName='receiveInvites' value=user.profile.receiveInvites}}
         {{>mmInputToggle label='Receive Newsletter' fieldName='receiveNewsletter' value=user.profile.receiveNewsletter}}
         {{>mmNextPage label='Bio' class="saveUserData" url=bioHandler.url snippet=bioHandler.snippet}}
-        {{>mm_media_control url=mediaUrl}}
-        {{>rolesNextPage}}
+        {{>mm_media_control class="saveUserData" url=mediaUrl}}
+        {{>rolesNextPage class="saveUserData"}}
         {{#ionItem buttonRight=true class="sub_list"}}
             <h2>Baskets</h2>
-            <a class="button button-icon" href="{{newBasketUrl}}" data-nav-direction="forward" data-snap-ignore="true">
+            <a class="button button-icon saveUserData" href="{{newBasketUrl}}" data-nav-direction="forward" data-snap-ignore="true">
                 <i class="icon ion-ios-plus-outline"></i>
             </a>
           {{>embeddedBasketsIndex}}
@@ -46,5 +46,7 @@
 </template>
 
 <template name='_userDoneHeaderButton'>
-  <button class="button button-icon done-button" data-snap-ignore="true">Done</button>
+  {{#if thisFormIsDirty}}
+      <button class="button button-icon done-button" data-nav-direction="back" data-snap-ignore="true">Save</button>
+  {{/if}}
 </template>

@@ -14,3 +14,10 @@
 #       $('.snap-content').css('-webkit-transform', 'translate3d(0px, 0px, 0px)')
 #       $('.snap-content').css('width', "100%")
 #       Session.set('_showWhenSideMenuOpen', true)
+
+Template.layoutSideMenu.events
+  'click a': (event, template) ->
+    event.preventDefault()
+    ui = $(event.currentTarget)
+    _url = ui.attr("href")
+    _userHistory.goToUrl(_url)

@@ -1,3 +1,65 @@
+# This is to rig up touching and holding of different things - yeah, it's awesome.
+touchDefaultState = true
+performDefaultAction = (event) ->
+  if touchDefaultState is true
+    console.log("I should do the default thing here!")
+    target = $(event.currentTarget)
+    defaultAction = target.attr("defaultAction")
+    if defaultAction is "link"
+      _userHistory.goToUrl(target.attr('href'))
+
+# Initialize hammer on the item we need the event from.
+Template._basketListItem.rendered = () ->
+  $(".item").hammer()
+
+Template._basketListItem.events
+  'press .item': (event, template) ->
+    touchDefaultState = false
+    IonActionSheet.show
+      titleText: 'ActionSheet Example'
+      buttons: [
+        { text: 'Share <i class="icon ion-share"></i>' }
+        { text: 'Move <i class="icon ion-arrow-move"></i>' }
+      ]
+      destructiveText: 'Delete'
+      cancelText: 'Cancel'
+      cancel: ->
+        console.log 'Cancelled!'
+
+      buttonClicked: (index) ->
+        if index == 0
+          console.log 'Shared!'
+        if index == 1
+          console.log 'Moved!'
+
+      destructiveButtonClicked: ->
+        console.log 'Destructive Action!'
+    $('.action-sheet-backdrop').append("<div id='ActionSheetHacker'></div>")
+    $('#ActionSheetHacker').on 'click', (e) ->
+      event.preventDefault()
+      event.stopPropagation()
+      event.stopImmediatePropagation()
+      $("#ActionSheetHacker").remove()
+    if navigator.userAgent.match(/(ip(hone|od|ad))/i)
+      #iOS triggers another click here than any other device!
+    else
+      $("#ActionSheetHacker").click()
+
+
+  'click .item': (event, template) ->
+    event.stopImmediatePropagation()
+    event.preventDefault()
+    event.stopPropagation()
+
+  'mousedown .item': (event, template) ->
+    event.stopImmediatePropagation()
+    event.preventDefault()
+    event.stopPropagation()
+    touchDefaultState = true
+
+  'mouseup .item': (event, template) ->
+    performDefaultAction(event)
+
 Template._basketListItem.helpers
   url: ->
     "/basket/#{this._id}"
@@ -27,9 +89,9 @@ Template.basketDescription.helpers
   _basket: ->
     Baskets.findOne({_id: Session.get("_basketId")})
 
-Template._basketBackHeaderButton.helpers
-  _url: ->
-    lastBasketsUrl()
+Template._basketBackHeaderButton.events
+  'click .back-button': (event, template) ->
+    _userHistory.goBack()
 
 
 Template._basketDescriptionBackHeaderButton.helpers
@@ -55,7 +117,7 @@ Template._basketDescriptionDoneHeaderButton.events
       if err
         throw new Meteor.error("ERROR", err)
       if data
-        Router.go "/basket/#{_basketId}"
+        _userHistory.goToUrl("/basket/#{_basketId}")
 
 saveBasketData = (url) ->
   Session.set('thisFormIsDirty', null)
@@ -79,20 +141,17 @@ saveBasketData = (url) ->
 
   #    Determine if we need to insert or update.
   if _data._id?
-    console.log("We are UPDATING now")
     _id = _data._id
     delete _data._id
     Baskets.update({_id: _id}, {$set: _data})
     if url?
-      console.log("We have a defined URL: " + url)
-      Router.go url
+      _userHistory.goToUrl(url)
   else
-    console.log("We are INSERTING now")
     _basketId = Baskets.insert(_data)
     Session.set('_basketId', _basketId)
     buildRelationship('Baskets', _basketId)
     if url?
-      Router.go url
+      _userHistory.goToUrl(url)
 
 buildRelationship = (childCollection, childId) ->
   parentCollection = Session.get('relationshipParentCollection')
@@ -114,19 +173,6 @@ buildRelationship = (childCollection, childId) ->
   Session.set('relationshipParentId', null)
   return true
 
-lastBasketsUrl = () ->
-  _lastBasketsUrl = Session.get("lastBasketsUrl")
-  _relationshipBackToParentUrl = Session.get('relationshipBackToParentUrl')
-  if _relationshipBackToParentUrl?
-    Session.set("lastBasketsUrl", _relationshipBackToParentUrl)
-    return _relationshipBackToParentUrl
-
-  if not _lastBasketsUrl?
-    _lastBasketsUrl = "/baskets"
-    Session.set("lastBasketsUrl", _lastBasketsUrl)
-  return _lastBasketsUrl
-
-
 Template._basketDoneHeaderButton.events
   'click .done-button': (event, template) ->
     saveBasketData()
@@ -140,9 +186,9 @@ Template.basketEdit.rendered = () ->
 
 Template.basketEdit.events
   'click .saveBasketData': (event, template) ->
-    ui = $(this)
-    _url = ui.attr("href")
     event.preventDefault()
+    ui = $(event.currentTarget)
+    _url = ui.attr("href")
     saveBasketData(_url)
 
   'keyup input': (event, template) ->

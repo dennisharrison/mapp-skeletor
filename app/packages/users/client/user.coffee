@@ -57,8 +57,13 @@ Template.user.helpers
       snippet:_snippet
     return _data
 
+Template._userDoneHeaderButton.helpers
+  thisFormIsDirty: ->
+    Session.get('thisFormIsDirty')
+
 Template._userDoneHeaderButton.events
   'click .done-button': (event, template) ->
+    Session.set('thisFormIsDirty', null)
 #    The ID of the record we are working with
     _id = Session.get('_editUser')
 #    Things we need data from
@@ -78,12 +83,25 @@ Template._userDoneHeaderButton.events
       if err
         throw new Meteor.error("ERROR", err)
       if data
-        Router.go '/users'
+        console.log("User Saved!")
+
+Template.user.rendered = () ->
+  Session.set('thisFormIsDirty', null)
+
+
 
 Template.user.events
+  'keyup input': (event, template) ->
+    console.log("You know")
+    Session.set('thisFormIsDirty', true)
+
+  'click .toggle': (event, template) ->
+    Session.set('thisFormIsDirty', true)
+
   'click .saveUserData': (event, template) ->
+    Session.set('thisFormIsDirty', null)
     event.preventDefault()
-    self = $(this)
+    ui = $(event.currentTarget)
 #    The ID of the record we are working with
     _id = Session.get('_editUser')
 #    Things we need data from
@@ -103,4 +121,4 @@ Template.user.events
       if err
         throw new Meteor.error("ERROR", err)
       if data
-        Router.go self.attr("href")
+        _userHistory.goToUrl(ui.attr("href"))

@@ -19,10 +19,10 @@
 </template>
 
 <template name="_basketListItem">
-  {{#ionItem buttonRight=true avatar=false href=url class='item-icon-right'}}
-    {{title}}
-    {{> ionIcon icon='ios-arrow-right'}}
-  {{/ionItem}}
+    <div class="item item-icon-right" href="{{url}}" data-snap-ignore="true" defaultAction="link">
+      {{title}}
+        <i class="icon ion-ios-arrow-right"></i>
+    </div>
 </template>
 
 <template name="basketEdit">
@@ -43,7 +43,7 @@
             {{>mmNextPage label='Description' class="saveBasketData" url=descriptionHandler.url snippet=descriptionHandler.snippet}}
             {{#ionItem buttonRight=true class="sub_list"}}
               <h2>Things</h2>
-                <a class="button button-icon" href="{{newThingUrl}}" data-nav-direction="forward" data-snap-ignore="true">
+                <a class="button button-icon saveBasketData" href="{{newThingUrl}}" data-nav-direction="forward" data-snap-ignore="true">
                     <i class="icon ion-ios-plus-outline"></i>
                 </a>
               {{>embeddedThingsIndex}}
@@ -63,7 +63,7 @@
 </template>
 
 <template name='_basketBackHeaderButton'>
-    <a class='button button-icon backButton' data-nav-direction="back" data-snap-ignore="true" href="{{_url}}">Back</a>
+    <button class='button button-icon back-button' data-nav-direction="back" data-snap-ignore="true">Back</button>
 </template>
 
 <template name='_basketDoneHeaderButton'>
