@@ -45,7 +45,6 @@ fortawesome:fontawesome@4.2.0
 fourseven:scss@1.2.3
 froala:editor@1.2.5_2
 geojson-utils@1.0.2
-hammer:jquery@0.0.1
 html-tools@1.0.3
 htmljs@1.0.3
 http@1.0.10
@@ -69,6 +68,7 @@ livedata@1.0.12
 localstorage@1.0.2
 logging@1.0.6
 mapp-skeletor:baskets@0.0.1
+mapp-skeletor:gestures@0.0.1
 mapp-skeletor:media@0.0.1
 mapp-skeletor:relationships@0.0.1
 mapp-skeletor:things@0.0.1

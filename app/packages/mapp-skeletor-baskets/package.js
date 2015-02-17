@@ -31,6 +31,4 @@ Package.onUse(function (api) {
   api.addFiles(['collections/baskets.coffee'], ['client','server']);
 
   api.addFiles(['server/baskets.coffee'], ['server']);
-  api.addFiles(['client/touchEventsAndRelationships.coffee'], ['client']);
-
 });
