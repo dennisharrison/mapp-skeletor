@@ -25,8 +25,11 @@ Meteor.users.allow
       return true
     if Roles.userIsInRole(userId, ['manage-users'])
       return true
-  # remove: (userId, doc) ->
-  #   # ...
+  remove: (userId, doc, fields, modifier) ->
+    if userId is doc._id
+      return true
+    if Roles.userIsInRole(userId, ['manage-users'])
+      return true
   fetch: ['owner']
   # transform: () ->
   #   # ...

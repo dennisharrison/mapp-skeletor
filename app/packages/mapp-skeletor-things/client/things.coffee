@@ -34,7 +34,7 @@ Template._thingListItem.events
         #console.log 'Middle Mouse button pressed.'
         break
       when 3
-        console.log 'Right Mouse button pressed.'
+        #console.log 'Right Mouse button pressed.'
         showActionSheet({buttons:[], event:event, meteorObject:this, collection:Things, destructionCallback:removeWithRelations, titleText: "'#{this.title}'"})
 
   'mouseup .item': (event, template) ->
