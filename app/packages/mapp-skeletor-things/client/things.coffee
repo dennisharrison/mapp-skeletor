@@ -7,60 +7,9 @@ thingsMediaSetup =
 Meteor.startup ->
   CreateMediaRoutes(thingsMediaSetup)
 
-
-# This is to rig up touching and holding of different things - yeah, it's awesome.
-touchDefaultState = true
-performDefaultAction = (event) ->
-  if touchDefaultState is true
-    console.log("I should do the default thing here!")
-    target = $(event.currentTarget)
-    defaultAction = target.attr("defaultAction")
-    if defaultAction is "link"
-      _userHistory.goToUrl(target.attr('href'))
-
 # Initialize hammer on the item we need the event from.
 Template._thingListItem.rendered = () ->
   $(".item").hammer()
-
-showActionSheet = (options) ->
-  event = options.event
-  buttons = options.buttons or []
-  meteorObject = options.meteorObject
-  destructionCallback = options.destructionCallback or () ->
-  titleText = options.titleText or ''
-  collection = options.collection
-
-  console.log(event.currentTarget)
-  console.log(meteorObject)
-  IonActionSheet.show
-    titleText: titleText
-    buttons: buttons
-    destructiveText: 'Delete'
-    cancelText: 'Cancel'
-    cancel: ->
-      console.log 'Cancelled!'
-
-    buttonClicked: (index) ->
-      if index == 0
-        console.log 'Shared!'
-      if index == 1
-        console.log 'Moved!'
-
-    destructiveButtonClicked: ->
-      console.log 'Destructive Action!'
-      destructionCallback(meteorObject, collection)
-      $(".action-sheet-backdrop").click()
-
-    $('.action-sheet-backdrop').append("<div id='ActionSheetHacker'></div>")
-    $('#ActionSheetHacker').on 'click', (e) ->
-      event.preventDefault()
-      event.stopPropagation()
-      event.stopImmediatePropagation()
-      $("#ActionSheetHacker").remove()
-    if navigator.userAgent.match(/(ip(hone|od|ad))/i)
-      #iOS triggers another click here than any other device!
-    else
-      $("#ActionSheetHacker").click()
 
 # Capture hammer events alongside normal events.
 Template._thingListItem.events
@@ -79,26 +28,17 @@ Template._thingListItem.events
     event.stopPropagation()
     switch event.which
       when 1
-        console.log 'Left Mouse button pressed.'
+        #console.log 'Left Mouse button pressed.'
         touchDefaultState = true
       when 2
-        console.log 'Middle Mouse button pressed.'
+        #console.log 'Middle Mouse button pressed.'
+        break
       when 3
         console.log 'Right Mouse button pressed.'
-        buttonsArray = [
-            { text: 'Share <i class="icon ion-share"></i>' }
-            { text: 'Move <i class="icon ion-arrow-move"></i>' }
-        ]
-
-        #showActionSheet({buttons:[], event:event, meteorObject:this, destructionCallback:destructionCallback, titleText: "#{this.title}"})
         showActionSheet({buttons:[], event:event, meteorObject:this, collection:Things, destructionCallback:removeWithRelations, titleText: "'#{this.title}'"})
-      else
-        console.log 'You have a strange Mouse!'
-    return
 
   'mouseup .item': (event, template) ->
     performDefaultAction(event)
-
 
 Template._thingListItem.helpers
   url: ->
@@ -134,10 +74,6 @@ Template.thingEdit.helpers
       snippet:_snippet
     return _data
 
-
-
-
-
 Template.thingDescription.helpers
   _thing: ->
     Things.findOne({_id: Session.get("_thingId")})
@@ -147,9 +83,9 @@ Template._thingBackHeaderButton.events
     _userHistory.goBack()
 
 
-Template._thingDescriptionBackHeaderButton.helpers
-  _thingId: ->
-    Session.get("_thingId")
+Template._thingDescriptionBackHeaderButton.events
+  'click .back-button': (event, template) ->
+    _userHistory.goBack()
 
 Template.embeddedThingsIndex.helpers
   _things: ->
@@ -170,26 +106,7 @@ Template._thingDescriptionDoneHeaderButton.events
       if err
         throw new Meteor.error("ERROR", err)
       if data
-        _userHistory.goToUrl("/thing/#{_thingId}")
-
-removeWithRelations = (_doc, _Collection) ->
-  _id = _doc._id
-  _Collection.remove({_id: _id})
-  _asChild = Relationships.find({childId: _id}).fetch()
-  _asParent = Relationships.find({parentId: _id}).fetch()
-  _possibleOrphans = []
-
-  for _isChild in _asChild
-    Relationships.remove({_id: _isChild._id})
-
-  for _isParent in _asParent
-    _possibleOrphans.push(_isParent)
-    Relationships.remove({_id: _isParent._id})
-
-  for _possibleOrphan in _possibleOrphans
-    _checkRelationships = Relationships.find({childId: _possibleOrphan.childId}).fetch()
-    if _checkRelationships.length is 0
-      window[_possibleOrphan.childCollection].remove({_id:_possibleOrphan.childId})
+        _userHistory.goBack()
 
 
 saveThingData = (url) ->
@@ -227,42 +144,8 @@ saveThingData = (url) ->
       _userHistory.goToUrl(url)
 
 
-buildRelationship = (childCollection, childId) ->
-  parentCollection = Session.get('relationshipParentCollection')
-  parentId = Session.get('relationshipParentId')
-
-  if not parentCollection? or not parentId?
-    console.warn "Both parentCollection & parentId session variables need to be defined to create a relationship."
-    return false
-
-  _data =
-    parentCollection: parentCollection
-    parentId: parentId
-    childCollection: childCollection
-    childId: childId
-    userId: Meteor.userId()
-
-  Relationships.insert(_data)
-  Session.set('relationshipParentCollection', null)
-  Session.set('relationshipParentId', null)
-  return true
-
-lastThingsUrl = () ->
-  _relationshipBackToParentUrl = Session.get('relationshipBackToParentUrl')
-  if _relationshipBackToParentUrl?
-    Session.set("lastThingsUrl", _relationshipBackToParentUrl)
-    return _relationshipBackToParentUrl
-
-  _lastThingsUrl = Session.get("lastThingsUrl")
-  if not _lastThingsUrl?
-    _lastThingsUrl = "/things"
-    Session.set("lastThingsUrl", _lastThingsUrl)
-  return _lastThingsUrl
-
-
 Template._thingDoneHeaderButton.events
   'click .done-button': (event, template) ->
-
     saveThingData()
 
 Template._thingDoneHeaderButton.helpers
@@ -278,7 +161,6 @@ Template.thingEdit.events
     _url = ui.attr("href")
     event.preventDefault()
     saveThingData(_url)
-
 
   'keyup input': (event, template) ->
     Session.set('thisFormIsDirty', true)
