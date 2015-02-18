@@ -27,16 +27,17 @@ showActionSheet = (options) ->
       destructionCallback(meteorObject, collection)
       $(".action-sheet-backdrop").click()
 
-    $('.action-sheet-backdrop').append("<div id='ActionSheetHacker'></div>")
-    $('#ActionSheetHacker').on 'click', (e) ->
-      event.preventDefault()
-      event.stopPropagation()
-      event.stopImmediatePropagation()
-      $("#ActionSheetHacker").remove()
-    if navigator.userAgent.match(/(ip(hone|od|ad))/i)
-      #iOS triggers another click here than any other device!
-    else
-      $("#ActionSheetHacker").click()
+  $('.action-sheet-backdrop').append("<div id='ActionSheetHacker'></div>")
+
+  $('#ActionSheetHacker').on 'click', (e) ->
+    event.preventDefault()
+    event.stopPropagation()
+    event.stopImmediatePropagation()
+    $("#ActionSheetHacker").remove()
+  if navigator.userAgent.match(/(ip(hone|od|ad))/i)
+    #iOS triggers another click here than any other device!
+  else
+    $("#ActionSheetHacker").click()
 
 touchDefaultState = true
 

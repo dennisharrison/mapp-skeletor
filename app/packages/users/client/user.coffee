@@ -91,7 +91,12 @@ Template.user.rendered = () ->
 
 Template.user.events
   'keyup input': (event, template) ->
-    console.log("You know")
+    Session.set('thisFormIsDirty', true)
+
+  'change input': (event, template) ->
+    Session.set('thisFormIsDirty', true)
+
+  'change select': (event, template) ->
     Session.set('thisFormIsDirty', true)
 
   'click .toggle': (event, template) ->
