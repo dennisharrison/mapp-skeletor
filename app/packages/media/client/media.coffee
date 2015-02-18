@@ -71,34 +71,32 @@ Template._userMediaAddHeaderButton.events
 
   'change input[type=file]': (event,template) ->
     console.log 'Upload started'
-    beforeUploadFile = event.target.files[0]
-    if not beforeUploadFile?
-      console.log("You really should upload something.")
-      return
+    files = event.target.files
+    for file in files
+      uploadFileWithExif(file)
 
-    binaryReader = new FileReader()
-    binaryReader.onloadend = (binary) ->
-      exif = EXIF.readFromBinaryFile(binary.target.result)
-      console.log(exif)
-      FS.Utility.eachFile event, (file) ->
-        fsFile = new FS.File(file)
-        console.log Object.keys(fsFile.original)
-        fsFile.metadata =
-          name: file.name
-          size: file.size
-          type: file.type
-          exif: exif
-          timestamp: Math.round(new Date().getTime() / 1000)
-          owner: Session.get('mediaOwnerId')
-          complete: false
-          from_ios: navigator.userAgent.match(/(ip(hone|od|ad))/i)
-        console.log 'Uploading File:' + fsFile.metadata.name
-        data = Media.insert fsFile, (err, fileObj) ->
-          if err?
-            console.log err
-          if fileObj?
-            console.log 'Upload complete!'
-            $(event.target).val('')
+uploadFileWithExif = (file) ->
+  binaryReader = new FileReader()
+  binaryReader.onloadend = (binary) ->
+    exif = EXIF.readFromBinaryFile(binary.target.result)
+    console.log(exif)
+    fsFile = new FS.File(file)
+    console.log Object.keys(fsFile.original)
+    fsFile.metadata =
+      name: file.name
+      size: file.size
+      type: file.type
+      exif: exif
+      timestamp: Math.round(new Date().getTime() / 1000)
+      owner: Session.get('mediaOwnerId')
+      complete: false
+      from_ios: navigator.userAgent.match(/(ip(hone|od|ad))/i)
+    console.log 'Uploading File:' + fsFile.metadata.name
+    data = Media.insert fsFile, (err, fileObj) ->
+      if err?
+        console.log err
+      if fileObj?
+        console.log 'Upload complete!'
+        $(event.target).val('')
 
-    binaryReader.readAsArrayBuffer(beforeUploadFile)
-    return
+  binaryReader.readAsArrayBuffer(file)
