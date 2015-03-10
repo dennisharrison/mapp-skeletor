@@ -74,3 +74,85 @@
   padding: 15px;
   font-style: italic;
 }
+
+@media (min-width: 770px) {
+  html {
+    height: 100%;
+  }
+  body {
+    background: url("/images/white_square.png") no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    transition: background-image 1s ease-in-out;
+  }
+
+  .ionic-body {
+    position: absolute;
+    overflow: visible;
+    max-width: 768px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .view {
+    background-color: transparent;
+  }
+
+  .snap-content {
+    margin-left: 266px;
+    max-width: 502px;
+
+    .menu-toggle-icon {
+      display: none;
+    }
+
+  }
+
+  .snap-drawer-left {
+    position: absolute;
+    .bar {
+      width: 266px;
+      right: auto;
+      left: auto;
+    }
+  }
+}
+
+@media (min-width: 1026px) {
+  .ionic-body {
+    position: absolute;
+    overflow: visible;
+    max-width: 1024px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .snap-content {
+    margin-left: 266px;
+    max-width: 758px;
+
+    .menu-toggle-icon {
+      display: none;
+    }
+
+  }
+
+  .snap-drawer-left {
+    position: absolute;
+    .bar {
+      width: 266px;
+      right: auto;
+      left: auto;
+    }
+  }
+}
+
+.snap-drawer-left {
+  background-color: rgba(255, 255, 255, 0.8);
+  .item {
+    background-color: transparent;
+    border: 0px;
+  }
+}
