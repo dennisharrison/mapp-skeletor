@@ -9,7 +9,7 @@ Template.mmInputToggle.helpers
 
 Template.mmInputRichText.helpers
 	value: ->
-		console.log(this)
+#		console.log(this)
 		if this.value?
 
 			return new Spacebars.SafeString(this.value)

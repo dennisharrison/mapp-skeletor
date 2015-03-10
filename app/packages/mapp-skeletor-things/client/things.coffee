@@ -139,6 +139,8 @@ saveThingData = (url) ->
   else
     _thingId = Things.insert(_data)
     Session.set('_thingId', _thingId)
+    Meteor.subscribe("things", {_id: _thingId})
+    _userHistory.replaceLastUrl("/thing/#{_thingId}")
     buildRelationship('Things', _thingId)
     if url?
       _userHistory.goToUrl(url)
