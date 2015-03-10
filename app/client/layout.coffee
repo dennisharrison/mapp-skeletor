@@ -116,5 +116,5 @@ changeBackgroundImage('', '/images/default_background.jpg')
 Meteor.setTimeout ->
   Meteor.setInterval ->
     changeBackgroundImage(Session.get('backgroundImageTags'))
-  , Number(Session.get('backgroundImageTimer'))
+  , 30000
 , 30
