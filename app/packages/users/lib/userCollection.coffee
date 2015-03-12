@@ -43,6 +43,29 @@ Meteor.methods
 
     return [null, true]
 
+  insertUser: (data) ->
+    #    Fix up the incoming data. Some of the form inputs need to be moved around
+    #    so that they map into the correct area of the user object.
+
+    profileItems = [
+      'lastName'
+      'firstName'
+      'receiveInvites'
+      'receiveNewsletter'
+    ]
+
+    data.profile = {}
+    data.username = "#{data.firstName}#{data.lastName}"
+
+    for item in profileItems
+      if data[item]?
+        data.profile[item] = data[item]
+        delete data[item]
+
+    Accounts.createUser(data)
+
+    return [null, true]
+
   updateUserRoles: (userId, roles) ->
     if Roles.userIsInRole(Meteor.userId(), 'admin')
       _usersRoles = Roles.getRolesForUser(userId)

@@ -85,6 +85,7 @@ Template._userDoneHeaderButton.events
       if data
         console.log("User Saved!")
 
+
 Template.user.rendered = () ->
   Session.set('thisFormIsDirty', null)
 

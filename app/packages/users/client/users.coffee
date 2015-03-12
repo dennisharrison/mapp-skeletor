@@ -82,3 +82,26 @@ Template._userListItem.events
   'mouseup .item': (event, template) ->
     performDefaultAction(event)
 
+
+Template._newUserModal.events
+  'click .insertNewUser': (event, template) ->
+    _data = {}
+    _inputElements = ['input', 'select', 'textarea']
+    for type in _inputElements
+      elements = $(".newUserForm").find(type)
+      for element in elements
+        if element.type == 'checkbox'
+          _data[element.name] = $(element).prop('checked')
+        else
+          _data[element.name] = element.value
+    if _data.email is _data.verifyEmail and _data.password is _data.verifyPassword
+      delete _data.verifyEmail
+      delete _data.verifyPassword
+      Meteor.call 'insertUser', _data, (err, data) ->
+        if err
+          throw new Meteor.error("ERROR", err)
+        if data
+          console.log("User Created!")
+          IonModal.close()
+    else
+      alert("Get your form right!")

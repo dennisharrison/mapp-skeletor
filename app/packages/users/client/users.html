@@ -8,7 +8,7 @@
   {{/contentFor}}
 
   {{#contentFor "headerButtonRight"}}
-    <button data-ion-menu-toggle="left" class="button button-icon icon ion-ios-personadd"></button>
+    <button class="addUser button button-icon icon ion-ios-personadd" data-ion-modal="_newUserModal"></button>
   {{/contentFor}}
 
   {{#ionView}}
@@ -44,4 +44,23 @@
     Users {{> ionIcon icon="ios-person-outline"}}
   </a>
   {{/if}}
+</template>
+
+<template name="_newUserModal">
+  {{#ionModal title="Create New User"}}
+    <div class="newUserWrapper">
+        <div class="newUserForm">
+          {{>mmInputText label='Email' fieldName='email' value='' type='text'}}
+          {{>mmInputText label='Email Again' fieldName='verifyEmail' value='' type='text'}}
+          {{>mmInputText label='Password' fieldName='password' value='' type='password'}}
+          {{>mmInputText label='Password Again' fieldName='verifyPassword' value='' type='password'}}
+          {{>mmInputText label='First Name' fieldName='firstName' value='' type='text'}}
+          {{>mmInputText label='Last Name' fieldName='lastName' value='' type='text'}}
+          {{>mmInputToggle label='Receive Invites' fieldName='receiveInvites' value=user.profile.receiveInvites}}
+          {{>mmInputToggle label='Receive Newsletter' fieldName='receiveNewsletter' value=user.profile.receiveNewsletter}}
+        </div>
+        <button class="insertNewUser button button-calm button-block">Create</button>
+    </div>
+
+  {{/ionModal}}
 </template>
