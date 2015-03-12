@@ -91,6 +91,7 @@ momentjs:moment@2.9.0
 mongo@1.0.11
 mongo-livedata@1.0.7
 mrt:moment@2.8.1
+nab:simple-audit@0.0.1
 npm-bcrypt@0.7.7
 observe-sequence@1.0.4
 ordered-dict@1.0.2
