@@ -48,7 +48,7 @@
           {{#ionList}}
             {{>mmInputText label='Title' fieldName='title' value=_thing.title type='text'}}
             {{>mmNextPage label='Description' class="saveThingData" url=descriptionHandler.url snippet=descriptionHandler.snippet}}
-            {{>mm_media_control class="saveThingData" url=mediaUrl}}
+            {{>mm_media_control class="saveThingData hasDefaultAction" url=mediaUrl}}
           {{/ionList}}
         </div>
     {{/ionContent}}

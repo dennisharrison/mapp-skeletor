@@ -1,0 +1,46 @@
+<template name="presentUser">
+  {{>contentFor region="headerTitle" template='_presentUserHeaderTitle'}}
+
+  {{> contentFor region="headerButtonLeft" template='_presentUserBackHeaderButton'}}
+
+  {{#ionView}}
+    {{#ionContent}}
+      <div class="userPresentMediaWrapper" data-ion-modal="_userPresentMediaModal" style="transition:background-image 2s ease-in-out; background-image: url('{{_firstMediaUrl}}');">
+      </div>
+      {{>embeddedBasketsIndex}}
+    {{/ionContent}}
+  {{/ionView}}
+
+</template>
+
+<template name="_presentUserHeaderTitle">
+    <h1 class="title">{{_presentUser.profile.firstName}} {{_presentUser.profile.lastName}}</h1>
+</template>
+
+<template name='_presentUserBackHeaderButton'>
+    <button class='button button-icon back-button' data-nav-direction="back" data-snap-ignore="true">Back</button>
+</template>
+
+
+<template name="_userMediaRow">
+  <li>
+    <img title='{{metadata.name}}' mediaFull='{{url store="mediaFull"}}' src='{{url store="fullMobile"}}' />
+  </li>
+</template>
+
+<template name="_userPresentMediaModal">
+  {{#ionModal title="Media"}}
+      <div class="mediaModalContentWrapper">
+        {{#each _media}}
+          {{> _modalMediaRow}}
+        {{/each}}
+      </div>
+  {{/ionModal}}
+</template>
+
+<template name="_modalMediaRow">
+      <div class="modalMediaItem" defaultAction="link" href="/media/{{_id}}">
+          <!--<img class="mediaMobileImage" src='{{url store="thumbs"}}' title='{{metadata.name}}'>-->
+          <div class="centeredImage" title='{{metadata.name}}' mediaFull='{{url store="mediaFull"}}' style="background-image: url('{{url store="fullMobile"}}')"></div>
+      </div>
+</template>

@@ -42,17 +42,19 @@
 <template name="_mediaRow">
   {{#if isMobile}}
     <div class="mediaItem mediaMobileImageWrapper" defaultAction="link" href="/media/{{_id}}">
-      <img class="mediaMobileImage" src='{{url store="thumbs"}}' title='{{metadata.name}}'>
+      <!--<img class="mediaMobileImage" src='{{url store="thumbs"}}' title='{{metadata.name}}'>-->
+        <div class="centeredImage" title='{{metadata.name}}' mediaFull='{{url store="mediaFull"}}' style="background-image: url('{{url store="thumbs"}}')"></div>
     </div>
   {{else}}
     <div class="mediaItem mediaFullMobileImageWrapper" defaultAction="link" href="/media/{{_id}}">
-      <img class="mediaFullMobileImage" src='{{url store="fullMobile"}}' title='{{metadata.name}}'>
+      <!--<img class="mediaFullMobileImage" src='{{url store="fullMobile"}}' title='{{metadata.name}}'>-->
+        <div class="centeredImage" title='{{metadata.name}}' mediaFull='{{url store="mediaFull"}}' style="background-image: url('{{url store="fullMobile"}}')"></div>
     </div>
   {{/if}}
 </template>
 
 <template name="mm_media_control">
-  {{>mmNextPage label='Media' class="saveUserData" url=url snippet=snippet}}
+  {{>mmNextPage label='Media' class=class url=url snippet=snippet}}
 </template>
 
 <template name="mediaFullView">

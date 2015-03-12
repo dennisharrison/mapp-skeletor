@@ -27,6 +27,8 @@ saveBasketData = (url) ->
       _userHistory.goToUrl(url)
   else
     _basketId = Baskets.insert(_data)
+    Meteor.subscribe("baskets", {_id: _basketId})
+    _userHistory.replaceLastUrl("/basket/#{_basketId}")
     Session.set('_basketId', _basketId)
     buildRelationship('Baskets', _basketId)
     if url?

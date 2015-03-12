@@ -6,10 +6,12 @@ Router.map ->
       @wait Meteor.subscribe('baskets')
       @render 'baskets'
 
+
   @route 'basket',
     path: '/basket/:id'
     action: ->
       Session.set("_basketId", @params.id)
+      Session.set('backgroundImageTags', 'wicker basket')
       # Wait on collections
       @wait Meteor.subscribe('baskets', {_id: @params.id})
       @wait Meteor.subscribe('relationships', {parentCollection: 'Baskets', parentId: @params.id})

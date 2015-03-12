@@ -21,7 +21,14 @@ Place settings.json in app directory
 	},
 	"uploader": {
 		"directory": "/path/to/uploads/on/filesystem"
-	}
-
+	},
+  "public": {
+    "backgroundImageOptions": {
+      "FlickrAPIKey": "YourFlickrAPIKey",
+      "tags": "Amazing Sunset",
+      "interval": 60000
+    }
+  }
 }
+
 ```

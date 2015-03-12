@@ -59,6 +59,16 @@ class userHistory
     else
       return window.location.pathname
 
+  replaceLastUrl: (newUrl) ->
+    if @historyId?
+      _history = Histories.findOne({_id:@historyId})
+      _history.locations.pop()
+      _history.locations.push(newUrl)
+      window.history.replaceState({}, "", newUrl)
+      delete _history._id
+      Histories.update({_id:@historyId}, {$set: _history})
+
+
   history: () ->
     if @historyId?
       _history = Histories.findOne({_id:@historyId})

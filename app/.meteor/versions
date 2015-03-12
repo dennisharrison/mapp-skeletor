@@ -69,6 +69,7 @@ logging@1.0.6
 mapp-skeletor:baskets@0.0.1
 mapp-skeletor:gestures@0.0.1
 mapp-skeletor:media@0.0.1
+mapp-skeletor:present@0.0.1
 mapp-skeletor:relationships@0.0.1
 mapp-skeletor:things@0.0.1
 mapp-skeletor:user-history@0.0.1
