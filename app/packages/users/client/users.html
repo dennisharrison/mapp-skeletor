@@ -8,7 +8,9 @@
   {{/contentFor}}
 
   {{#contentFor "headerButtonRight"}}
-    <button class="addUser button button-icon icon ion-ios-personadd" data-ion-modal="_newUserModal"></button>
+    {{#if isInRole 'manage-users'}}
+      <button class="addUser button button-icon icon ion-ios-personadd" data-ion-modal="_newUserModal"></button>
+    {{/if}}
   {{/contentFor}}
 
   {{#ionView}}
