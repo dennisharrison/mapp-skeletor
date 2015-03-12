@@ -13,7 +13,6 @@ Router.configure
     # console.log this.route.name
     if except.none(route)
       mustBeSignedIn(this)
-
     return
 
 Meteor.startup () ->
