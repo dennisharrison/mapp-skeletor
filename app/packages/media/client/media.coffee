@@ -100,3 +100,23 @@ uploadFileWithExif = (file) ->
         $(event.target).val('')
 
   binaryReader.readAsArrayBuffer(file)
+
+Template._presentMediaModal.helpers
+  _media: ->
+    return Media.find().fetch()
+  _viewMediaInModal: ->
+    foundMedia = Media.findOne({_id:Session.get("_viewMediaInModal")})
+    if foundMedia?
+      return foundMedia
+    else
+      return false
+
+Template._presentMediaModal.events
+  'click .modalMediaItem': (event, template) ->
+    Session.set("_viewMediaInModal", this._id)
+
+  'click .viewMediaInModal': (event, template) ->
+    Session.set("_viewMediaInModal", null)
+
+Template._presentMediaModal.created = () ->
+  Session.set("_viewMediaInModal", null)

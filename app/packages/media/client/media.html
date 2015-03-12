@@ -72,3 +72,25 @@
     {{/ionContent}}
   {{/ionView}}
 </template>
+
+
+<template name="_presentMediaModal">
+  {{#ionModal title="Media"}}
+    {{#if _viewMediaInModal}}
+      <div class="viewMediaInModal" style="transition:background-image 1s ease-in-out; background-image: url('{{_viewMediaInModal.url store="mediaFull"}}');"></div>
+    {{/if}}
+    <div class="mediaModalContentWrapper">
+      {{#each _media}}
+        {{> _modalMediaRow}}
+      {{/each}}
+    </div>
+
+  {{/ionModal}}
+</template>
+
+<template name="_modalMediaRow">
+    <div class="modalMediaItem" href="/media/{{_id}}">
+        <!--<img class="mediaMobileImage" src='{{url store="thumbs"}}' title='{{metadata.name}}'>-->
+        <div class="centeredImage" title='{{metadata.name}}' mediaFull='{{url store="mediaFull"}}' style="background-image: url('{{url store="fullMobile"}}')"></div>
+    </div>
+</template>

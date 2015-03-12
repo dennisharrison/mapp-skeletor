@@ -1,3 +1,18 @@
+Meteor.startup ->
+  Session.set("homeViewTemplate", "presentHome")
+
+Template.presentHome.helpers
+  _users: ->
+    foundUsers = Meteor.users.find().fetch()
+    if foundUsers
+      return foundUsers
+    else
+      return []
+
+Template.presentHome.events
+  'click .item': (event, template) ->
+    performDefaultAction(event)
+
 Template.presentUser.helpers
   _presentUser: ->
     return Meteor.users.findOne(Session.get('_presentUser'))
@@ -27,9 +42,18 @@ Template._presentUserBackHeaderButton.events
   'click .back-button': (event, template) ->
     _userHistory.goBack()
 
-Template._userPresentMediaModal.helpers
-  _media: ->
-    return Media.find().fetch()
+Template._presentBasketsIndex.helpers
+  _baskets: ->
+    foundBaskets = Baskets.find().fetch()
+    if foundBaskets?
+      return foundBaskets
+    else
+      return []
+
+Template._presentBasketsIndex.events
+  'click .item': (event, template) ->
+    performDefaultAction(event)
+
 
 @changeUserPresentImage = (mediaId) ->
   if mediaId?

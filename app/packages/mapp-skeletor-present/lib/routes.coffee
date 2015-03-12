@@ -19,3 +19,21 @@ Router.map ->
         @wait Meteor.subscribe('relationships', {parentId: {$in: _relationShipsArray}})
 
       @render 'presentUser'
+
+  @route 'basketPresent',
+    path: '/basket/:id/present'
+    action: ->
+      # Wait on collections
+      Session.set('backgroundImageTags', 'amazing architecture')
+      @wait Meteor.subscribe('relationships', {parentId: @params.id})
+      _relationShips = Relationships.find({},{fields:{childId: 1}}).fetch()
+      _relationShipsArray = []
+
+      for item in _relationShips
+        _relationShipsArray.push item.childId
+
+      if _relationShipsArray.length isnt 0
+        @wait Meteor.subscribe('things', {_id: {$in: _relationShipsArray}})
+        @wait Meteor.subscribe('relationships', {parentId: {$in: _relationShipsArray}})
+
+      @render 'presentBasket'

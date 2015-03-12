@@ -1,3 +1,30 @@
+<template name="presentHome">
+  {{#contentFor "headerTitle"}}
+      <h1 class="title">Hello There</h1>
+  {{/contentFor}}
+
+  {{#contentFor "headerButtonLeft"}}
+      <button data-ion-menu-toggle="left" class="button button-icon icon ion-navicon menu-toggle-icon"></button>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+      {{#ionList}}
+        {{#each _users}}
+            <div class="item item-avatar item-button-right item-icon-right" href="/user/{{_id}}/present" data-snap-ignore="true" defaultAction="link">
+                <img src="{{_gravatarURL}}">
+                <h2>{{username}}</h2>
+                <p>
+                  {{profile.name}} - {{> lastSeen}}
+                </p>
+                <i class="icon ion-ios-arrow-right"></i>
+            </div>
+        {{/each}}
+      {{/ionList}}
+    {{/ionContent}}
+  {{/ionView}}
+</template>
+
 <template name="presentUser">
   {{>contentFor region="headerTitle" template='_presentUserHeaderTitle'}}
 
@@ -5,9 +32,9 @@
 
   {{#ionView}}
     {{#ionContent}}
-      <div class="userPresentMediaWrapper" data-ion-modal="_userPresentMediaModal" style="transition:background-image 2s ease-in-out; background-image: url('{{_firstMediaUrl}}');">
+      <div class="userPresentMediaWrapper" data-ion-modal="_presentMediaModal" style="transition:background-image 2s ease-in-out; background-image: url('{{_firstMediaUrl}}');">
       </div>
-      {{>embeddedBasketsIndex}}
+      {{>_presentBasketsIndex}}
     {{/ionContent}}
   {{/ionView}}
 
@@ -22,25 +49,38 @@
 </template>
 
 
-<template name="_userMediaRow">
-  <li>
-    <img title='{{metadata.name}}' mediaFull='{{url store="mediaFull"}}' src='{{url store="fullMobile"}}' />
-  </li>
+<template name="_presentBasketsIndex">
+  {{#ionList}}
+    {{#each _baskets}}
+        <div class="item item-icon-right" href="/basket/{{_id}}/present" data-snap-ignore="true" data-nav-direction="forward" defaultAction="link">
+          {{title}}
+            <i class="icon ion-ios-arrow-right"></i>
+        </div>
+    {{/each}}
+  {{/ionList}}
 </template>
 
-<template name="_userPresentMediaModal">
-  {{#ionModal title="Media"}}
-      <div class="mediaModalContentWrapper">
-        {{#each _media}}
-          {{> _modalMediaRow}}
-        {{/each}}
-      </div>
-  {{/ionModal}}
+
+<template name="presentBasket">
+  {{>contentFor region="headerTitle" template='_presentUserHeaderTitle'}}
+
+  {{> contentFor region="headerButtonLeft" template='_presentUserBackHeaderButton'}}
+
+  {{#ionView}}
+    {{#ionContent}}
+        <div class="userPresentMediaWrapper" data-ion-modal="_presentMediaModal" style="transition:background-image 2s ease-in-out; background-image: url('{{_firstMediaUrl}}');">
+        </div>
+      {{>_presentBasketsIndex}}
+    {{/ionContent}}
+  {{/ionView}}
+
 </template>
 
-<template name="_modalMediaRow">
-      <div class="modalMediaItem" defaultAction="link" href="/media/{{_id}}">
-          <!--<img class="mediaMobileImage" src='{{url store="thumbs"}}' title='{{metadata.name}}'>-->
-          <div class="centeredImage" title='{{metadata.name}}' mediaFull='{{url store="mediaFull"}}' style="background-image: url('{{url store="fullMobile"}}')"></div>
-      </div>
+<template name="_presentBasketHeaderTitle">
+    <h1 class="title">Basket</h1>
 </template>
+
+<template name='_presentBasketBackHeaderButton'>
+    <button class='button button-icon back-button' data-nav-direction="back" data-snap-ignore="true">Back</button>
+</template>
+
