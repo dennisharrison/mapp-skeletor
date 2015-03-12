@@ -2,16 +2,30 @@
 @import '.meteor/local/build/programs/server/assets/packages/meteoric_ionicons-sass/ionicons';
 
 .ionic-body.platform-android {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
 
   h1, h2, h3, h4, h5, h6,
   .h1, .h2, .h3, .h4, .h5, .h6 {
-    font-family: "Roboto", sans-serif;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
   }
 
   .tab-item {
-    font-family: "Roboto", sans-serif;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
   }
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+}
+
+.tab-item {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
 }
 
 .popover {
@@ -43,6 +57,8 @@
 
 .item {
   cursor: pointer;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
 }
 
 #ActionSheetHacker {

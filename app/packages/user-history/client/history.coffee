@@ -28,7 +28,6 @@ class userHistory
     if @historyId?
       _history = Histories.findOne({_id:@historyId})
       _history.locations.push(url)
-      console.log(_history)
       delete _history._id
       Histories.update({_id:@historyId}, {$set: _history})
 

@@ -43,7 +43,6 @@ touchDefaultState = true
 
 performDefaultAction = (event) ->
   if touchDefaultState is true
-    console.log("I should do the default thing here!")
     target = $(event.currentTarget)
     defaultAction = target.attr("defaultAction")
     if defaultAction is "link"

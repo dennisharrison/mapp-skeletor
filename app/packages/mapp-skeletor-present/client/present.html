@@ -62,25 +62,73 @@
 
 
 <template name="presentBasket">
-  {{>contentFor region="headerTitle" template='_presentUserHeaderTitle'}}
+  {{>contentFor region="headerTitle" template='_presentBasketHeaderTitle'}}
 
-  {{> contentFor region="headerButtonLeft" template='_presentUserBackHeaderButton'}}
+  {{> contentFor region="headerButtonLeft" template='_presentBasketBackHeaderButton'}}
 
   {{#ionView}}
     {{#ionContent}}
-        <div class="userPresentMediaWrapper" data-ion-modal="_presentMediaModal" style="transition:background-image 2s ease-in-out; background-image: url('{{_firstMediaUrl}}');">
-        </div>
-      {{>_presentBasketsIndex}}
+      {{#if _media}}
+          <div class="userPresentMediaWrapper" data-ion-modal="_presentMediaModal" style="transition:background-image 2s ease-in-out; background-image: url('{{_firstMediaUrl}}');">
+          </div>
+      {{else}}
+          <div class="userPresentMediaWrapper" style="transition:background-image 2s ease-in-out; background-image: url('{{_firstMediaUrl}}');">
+          </div>
+      {{/if}}
+      <div class="descriptionWrapper">
+          {{_description}}
+      </div>
+      {{> _presentThingsIndex}}
     {{/ionContent}}
   {{/ionView}}
 
 </template>
 
 <template name="_presentBasketHeaderTitle">
-    <h1 class="title">Basket</h1>
+    <h1 class="title">{{_presentBasket.title}}</h1>
 </template>
 
 <template name='_presentBasketBackHeaderButton'>
     <button class='button button-icon back-button' data-nav-direction="back" data-snap-ignore="true">Back</button>
 </template>
 
+<template name="_presentThingsIndex">
+  {{#ionList}}
+    {{#each _things}}
+        <div class="item item-icon-right" href="/thing/{{_id}}/present" data-snap-ignore="true" data-nav-direction="forward" defaultAction="link">
+          {{title}}
+            <i class="icon ion-ios-arrow-right"></i>
+        </div>
+    {{/each}}
+  {{/ionList}}
+</template>
+
+<template name="presentThing">
+  {{>contentFor region="headerTitle" template='_presentThingHeaderTitle'}}
+
+  {{> contentFor region="headerButtonLeft" template='_presentThingBackHeaderButton'}}
+
+  {{#ionView}}
+    {{#ionContent}}
+      {{#if _media}}
+          <div class="thingPresentMediaWrapper" data-ion-modal="_presentMediaModal" style="transition:background-image 2s ease-in-out; background-image: url('{{_firstMediaUrl}}');">
+          </div>
+      {{else}}
+          <div class="thingPresentMediaWrapper" style="transition:background-image 2s ease-in-out; background-image: url('{{_firstMediaUrl}}');">
+          </div>
+      {{/if}}
+      <div class="descriptionWrapper">
+        {{_description}}
+      </div>
+    {{/ionContent}}
+  {{/ionView}}
+
+</template>
+
+<template name="_presentThingHeaderTitle">
+    <h1 class="title">{{_presentThing.title}}</h1>
+</template>
+
+<template name='_presentThingBackHeaderButton'>
+    <button class='button button-icon back-button' data-nav-direction="back" data-snap-ignore="true">Back</button>
+</template>

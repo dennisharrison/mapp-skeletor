@@ -103,7 +103,7 @@ uploadFileWithExif = (file) ->
 
 Template._presentMediaModal.helpers
   _media: ->
-    return Media.find().fetch()
+    return Media.find({"metadata.owner": Session.get("_currentMediaOwner")}).fetch()
   _viewMediaInModal: ->
     foundMedia = Media.findOne({_id:Session.get("_viewMediaInModal")})
     if foundMedia?
