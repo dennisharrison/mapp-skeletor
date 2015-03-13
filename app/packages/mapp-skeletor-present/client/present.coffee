@@ -63,7 +63,11 @@ Template.presentBasket.helpers
   _presentBasket: ->
     Baskets.findOne(Session.get('_presentBasketId'))
   _description: ->
-    return new Spacebars.SafeString(Baskets.findOne(Session.get('_presentBasketId')).description)
+    found = Baskets.findOne(Session.get('_presentBasketId'))
+    if found?.description?
+      return new Spacebars.SafeString(found.description)
+    else
+      return ""
   _media: ->
     return Media.find({"metadata.owner": Session.get("_currentMediaOwner")}).fetch()
   _firstMediaUrl: ->
@@ -99,7 +103,11 @@ Template.presentThing.helpers
   _media: ->
     return Media.find({"metadata.owner": Session.get("_currentMediaOwner")}).fetch()
   _description: ->
-    return new Spacebars.SafeString(Baskets.findOne(Session.get('_presentThingId')).description)
+    found = Things.findOne(Session.get('_presentThingId'))
+    if found?.description?
+      return new Spacebars.SafeString(found.description)
+    else
+      return ""
   _firstMediaUrl: ->
     found = Media.findOne({"metadata.owner": Session.get("_currentMediaOwner")})
     if found?

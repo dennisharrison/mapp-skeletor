@@ -27,7 +27,13 @@
 
 <template name="basketEdit">
   {{#contentFor "headerTitle"}}
-      <h1 class="title" data-snap-ignore="true">Edit Basket</h1>
+      <h1 class="title" data-snap-ignore="true">
+        {{#if _basket.title}}
+            Editing - {{_basket.title}}
+        {{else}}
+            Create New Basket
+        {{/if}}
+      </h1>
   {{/contentFor}}
 
   {{> contentFor region="headerButtonLeft" template='_basketBackHeaderButton'}}
