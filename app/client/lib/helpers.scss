@@ -464,3 +464,16 @@ h6[class="fr-tag"] {
 .froala-overlay {
   background: #000000;
 }
+
+.card {
+  .item {
+    p {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+input[type='image'] {
+  width: auto;
+  height: auto;
+}

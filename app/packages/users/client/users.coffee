@@ -1,4 +1,4 @@
-Meteor.subscribe('allUsers')
+#Meteor.subscribe('allUsers')
 #AccountsTemplates.configure({
 #  enablePasswordChange: true
 #})
@@ -40,6 +40,8 @@ Template.users.helpers
       _users.push _user
     return _users
 
+Template.users.onCreated ->
+  this.subscribe("allUsers")
 
 Template._userListItem.helpers
   '_gravatarURL': ->

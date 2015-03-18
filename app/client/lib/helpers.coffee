@@ -32,3 +32,22 @@ Template.mmNextPage.helpers
       for klass in customClasses
         classes.push(klass)
     return classes.join(' ')
+
+Template.mmIonCard.helpers
+  classes: ->
+    classes = ['card']
+    if this.class?
+      customClasses = this.class.split(' ')
+      for klass in customClasses
+        classes.push(klass)
+    return classes.join(' ')
+
+
+@pausecomp = (millis) ->
+  date = new Date
+  curDate = null
+  loop
+    curDate = new Date
+    unless curDate - date < millis
+      break
+  return

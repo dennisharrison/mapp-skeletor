@@ -57,3 +57,40 @@
       {{/if}}
     {{/ionItem}}
 </template>
+
+<template name="mmIonCard">
+    <div class="{{classes}}">
+      {{#if title}}
+          <div class="item item-divider">
+            {{title}}
+          </div>
+      {{/if}}
+        <div class='item item-text-wrap'>
+          {{> UI.contentBlock}}
+        </div>
+    </div>
+</template>
+
+<template name="mmInputImage">
+    <label class="item item-input" data-snap-ignore="true">
+        <input type="image" src="{{src}}" border="0" name="submit" alt="{{alt}}">
+    </label>
+</template>
+
+<template name="mmInputSubmit">
+    <label class="item item-input" data-snap-ignore="true">
+        <input class='button' type="submit" name="submit" title="{{alt}}" value="{{text}}">
+    </label>
+</template>
+
+<template name="mmIonLink">
+  {{#if url}}
+      <a class="item item-icon-right" href="{{url}}"  data-ion-menu-close>
+        {{title}} {{> ionIcon icon=icon}}
+      </a>
+  {{else}}
+      <div class="item item-icon-right" data-ion-menu-close>
+        {{title}} {{> ionIcon icon=icon}}
+      </div>
+  {{/if}}
+</template>

@@ -184,3 +184,13 @@ h1, h2, h3, h4, h5, h6,
 .newUserWrapper {
   padding: 1em;
 }
+
+.loadingCard {
+  border: none;
+  box-shadow: none;
+  .item {
+    background-image: url('/images/loading.gif');
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+}

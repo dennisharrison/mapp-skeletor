@@ -7,6 +7,11 @@ userMediaSetup =
 Meteor.startup ->
   CreateMediaRoutes(userMediaSetup)
 
+Template.user.onCreated ->
+  userId = Session.get('_editUser')
+  this.subscribe('allUsers', {_id: userId})
+  this.subscribe('basketsByParent', userId)
+
 Template.user.helpers
   user: ->
     _editUser = Session.get('_editUser')

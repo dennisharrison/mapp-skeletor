@@ -15,11 +15,16 @@
 
   {{#ionView}}
     {{#ionContent}}
-      {{#ionList}}
-        {{#each _users}}
-          {{> _userListItem}}
-        {{/each}}
-      {{/ionList}}
+      {{#if Template.subscriptionsReady}}
+          <!-- This is displayed when all data is ready. -->
+        {{#ionList}}
+          {{#each _users}}
+            {{> _userListItem}}
+          {{/each}}
+        {{/ionList}}
+      {{else}}
+          Loading...
+      {{/if}}
     {{/ionContent}}
   {{/ionView}}
 </template>

@@ -29,7 +29,12 @@
             <a class="button button-icon saveUserData" href="{{newBasketUrl}}" data-nav-direction="forward" data-snap-ignore="true">
                 <i class="icon ion-ios-plus-outline"></i>
             </a>
-          {{>embeddedBasketsIndex}}
+          {{#if Template.subscriptionsReady}}
+              <!-- This is displayed when all data is ready. -->
+            {{>embeddedBasketsIndex}}
+          {{else}}
+              {{>mappLoader}}
+          {{/if}}
         {{/ionItem}}
       {{/ionList}}
       <div class='card'>
