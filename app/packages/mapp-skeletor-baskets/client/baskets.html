@@ -52,7 +52,12 @@
                 <a class="button button-icon saveBasketData" href="{{newThingUrl}}" data-nav-direction="forward" data-snap-ignore="true">
                     <i class="icon ion-ios-plus-outline"></i>
                 </a>
-              {{>embeddedThingsIndex}}
+              {{#if Template.subscriptionsReady}}
+                  <!-- This is displayed when all data is ready. -->
+                {{>embeddedThingsIndex}}
+              {{else}}
+                {{>mappLoader}}
+              {{/if}}
             {{/ionItem}}
           {{/ionList}}
         </div>

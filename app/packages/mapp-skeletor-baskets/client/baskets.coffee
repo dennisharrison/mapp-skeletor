@@ -34,6 +34,8 @@ saveBasketData = (url) ->
     if url?
       _userHistory.goToUrl(url)
 
+Template.baskets.onCreated ->
+  this.subscribe('baskets')
 
 # Baskets Index
 Template.embeddedBasketsIndex.helpers
@@ -80,8 +82,9 @@ Template._basketListItem.events
 
 # Basket view/edit/new
 Template.basketEdit.onCreated ->
-  userId = Session.get('_editUser')
-  this.subscribe('allUsers', {_id: userId})
+  basketId = Session.get('_basketId')
+  this.subscribe('baskets', {_id: basketId})
+  this.subscribe('thingsByParent', basketId)
 
 Template.basketEdit.helpers
   _basket: ->
@@ -136,6 +139,10 @@ Template._basketDoneHeaderButton.events
 
 
 # Basket sub-screen edit/view
+Template.basketDescription.onCreated ->
+  basketId = Session.get('_basketId')
+  this.subscribe('baskets', {_id: basketId})
+
 Template.basketDescription.helpers
   _basket: ->
     Baskets.findOne({_id: Session.get("_basketId")})

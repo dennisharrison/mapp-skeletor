@@ -7,6 +7,9 @@ thingsMediaSetup =
 Meteor.startup ->
   CreateMediaRoutes(thingsMediaSetup)
 
+Template.things.onCreated ->
+  this.subscribe('things')
+
 # Initialize hammer on the item we need the event from.
 Template._thingListItem.rendered = () ->
   $(".item").hammer()
@@ -44,6 +47,9 @@ Template._thingListItem.helpers
   url: ->
     "/thing/#{this._id}"
 
+Template.thingEdit.onCreated ->
+  itemId = Session.get('_thingId')
+  this.subscribe('things', {_id: itemId})
 
 Template.thingEdit.helpers
   _thing: ->
@@ -73,6 +79,10 @@ Template.thingEdit.helpers
       url:_url
       snippet:_snippet
     return _data
+
+Template.thingDescription.onCreated ->
+  itemId = Session.get('_thingId')
+  this.subscribe('things', {_id: itemId})
 
 Template.thingDescription.helpers
   _thing: ->
