@@ -18,10 +18,10 @@ Meteor.publish 'baskets', (search, options) ->
 
 Meteor.publish 'basketsByParent', (parentId, options) ->
   # define some defaults here
-  _data = null
+  _data = []
   defaultOptions =
-    sort:
-      title: 1
+      sort:
+        title: 1
 
   if not Object.isObject(options)
     options = defaultOptions

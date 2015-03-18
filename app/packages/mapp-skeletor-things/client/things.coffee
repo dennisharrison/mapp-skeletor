@@ -97,10 +97,16 @@ Template._thingDescriptionBackHeaderButton.events
   'click .back-button': (event, template) ->
     _userHistory.goBack()
 
+Template.embeddedThingsIndex.onCreated ->
+  ownerId = this.ownerId
+  this.subscribe('relationships', {parentId: ownerId})
+  this.subscribe('thingsByParent', ownerId)
+
 Template.embeddedThingsIndex.helpers
   _things: ->
-    return Things.find({}).fetch().sortBy('title')
-
+    ownerId = this.ownerId
+    _data = findChildren(ownerId, Things)
+    return _data
 
 Template._thingDescriptionDoneHeaderButton.events
   'click .description-done-button': (event, template) ->

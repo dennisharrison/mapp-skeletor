@@ -36,3 +36,22 @@ removeWithRelations = (_doc, _Collection) ->
     _checkRelationships = Relationships.find({childId: _possibleOrphan.childId}).fetch()
     if _checkRelationships.length is 0
       window[_possibleOrphan.childCollection].remove({_id:_possibleOrphan.childId})
+
+findChildren = (parentId, childCollection, options) ->
+  defaultOptions =
+    sort:
+      title: 1
+
+  if not Object.isObject(options)
+    options = defaultOptions
+
+  _data = []
+  _relationShips = Relationships.find({parentId: parentId},{fields:{childId: 1}}).fetch()
+  _relationShipsArray = []
+
+  for item in _relationShips
+    _relationShipsArray.push item.childId
+
+  if _relationShipsArray.length isnt 0
+    _data = childCollection.find({_id: {$in: _relationShipsArray}}, options)
+  return _data

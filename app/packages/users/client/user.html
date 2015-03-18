@@ -31,7 +31,7 @@
             </a>
           {{#if Template.subscriptionsReady}}
               <!-- This is displayed when all data is ready. -->
-            {{>embeddedBasketsIndex}}
+            {{>embeddedBasketsIndex ownerId=user._id}}
           {{else}}
               {{>mappLoader}}
           {{/if}}

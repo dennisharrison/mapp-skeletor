@@ -18,7 +18,7 @@ Meteor.publish 'things', (search, options) ->
 
 Meteor.publish 'thingsByParent', (parentId, options) ->
   # define some defaults here
-  _data = null
+  _data = []
   defaultOptions =
     sort:
       title: 1

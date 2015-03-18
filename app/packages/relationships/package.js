@@ -19,4 +19,5 @@ Package.onUse(function (api) {
 
   api.export('buildRelationship', ['client']);
   api.export('removeWithRelations', ['client']);
+  api.export('findChildren', ['client']);
 });

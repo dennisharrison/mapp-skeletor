@@ -38,9 +38,16 @@ Template.baskets.onCreated ->
   this.subscribe('baskets')
 
 # Baskets Index
+Template.embeddedBasketsIndex.onCreated ->
+  ownerId = this.ownerId
+  this.subscribe('relationships', {parentId: ownerId})
+  this.subscribe('basketsByParent', ownerId)
+
 Template.embeddedBasketsIndex.helpers
   _baskets: ->
-    return Baskets.find({}).fetch().sortBy('title')
+    ownerId = this.ownerId
+    _data = findChildren(ownerId, Baskets)
+    return _data
 
 # Basket List Item
 Template._basketListItem.helpers
