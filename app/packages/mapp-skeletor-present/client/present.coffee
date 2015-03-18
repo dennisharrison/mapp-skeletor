@@ -1,6 +1,9 @@
 Meteor.startup ->
   Session.set("homeViewTemplate", "presentHome")
 
+Template.presentHome.onCreated ->
+  this.subscribe('allUsers')
+
 Template.presentHome.helpers
   _users: ->
     foundUsers = Meteor.users.find().fetch()
@@ -8,10 +11,25 @@ Template.presentHome.helpers
       return foundUsers
     else
       return []
+      
+  '_gravatarURL': ->
+    options =
+      secure: true
+    # Always use the FIRST email address
+    email = this.emails[0].address
+    url = Gravatar.imageUrl(email, options)
+    return url
 
 Template.presentHome.events
   'click .item': (event, template) ->
     performDefaultAction(event)
+
+Template.presentUser.onCreated ->
+  userId = Session.get('_presentUser')
+  this.subscribe('allUsers', {_id: userId})
+  this.subscribe('media', {owner: userId})
+  this.subscribe('relationships', {parentId: userId})
+  this.subscribe('basketsByParent', userId)
 
 Template.presentUser.helpers
   _presentUser: ->
@@ -59,6 +77,14 @@ Template._presentBasketsIndex.events
     performDefaultAction(event)
 
 
+Template.presentBasket.onCreated ->
+  userId = Session.get('_presentUser')
+  basketId = Session.get('_presentBasketId')
+  this.subscribe('baskets', {_id: basketId})
+  this.subscribe('media', {owner: userId})
+  this.subscribe('relationships', {parentId: basketId})
+  this.subscribe('thingsByParent', basketId)
+
 Template.presentBasket.helpers
   _presentBasket: ->
     Baskets.findOne(Session.get('_presentBasketId'))
@@ -98,6 +124,11 @@ Template._presentThingsIndex.helpers
 Template._presentThingsIndex.events
   'click .item': (event, template) ->
     performDefaultAction(event)
+
+Template.presentBasket.onCreated ->
+  thingId = Session.get('_presentThingId')
+  this.subscribe('things', {_id: thingId})
+  this.subscribe('media', {owner: thingId})
 
 Template.presentThing.helpers
   _media: ->
