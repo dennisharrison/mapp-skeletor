@@ -1,3 +1,7 @@
+Template.userRoles.onCreated ->
+  userId = Session.get('_editUser')
+  this.subscribe('allUsers', {_id: userId})
+
 Template.userRoles.helpers
   user: ->
     _editUser = Session.get('_editUser')

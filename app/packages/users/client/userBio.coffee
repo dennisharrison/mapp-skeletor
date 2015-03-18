@@ -1,3 +1,7 @@
+Template.userBio.onCreated ->
+  userId = Session.get('_editUser')
+  this.subscribe('allUsers', {_id: userId})
+
 Template.userBio.helpers
 	user: ->
     _editUser = Session.get('_editUser')

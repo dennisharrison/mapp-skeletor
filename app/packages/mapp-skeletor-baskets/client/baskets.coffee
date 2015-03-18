@@ -79,6 +79,10 @@ Template._basketListItem.events
 
 
 # Basket view/edit/new
+Template.basketEdit.onCreated ->
+  userId = Session.get('_editUser')
+  this.subscribe('allUsers', {_id: userId})
+
 Template.basketEdit.helpers
   _basket: ->
     Baskets.findOne({_id: Session.get("_basketId")})
