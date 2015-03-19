@@ -5,6 +5,23 @@
     <link href='http://fonts.googleapis.com/css?family=Raleway:300,400' rel='stylesheet' type='text/css'>
     <script type="application/javascript">
         //document.oncontextmenu = function(){return false;}
+        // Rig up scrollEnd:
+        $.fn.scrollEnd = function(callback, timeout) {
+            $(this).scroll(function(){
+                var $this = $(this);
+                Session.set('touchDefaultState', false);
+                if ($this.data('scrollTimeout')) {
+                    clearTimeout($this.data('scrollTimeout'));
+                }
+                $this.data('scrollTimeout', setTimeout(callback,timeout));
+            });
+        };
+
+        // how to call it (with a 150ms timeout):
+        $('.overflow-scroll').scrollEnd(function(){
+            alert("Scrolling over!");
+            Session.set('touchDefaultState', true);
+        }, 150);
     </script>
 </head>
 

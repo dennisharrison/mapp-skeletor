@@ -51,3 +51,9 @@ Template.mmIonCard.helpers
     unless curDate - date < millis
       break
   return
+
+Template.scrollHelper.rendered = ->
+  $('.overflow-scroll').scrollEnd (->
+    Session.set 'touchDefaultState', true
+    return
+  ), 150
