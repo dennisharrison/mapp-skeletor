@@ -1,0 +1,13 @@
+{
+  "apn": {
+    "passphrase": "MappSkeletor",
+    "key": "MappSkeletorKey.pem",
+    "cert": "MappSkeletorCert.pem",
+    "gateway": "gateway.sandbox.push.apple.com"
+  },
+  "production": false,
+  "badge": true,
+  "alert": true,
+  "sound": true,
+  "vibrate": true
+}

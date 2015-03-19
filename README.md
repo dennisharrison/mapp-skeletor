@@ -32,3 +32,13 @@ Place settings.json in app directory
 }
 
 ```
+
+## Example iOS Build Command
+```
+meteor run ios-device --mobile-server 192.168.42.11:3000 --settings settings.json
+```
+
+## Example Push Notification
+```
+Push.send({from: 'push',title: 'Hello World',text: 'This notification has been sent from the SERVER',badge: 11,sound: "default",payload: {title: 'Hello World',historyId: 99},query: {}});
+```
