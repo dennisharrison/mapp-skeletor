@@ -1,3 +1,3 @@
-Push.addListener('token', (token) ->
-  alert(JSON.stringify(token))
-)
+#Push.addListener('token', (token) ->
+#  alert(JSON.stringify(token))
+#)
