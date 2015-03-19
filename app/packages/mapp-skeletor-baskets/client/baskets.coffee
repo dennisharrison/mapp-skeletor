@@ -60,7 +60,7 @@ Template._basketListItem.rendered = () ->
 
 Template._basketListItem.events
   'press .item': (event, template) ->
-    touchDefaultState = false
+    Session.set("touchDefaultState", false)
     showActionSheet({buttons:[], event:event, meteorObject:this, collection:Baskets, destructionCallback:removeWithRelations, titleText: "'#{this.title}'"})
 
   'click .item': (event, template) ->
@@ -75,7 +75,7 @@ Template._basketListItem.events
     switch event.which
       when 1
         #console.log 'Left Mouse button pressed.'
-        touchDefaultState = true
+        Session.set("touchDefaultState", true)
       when 2
         #console.log 'Middle Mouse button pressed.'
         break
@@ -84,6 +84,12 @@ Template._basketListItem.events
         showActionSheet({buttons:[], event:event, meteorObject:this, collection:Baskets, destructionCallback:removeWithRelations, titleText: "'#{this.title}'"})
 
   'mouseup .item': (event, template) ->
+    performDefaultAction(event)
+
+  'touchstart .item': (event, template) ->
+    Session.set("touchDefaultState", true)
+
+  'touchend .item': (event, template) ->
     performDefaultAction(event)
 
 

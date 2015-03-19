@@ -58,7 +58,10 @@ Template._userListItem.rendered = () ->
 
 Template._userListItem.events
   'press .item': (event, template) ->
-    touchDefaultState = false
+    event.stopImmediatePropagation()
+    event.preventDefault()
+    event.stopPropagation()
+    Session.set("touchDefaultState", false)
     showActionSheet({buttons:[], event:event, meteorObject:this, collection:Meteor.users, destructionCallback:removeWithRelations, titleText: "'#{this.username}'"})
 
   'click .item': (event, template) ->
@@ -73,7 +76,7 @@ Template._userListItem.events
     switch event.which
       when 1
         #console.log 'Left Mouse button pressed.'
-        touchDefaultState = true
+        Session.set("touchDefaultState", true)
       when 2
         #console.log 'Middle Mouse button pressed.'
         break
@@ -83,6 +86,13 @@ Template._userListItem.events
 
   'mouseup .item': (event, template) ->
     performDefaultAction(event)
+
+  'touchstart .item': (event, template) ->
+    Session.set("touchDefaultState", true)
+
+  'touchend .item': (event, template) ->
+    performDefaultAction(event)
+
 
 
 Template._newUserModal.events

@@ -1,3 +1,6 @@
+Meteor.startup ->
+  Session.setDefault("touchDefaultState", true)
+
 showActionSheet = (options) ->
   event = options.event
   buttons = options.buttons or []
@@ -23,7 +26,7 @@ showActionSheet = (options) ->
         console.log 'Moved!'
 
     destructiveButtonClicked: ->
-      console.log 'Destructive Action!'
+      touchDefaultState = true
       destructionCallback(meteorObject, collection)
       $(".action-sheet-backdrop").click()
 
@@ -39,10 +42,8 @@ showActionSheet = (options) ->
   else
     $("#ActionSheetHacker").click()
 
-touchDefaultState = true
-
 performDefaultAction = (event) ->
-  if touchDefaultState is true
+  if Session.get("touchDefaultState") is true
     target = $(event.currentTarget)
     defaultAction = target.attr("defaultAction")
     if defaultAction is "link"

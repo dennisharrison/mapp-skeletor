@@ -17,7 +17,7 @@ Template._thingListItem.rendered = () ->
 # Capture hammer events alongside normal events.
 Template._thingListItem.events
   'press .item': (event, template) ->
-    touchDefaultState = false
+    Session.set("touchDefaultState", false)
     showActionSheet({buttons:[], event:event, meteorObject:this, collection:Things, destructionCallback:removeWithRelations, titleText: "'#{this.title}'"})
 
   'click .item': (event, template) ->
@@ -32,7 +32,7 @@ Template._thingListItem.events
     switch event.which
       when 1
         #console.log 'Left Mouse button pressed.'
-        touchDefaultState = true
+        Session.set("touchDefaultState", true)
       when 2
         #console.log 'Middle Mouse button pressed.'
         break
@@ -41,6 +41,12 @@ Template._thingListItem.events
         showActionSheet({buttons:[], event:event, meteorObject:this, collection:Things, destructionCallback:removeWithRelations, titleText: "'#{this.title}'"})
 
   'mouseup .item': (event, template) ->
+    performDefaultAction(event)
+
+  'touchstart .item': (event, template) ->
+    Session.set("touchDefaultState", true)
+
+  'touchend .item': (event, template) ->
     performDefaultAction(event)
 
 Template._thingListItem.helpers
