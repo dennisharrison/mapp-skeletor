@@ -1,0 +1,2 @@
+mappNotification = (options) ->
+  return true
