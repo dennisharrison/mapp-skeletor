@@ -11,7 +11,7 @@ Template.presentHome.helpers
       return foundUsers
     else
       return []
-      
+
   '_gravatarURL': ->
     options =
       secure: true
@@ -35,9 +35,9 @@ Template.presentUser.helpers
   _presentUser: ->
     return Meteor.users.findOne(Session.get('_presentUser'))
   _media: ->
-    return Media.find({"metadata.owner": Session.get("_currentMediaOwner")}).fetch()
+    return MediaItems.find({"metadata.owner": Session.get("_currentMediaOwner")}).fetch()
   _firstMediaUrl: ->
-    found = Media.findOne({"metadata.owner": Session.get("_currentMediaOwner")})
+    found = MediaItems.findOne({"metadata.owner": Session.get("_currentMediaOwner")})
     if found?
       return found.url({store:"fullMobile"})
     else
@@ -95,9 +95,9 @@ Template.presentBasket.helpers
     else
       return ""
   _media: ->
-    return Media.find({"metadata.owner": Session.get("_currentMediaOwner")}).fetch()
+    return MediaItems.find({"metadata.owner": Session.get("_currentMediaOwner")}).fetch()
   _firstMediaUrl: ->
-    found = Media.findOne({"metadata.owner": Session.get("_currentMediaOwner")})
+    found = MediaItems.findOne({"metadata.owner": Session.get("_currentMediaOwner")})
     if found?
       return found.url({store:"fullMobile"})
     else
@@ -132,7 +132,7 @@ Template.presentBasket.onCreated ->
 
 Template.presentThing.helpers
   _media: ->
-    return Media.find({"metadata.owner": Session.get("_currentMediaOwner")}).fetch()
+    return MediaItems.find({"metadata.owner": Session.get("_currentMediaOwner")}).fetch()
   _description: ->
     found = Things.findOne(Session.get('_presentThingId'))
     if found?.description?
@@ -140,7 +140,7 @@ Template.presentThing.helpers
     else
       return ""
   _firstMediaUrl: ->
-    found = Media.findOne({"metadata.owner": Session.get("_currentMediaOwner")})
+    found = MediaItems.findOne({"metadata.owner": Session.get("_currentMediaOwner")})
     if found?
       return found.url({store:"fullMobile"})
     else
@@ -160,12 +160,12 @@ Template._presentThingBackHeaderButton.events
 
 @changeUserPresentImage = (mediaId) ->
   if mediaId?
-    newMedia = Media.findOne(mediaId)
+    newMedia = MediaItems.findOne(mediaId)
   else
-    newMedia = _.flatten(_.sample(Media.find({"metadata.owner": Session.get("_currentMediaOwner")}).fetch(), 1))[0]
+    newMedia = _.flatten(_.sample(MediaItems.find({"metadata.owner": Session.get("_currentMediaOwner")}).fetch(), 1))[0]
     if currentUserMediaDisplay?
       if newMedia._id is currentUserMediaDisplay
-        newMedia = _.flatten(_.sample(Media.find({"metadata.owner": Session.get("_currentMediaOwner")}).fetch(), 1))[0]
+        newMedia = _.flatten(_.sample(MediaItems.find({"metadata.owner": Session.get("_currentMediaOwner")}).fetch(), 1))[0]
 
   Session.set('currentUserMediaDisplay', newMedia._id)
   src = newMedia.url({store:"fullMobile"})

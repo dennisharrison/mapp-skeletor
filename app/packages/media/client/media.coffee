@@ -1,10 +1,40 @@
-Meteor.subscribe('media', {"metadata.owner": Session.get('mediaOwnerId')})
+mediaStore = new FS.Store.FileSystem "media"
+
+
+@MediaItems = new FS.Collection "media",
+  stores: [mediaStore]
+
+MediaItems.allow
+  insert: (userId, doc) ->
+    # return userId && (doc.user == userId)
+    return true
+
+  update: (userId, doc, fields, modifier) ->
+    # return userId == doc.user
+    return true
+
+  remove: (userId, doc) ->
+    # return userId && (doc.user == userId)
+    return true
+
+  download: (userId, doc) ->
+    return true
+
+MediaItems.deny
+  insert: (userId, doc) ->
+    doc.createdAt = "#{moment().unix()}"
+    return false;
+  update: (userId, docs, fields, modifier) ->
+    modifier.$set.updatedAt = "#{moment().unix()}"
+    return false
+
+Meteor.subscribe('mediaItems', {"metadata.owner": Session.get('mediaOwnerId')})
 
 Template.mm_media.helpers
   media: ->
     _mediaOwnerId = Session.get('mediaOwnerId')
     if _mediaOwnerId?
-    	_media = Media.find({"metadata.owner": _mediaOwnerId}).fetch().sortBy('updatedAt')
+    	_media = MediaItems.find({"metadata.owner": _mediaOwnerId}).fetch().sortBy('updatedAt')
     	return _media
 
 Template._userMediaBackHeaderButton.events
@@ -15,7 +45,7 @@ Template._userMediaBackHeaderButton.events
 Template.mm_media_control.helpers
   snippet: ->
     _mediaOwnerId = Session.get('mediaOwnerId')
-    _mediaCount = Media.find({"metadata.owner":_mediaOwnerId}).count()
+    _mediaCount = MediaItems.find({"metadata.owner":_mediaOwnerId}).count()
     _imageCount = 0
     _videoCount = 0
     "You have #{_mediaCount} Media items"
@@ -23,7 +53,7 @@ Template.mm_media_control.helpers
 Template.mediaFullView.helpers
   _mediaItem: ->
     _mediaFullViewId = Session.get('mediaFullViewId')
-    _mediaItem = Media.findOne({_id:_mediaFullViewId})
+    _mediaItem = MediaItems.findOne({_id:_mediaFullViewId})
     console.log(_mediaItem)
     return _mediaItem
 
@@ -92,7 +122,7 @@ uploadFileWithExif = (file) ->
       complete: false
       from_ios: navigator.userAgent.match(/(ip(hone|od|ad))/i)
     console.log 'Uploading File:' + fsFile.metadata.name
-    data = Media.insert fsFile, (err, fileObj) ->
+    data = MediaItems.insert fsFile, (err, fileObj) ->
       if err?
         console.log err
       if fileObj?
@@ -103,9 +133,9 @@ uploadFileWithExif = (file) ->
 
 Template._presentMediaModal.helpers
   _media: ->
-    return Media.find({"metadata.owner": Session.get("_currentMediaOwner")}).fetch()
+    return MediaItems.find({"metadata.owner": Session.get("_currentMediaOwner")}).fetch()
   _viewMediaInModal: ->
-    foundMedia = Media.findOne({_id:Session.get("_viewMediaInModal")})
+    foundMedia = MediaItems.findOne({_id:Session.get("_viewMediaInModal")})
     if foundMedia?
       return foundMedia
     else

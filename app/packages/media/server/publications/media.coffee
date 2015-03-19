@@ -1,4 +1,4 @@
-Meteor.publish 'media', (search, options) ->
+Meteor.publish 'mediaItems', (search, options) ->
   # define some defaults here
   defaultOptions =
     sort:
@@ -10,7 +10,7 @@ Meteor.publish 'media', (search, options) ->
   if not Object.isObject(options)
     options = defaultOptions
 
-  _data = Media.find(search, options)
+  _data = MediaItems.find(search, options)
   return _data
 
 if Meteor.isServer
@@ -21,7 +21,7 @@ if Meteor.isServer
       _id = new Mongo.ObjectID()
       newFilename = "#{_id}.#{extension}"
       file.name = newFilename
-      Media.insert
+      MediaItems.insert
         originalName: filename
         filename: newFilename
         userId: this.userId

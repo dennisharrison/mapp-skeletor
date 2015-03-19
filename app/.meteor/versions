@@ -93,8 +93,9 @@ observe-sequence@1.0.5
 ordered-dict@1.0.3
 peerlibrary:aws-sdk@2.1.17_1
 peerlibrary:blocking@0.5.2
-raix:eventemitter@0.1.1
-raix:push@2.6.1
+raix:eventemitter@0.1.2
+raix:eventstate@0.0.2
+raix:push@2.6.2
 random@1.0.3
 reactive-dict@1.1.0
 reactive-var@1.0.5
