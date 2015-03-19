@@ -1,0 +1,11 @@
+<template name="notificationSubHeader">
+  {{notifications}}
+  {{#if newNotification}}
+    {{#ionSubheaderBar class="bar-dark"}}
+      {{#with currentNotification}}
+        <h2 class="title">{{messageText}}</h2>
+        <button class="button button-icon icon ion-ios-close-outline dismissNotificationButton"></button>
+      {{/with}}
+    {{/ionSubheaderBar}}
+  {{/if}}
+</template>

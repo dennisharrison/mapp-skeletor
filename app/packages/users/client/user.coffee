@@ -148,10 +148,6 @@ Template._userPushModal.events
         else
           _data[element.name] = element.value
 
-    _data.userId = userId
+    _data.notifyUserId = userId
 
-    Meteor.call 'sendPush', _data, (err, data) ->
-      if err
-        throw new Meteor.error("Push Failed", err)
-      if data
-        IonModal.close()
+    mappNotification(_data)

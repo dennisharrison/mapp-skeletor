@@ -9,7 +9,7 @@ var createThreeAmigos = function(dir, baseName) {
   return _array;
 };
 
-var notifications = createThreeAmigos('client', 'notifications')
+var notifications = createThreeAmigos('client', 'notifications');
 
 Package.describe({
   summary: "User notifications for browser and mobile",
@@ -25,12 +25,13 @@ Package.onUse(function (api) {
   api.use(['coffeescript'], ['client','server']);
   api.use(['digilord:sugarjs@1.4.1'], ['client', 'server']);
   api.use(['iron:router@1.0.7'], ['client', 'server']);
+  api.use(['fourseven:scss@1.2.3'], ['client', 'server']);
   api.use(['mapp-skeletor:users'], ['client', 'server']);
   api.use(['raix:push'], ['client', 'server']);
 
   api.addFiles(notifications, ['client']);
   api.addFiles(['collections/notifications.coffee'], ['client','server']);
   api.addFiles(['server/notifications.coffee'], ['server']);
-
+  api.addFiles(['public/audio/communicator.wav'], ['client']);
   api.export('mappNotification', ['client']);
 });
