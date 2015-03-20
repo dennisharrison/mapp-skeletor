@@ -41,13 +41,11 @@
             <a class="item item-icon-right" href='/' data-ion-menu-close>
                 Home {{> ionIcon icon="ios-home-outline"}}
             </a>
+            <a class="item item-icon-right" href='/notifications' data-ion-menu-close>
+                Notifications {{> ionIcon icon="ios-email-outline"}}
+            </a>
           {{> usersAdminButton}}
-            <div class="item item-icon-right">
-                Baskets {{> ionIcon icon="ios-cart-outline"}}
-            </div>
-            <div class="item item-icon-right">
-                Things {{> ionIcon icon="ios-pricetags-outline"}}
-            </div>
+
           {{#if currentUser}}
               <a class="item item-icon-right" href='/logout' data-ion-menu-close>
                   Logout

@@ -42,9 +42,16 @@ showActionSheet = (options) ->
   else
     $("#ActionSheetHacker").click()
 
-performDefaultAction = (event) ->
+performDefaultAction = (event, object) ->
   if Session.get("touchDefaultState") is true
     target = $(event.currentTarget)
     defaultAction = target.attr("defaultAction")
-    if defaultAction is "link"
-      _userHistory.goToUrl(target.attr('href'))
+    switch defaultAction
+      when "link"
+        _userHistory.goToUrl(target.attr('href'))
+      when "handleNotification"
+        if object?
+          mappNotificationHandler(object)
+      else
+        console.log "Unknown defaultAction ..."
+

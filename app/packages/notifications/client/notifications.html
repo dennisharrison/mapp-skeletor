@@ -55,3 +55,39 @@
 <template name='_notificationViewBackHeaderButton'>
     <button class='button button-icon back-button' data-nav-direction="back" data-snap-ignore="true">Back</button>
 </template>
+
+<template name='notifications'>
+  {{#contentFor "headerTitle"}}
+      <h1 class="title">Notifications</h1>
+  {{/contentFor}}
+
+  {{#contentFor "headerButtonLeft"}}
+      <button data-ion-menu-toggle="left" class="button button-icon icon ion-navicon menu-toggle-icon"></button>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+      {{#if Template.subscriptionsReady}}
+          <!-- This is displayed when all data is ready. -->
+        {{#ionList}}
+          {{#each _notifications}}
+            {{> _notificationListItem}}
+          {{/each}}
+        {{/ionList}}
+      {{else}}
+        {{>mappLoader}}
+      {{/if}}
+    {{/ionContent}}
+  {{/ionView}}
+  {{>scrollHelper}}
+</template>
+
+<template name="_notificationListItem">
+    <div class="item item-avatar item-button-right item-icon-right" data-snap-ignore="true" defaultAction="handleNotification">
+        <img src="{{_profileImage}}">
+        <h2>{{fromUserProfile.firstName}}</h2>
+        <p>
+          {{messageText}}
+        </p>
+    </div>
+</template>

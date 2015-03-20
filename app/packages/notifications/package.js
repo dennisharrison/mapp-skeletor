@@ -35,4 +35,5 @@ Package.onUse(function (api) {
   api.addFiles(['lib/routes.coffee'], ['client','server']);
   api.addFiles(['public/audio/communicator.wav'], ['client']);
   api.export('mappNotification', ['client']);
+  api.export('mappNotificationHandler', ['client']);
 });
