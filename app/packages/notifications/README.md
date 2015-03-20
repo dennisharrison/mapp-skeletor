@@ -1,15 +1,17 @@
-mapp-skeletor:baskets
+mapp-skeletor:notifications
 ============
 
-A hammer.js wrapper w/ jQuery plugin for meteor
+A notification package riding on top of [Push](https://github.com/raix/push "raix:push") and [Meteoric](https://github.com/meteoric/meteor-ionic "Meteoric:meteor-ionic")
 
-Add this package with `meteor add hammerjs:jquery` to get access to $('element').hammer()
+Additional requirements right now are mapp-skeletor:gestures and mapp-skeletor:user-history
+
+Add this package with `meteor add mapp-skeletor:notifications` to get isomorphic notifications for users.
 
 --
 ## License
 The MIT License (MIT)
 
-Copyright &copy; 2014 Dennis Harrison
+Copyright &copy; 2015 Dennis Harrison
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
