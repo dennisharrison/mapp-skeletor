@@ -46,6 +46,13 @@
         </div>
       </div>
     </div>
+
+    {{#if isInRole 'manage-users'}}
+      <div class="userPushModalButtonWrapper">
+        <button class="button button-calm button-block" data-ion-modal="_userPushModal">Push</button>
+      </div>
+    {{/if}}
+
     {{/ionContent}}
   {{/ionView}}
   {{>scrollHelper}}
@@ -55,4 +62,19 @@
   {{#if thisFormIsDirty}}
       <button class="button button-icon done-button" data-nav-direction="back" data-snap-ignore="true">Save</button>
   {{/if}}
+</template>
+
+
+<template name="_userPushModal">
+  {{#ionModal title="Send Notification To User"}}
+      <div class="userPushWrapper">
+          <div class="userPushForm">
+            {{>mmInputText label='Badge Count' fieldName='badgeCount' value='1' type='text'}}
+            {{>mmInputText label='Message' fieldName='messageText' value='' type='text'}}
+            {{>mmInputToggle label='Other Option' fieldName='otherOption' value=false}}
+          </div>
+          <button class="pushToUser button button-calm button-block">Push IT!</button>
+      </div>
+
+  {{/ionModal}}
 </template>

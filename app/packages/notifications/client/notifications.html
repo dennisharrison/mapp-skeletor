@@ -1,0 +1,93 @@
+<template name="notificationSubHeader">
+  {{notifications}}
+  {{#if newNotification}}
+    {{#ionSubheaderBar class="bar-dark"}}
+      {{#with currentNotification}}
+        <h2 class="title messageText">{{messageText}}</h2>
+        <button class="button button-icon icon ion-ios-close-outline dismissNotificationButton"></button>
+      {{/with}}
+    {{/ionSubheaderBar}}
+  {{/if}}
+</template>
+
+<template name="_userNotificationsPopover">
+  {{#ionPopover}}
+      <div class="content">
+          <div class="list">
+              <div class="item item-icon-left sayHiButton">
+                  Say Hi!
+                {{> ionIcon icon="android-hand"}}
+              </div>
+              <div class="item item-icon-left likeButton">
+                  Like
+                {{> ionIcon icon="ios-heart-outline"}}
+              </div>
+              <div class="item item-icon-left sharePicsButton">
+                  Share My Pics
+                {{> ionIcon icon="ios-camera-outline"}}
+              </div>
+          </div>
+      </div>
+  {{/ionPopover}}
+</template>
+
+<template name="notificationView">
+  {{>contentFor region="headerTitle" template='_notificationViewHeaderTitle'}}
+
+  {{> contentFor region="headerButtonLeft" template='_notificationViewBackHeaderButton'}}
+
+  {{#ionView}}
+    {{#ionContent}}
+      {{#with _currentNotification}}
+       {{#mmIonCard title=title}}
+         {{messageText}}
+       {{/mmIonCard}}
+      {{/with}}
+    {{/ionContent}}
+  {{/ionView}}
+
+</template>
+
+<template name="_notificationViewHeaderTitle">
+    <h1 class="title">Message from: {{_fromUserFirstName}}</h1>
+</template>
+
+<template name='_notificationViewBackHeaderButton'>
+    <button class='button button-icon back-button' data-nav-direction="back" data-snap-ignore="true">Back</button>
+</template>
+
+<template name='notifications'>
+  {{#contentFor "headerTitle"}}
+      <h1 class="title">Notifications</h1>
+  {{/contentFor}}
+
+  {{#contentFor "headerButtonLeft"}}
+      <button data-ion-menu-toggle="left" class="button button-icon icon ion-navicon menu-toggle-icon"></button>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+      {{#if Template.subscriptionsReady}}
+          <!-- This is displayed when all data is ready. -->
+        {{#ionList}}
+          {{#each _notifications}}
+            {{> _notificationListItem}}
+          {{/each}}
+        {{/ionList}}
+      {{else}}
+        {{>mappLoader}}
+      {{/if}}
+    {{/ionContent}}
+  {{/ionView}}
+  {{>scrollHelper}}
+</template>
+
+<template name="_notificationListItem">
+    <div class="item item-avatar item-button-right item-icon-right" data-snap-ignore="true" defaultAction="handleNotification">
+        <img src="{{_profileImage}}">
+        <h2>{{fromUserProfile.firstName}}</h2>
+        <p>
+          {{messageText}}
+        </p>
+    </div>
+</template>

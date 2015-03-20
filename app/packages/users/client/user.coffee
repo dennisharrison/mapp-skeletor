@@ -132,3 +132,23 @@ Template.user.events
         throw new Meteor.error("ERROR", err)
       if data
         _userHistory.goToUrl(ui.attr("href"))
+
+
+Template._userPushModal.events
+  'click .pushToUser': (event, template) ->
+    userId = Session.get('_editUser')
+    _data = {}
+
+    _inputElements = ['input', 'select', 'textarea']
+    for type in _inputElements
+      elements = $(".userPushForm").find(type)
+      for element in elements
+        if element.type == 'checkbox'
+          _data[element.name] = $(element).prop('checked')
+        else
+          _data[element.name] = element.value
+
+    _data.notifyUserId = userId
+
+    mappNotification(_data)
+    IonModal.close()

@@ -77,7 +77,7 @@ mediaFull = new FS.Store.FileSystem "mediaFull", {
 }
 
 
-@Media = new FS.Collection "media",
+@MediaItems = new FS.Collection "media",
   stores: [mediaStore, thumbs, fullMobile, mediaFull],
   filter: {
     allow: {
@@ -86,9 +86,9 @@ mediaFull = new FS.Store.FileSystem "mediaFull", {
   }
 
 Meteor.startup ->
-  Media.files._ensureIndex({"metadata.owner": 1})
+  MediaItems.files._ensureIndex({"metadata.owner": 1})
 
-Media.allow
+MediaItems.allow
   insert: (userId, doc) ->
     # return userId && (doc.user == userId)
     return true
@@ -104,7 +104,7 @@ Media.allow
   download: (userId, doc) ->
     return true
 
-Media.deny
+MediaItems.deny
   insert: (userId, doc) ->
     doc.createdAt = "#{moment().unix()}"
     return false;

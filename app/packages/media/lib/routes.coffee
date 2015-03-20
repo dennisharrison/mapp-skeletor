@@ -10,7 +10,7 @@ CreateMediaRoutes = (options) ->
       action: ->
         Session.set('mm_media_back_header_button_url', "#{backHeaderButtonUrlBase}/#{@params.id}")
         Session.set('mediaOwnerId', @params.id)
-        @wait Meteor.subscribe('media', {owner: @params.id})
+        @wait Meteor.subscribe('mediaItems', {owner: @params.id})
         @render mediaRouteTemplate
 
 
@@ -19,5 +19,5 @@ Router.map ->
     path: '/media/:id'
     action: ->
       Session.set('mediaFullViewId', @params.id)
-      @wait Meteor.subscribe('media', {_id: @params.id})
+      @wait Meteor.subscribe('mediaItems', {_id: @params.id})
       @render 'mediaFullView'
