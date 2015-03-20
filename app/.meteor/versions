@@ -119,3 +119,4 @@ useraccounts:core@1.8.1
 useraccounts:ionic@1.8.1
 webapp@1.2.0
 webapp-hashing@1.0.3
+zimme:iron-router-auth@3.0.0
