@@ -30,6 +30,11 @@
 
   {{> contentFor region="headerButtonLeft" template='_presentUserBackHeaderButton'}}
 
+  {{#contentFor "headerButtonRight"}}
+      <button class="button button-icon icon ion-ios-chatboxes-outline" data-ion-popover="_userNotificationsPopover"></button>
+  {{/contentFor}}
+
+
   {{#ionView}}
     {{#ionContent}}
       <div class="userPresentMediaWrapper" data-ion-modal="_presentMediaModal" style="transition:background-image 2s ease-in-out; background-image: url('{{_firstMediaUrl}}');">

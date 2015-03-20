@@ -151,3 +151,4 @@ Template._userPushModal.events
     _data.notifyUserId = userId
 
     mappNotification(_data)
+    IonModal.close()

@@ -32,6 +32,7 @@ Package.onUse(function (api) {
   api.addFiles(notifications, ['client']);
   api.addFiles(['collections/notifications.coffee'], ['client','server']);
   api.addFiles(['server/notifications.coffee'], ['server']);
+  api.addFiles(['lib/routes.coffee'], ['client','server']);
   api.addFiles(['public/audio/communicator.wav'], ['client']);
   api.export('mappNotification', ['client']);
 });

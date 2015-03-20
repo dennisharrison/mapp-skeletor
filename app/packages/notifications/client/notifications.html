@@ -3,9 +3,55 @@
   {{#if newNotification}}
     {{#ionSubheaderBar class="bar-dark"}}
       {{#with currentNotification}}
-        <h2 class="title">{{messageText}}</h2>
+        <h2 class="title messageText">{{messageText}}</h2>
         <button class="button button-icon icon ion-ios-close-outline dismissNotificationButton"></button>
       {{/with}}
     {{/ionSubheaderBar}}
   {{/if}}
+</template>
+
+<template name="_userNotificationsPopover">
+  {{#ionPopover}}
+      <div class="content">
+          <div class="list">
+              <div class="item item-icon-left sayHiButton">
+                  Say Hi!
+                {{> ionIcon icon="android-hand"}}
+              </div>
+              <div class="item item-icon-left likeButton">
+                  Like
+                {{> ionIcon icon="ios-heart-outline"}}
+              </div>
+              <div class="item item-icon-left sharePicsButton">
+                  Share My Pics
+                {{> ionIcon icon="ios-camera-outline"}}
+              </div>
+          </div>
+      </div>
+  {{/ionPopover}}
+</template>
+
+<template name="notificationView">
+  {{>contentFor region="headerTitle" template='_notificationViewHeaderTitle'}}
+
+  {{> contentFor region="headerButtonLeft" template='_notificationViewBackHeaderButton'}}
+
+  {{#ionView}}
+    {{#ionContent}}
+      {{#with _currentNotification}}
+       {{#mmIonCard title=title}}
+         {{messageText}}
+       {{/mmIonCard}}
+      {{/with}}
+    {{/ionContent}}
+  {{/ionView}}
+
+</template>
+
+<template name="_notificationViewHeaderTitle">
+    <h1 class="title">Message from: {{_fromUserFirstName}}</h1>
+</template>
+
+<template name='_notificationViewBackHeaderButton'>
+    <button class='button button-icon back-button' data-nav-direction="back" data-snap-ignore="true">Back</button>
 </template>
