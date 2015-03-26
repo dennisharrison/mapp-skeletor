@@ -40,3 +40,4 @@ mapp-skeletor:present
 raix:push
 mapp-skeletor:notifications
 zimme:iron-router-auth
+wylio:mandrill

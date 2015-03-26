@@ -28,6 +28,10 @@ Place settings.json in app directory
       "tags": "Amazing Sunset",
       "interval": 60000
     }
+  },
+  "mandrill": {
+    "username": "mandrill@user.name",
+    "key": "MandrillAPIKey"
   }
 }
 

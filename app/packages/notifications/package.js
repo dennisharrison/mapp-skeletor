@@ -28,6 +28,7 @@ Package.onUse(function (api) {
   api.use(['fourseven:scss@1.2.3'], ['client', 'server']);
   api.use(['mapp-skeletor:users'], ['client', 'server']);
   api.use(['raix:push'], ['client', 'server']);
+  api.use(['wylio:mandrill'], ['client', 'server']);
 
   api.addFiles(notifications, ['client']);
   api.addFiles(['collections/notifications.coffee'], ['client','server']);
