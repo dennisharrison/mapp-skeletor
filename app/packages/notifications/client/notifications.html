@@ -91,3 +91,23 @@
         </p>
     </div>
 </template>
+
+<template name="notificationTester">
+  {{#contentFor "headerTitle"}}
+      <h1 class="title">Hello There</h1>
+  {{/contentFor}}
+
+  {{#contentFor "headerButtonLeft"}}
+      <button data-ion-menu-toggle="left" class="button button-icon icon ion-navicon menu-toggle-icon"></button>
+  {{/contentFor}}
+
+  {{#ionView}}
+    {{#ionContent}}
+      {{#ionList}}
+          <div class="userPushModalButtonWrapper">
+              <button class="testEmailButton button button-calm button-block">Test E-Mail</button>
+          </div>
+      {{/ionList}}
+    {{/ionContent}}
+  {{/ionView}}
+</template>

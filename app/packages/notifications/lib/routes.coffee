@@ -7,3 +7,6 @@ Router.map ->
     action: ->
       Session.set('_currentNotificationId', @params.id)
       @render 'notificationView'
+
+  @route 'notificationTester',
+    path: '/notificationTester'

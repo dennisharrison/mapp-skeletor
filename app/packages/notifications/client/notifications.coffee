@@ -181,3 +181,23 @@ Template._notificationListItem.events
   'touchend .item': (event, template) ->
     performDefaultAction(event, this)
 
+Template.notificationTester.events
+  'click .testEmailButton': (event, template) ->
+    _data = {}
+    _data.template = 'mapp-skeletor-message'
+    _data.subject = 'Emergency Notice!'
+    _data.from_name = "Your totally friendly robotic overlord"
+    _data.from_email = "totally_not_mappskeletor@gmail.com"
+    _data.to_email = "dennisharrison@gmail.com"
+    _data.messageType = "Emergency Notice"
+    _data.messageBody = "Look at all of this content!"
+    _data.listCompany = "MAPP-Skeletor"
+    _data.listDescription = "Emergency List"
+    _data.listPhysicalAddress = "81550 Hwy 437, Covington, LA 70435"
+    Meteor.call 'sendEmail', _data, (err, data) ->
+      if err
+        throw new Meteor.error("Email Failed", err)
+      if data
+        console.log('Email Sent!')
+        return true
+
