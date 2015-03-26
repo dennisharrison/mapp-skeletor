@@ -68,7 +68,7 @@ Template._mediaRow.rendered = () ->
 Template._mediaRow.events
   'press .mediaItem': (event, template) ->
     touchDefaultState = false
-    showActionSheet({buttons:[], event:event, meteorObject:this, collection:Media, destructionCallback:removeWithRelations, titleText: "'#{this.metadata.name}'"})
+    showActionSheet({buttons:[], event:event, meteorObject:this, collection:MediaItems, destructionCallback:removeWithRelations, titleText: "'#{this.metadata.name}'"})
 
   'click .mediaItem': (event, template) ->
     event.stopImmediatePropagation()
@@ -88,7 +88,7 @@ Template._mediaRow.events
         break
       when 3
         #console.log 'Right Mouse button pressed.'
-        showActionSheet({buttons:[], event:event, meteorObject:this, collection:Media, destructionCallback:removeWithRelations, titleText: "'#{this.metadata.name}'"})
+        showActionSheet({buttons:[], event:event, meteorObject:this, collection:MediaItems, destructionCallback:removeWithRelations, titleText: "'#{this.metadata.name}'"})
 
   'mouseup .mediaItem': (event, template) ->
     performDefaultAction(event)

@@ -1,6 +1,12 @@
 console.log "Adding Notifications"
 console.log "Setting Push Debug to TRUE"
 Push.debug=true
+console.log "Configuring Mandrill"
+
+Meteor.startup ->
+  Meteor.Mandrill.config
+    username: Meteor.settings.mandril.username
+    key: Meteor.settings.mandril.key
 
 Meteor.publish 'mappNotifications', (search, options) ->
   # define some defaults here
