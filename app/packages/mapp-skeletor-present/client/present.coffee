@@ -36,6 +36,12 @@ Template.presentUser.helpers
     return Meteor.users.findOne(Session.get('_presentUser'))
   _media: ->
     return MediaItems.find({"metadata.owner": Session.get("_currentMediaOwner")}).fetch()
+  _bio: ->
+    found = Meteor.users.findOne(Session.get('_presentUser'))
+    if found?.profile?.bio?
+      return new Spacebars.SafeString(found.profile.bio)
+    else
+      return ""
   _firstMediaUrl: ->
     found = MediaItems.findOne({"metadata.owner": Session.get("_currentMediaOwner")})
     if found?

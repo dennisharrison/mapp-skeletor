@@ -18,6 +18,7 @@ Template.mmInputRichText.rendered = ->
   $('textarea.mmInputRichTextArea').editable
     theme: 'custom'
     inlineMode: false
+    spellcheck: true
     minHeight: 300
     maxHeight: Math.max(document.documentElement.clientHeight, window.innerHeight or 0) - 80
     buttons: ['bold', 'italic', 'underline', 'fontSize', 'color', 'align', 'insertUnorderedList', 'insertOrderedList', 'removeFormat']
