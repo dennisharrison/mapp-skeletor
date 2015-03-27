@@ -23,6 +23,7 @@ Package.onUse(function (api) {
   api.versionsFrom("1.0");
   api.use(['meteor-platform']);
   api.use(['coffeescript'], ['client','server']);
+  api.use(['fourseven:scss@1.2.3'], ['client', 'server']);
   api.use(['digilord:sugarjs@1.4.1'], ['client', 'server']);
   api.use(['iron:router@1.0.7'], ['client', 'server']);
   api.use(['meteoric:ionic@0.1.11'], ['client']);
@@ -30,6 +31,7 @@ Package.onUse(function (api) {
 
   api.addFiles(['client/TimelineMax.min.js'], ['client']);
   api.addFiles(['client/TweenMax.min.js'], ['client']);
+  api.addFiles(['client/Draggable.min.js'], ['client']);
   api.addFiles(gsap, 'client');
   api.addFiles(['lib/routes.coffee'], ['client','server']);
 
