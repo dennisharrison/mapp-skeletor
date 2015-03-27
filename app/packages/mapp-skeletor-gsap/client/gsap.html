@@ -1,0 +1,24 @@
+<template name="gsapTest">
+  {{>contentFor region="headerTitle" template='_gsapTestViewHeaderTitle'}}
+
+  {{> contentFor region="headerButtonLeft" template='_gsapTestBackHeaderButton'}}
+
+  {{#ionView}}
+    {{#ionContent}}
+
+        {{#mmIonCard title="Title"}}
+          Card Content
+        {{/mmIonCard}}
+
+    {{/ionContent}}
+  {{/ionView}}
+
+</template>
+
+<template name="_gsapTestViewHeaderTitle">
+    <h1 class="title">GSAP Test</h1>
+</template>
+
+<template name='_gsapTestBackHeaderButton'>
+    <button class='button button-icon back-button' data-nav-direction="back" data-snap-ignore="true">Back</button>
+</template>

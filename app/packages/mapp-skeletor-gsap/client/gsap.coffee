@@ -1,0 +1,2 @@
+simpleAnimate = (options) ->
+  return options
