@@ -34,6 +34,10 @@ Package.onUse(function (api) {
   api.addFiles(['client/Draggable.min.js'], ['client']);
   api.addFiles(gsap, 'client');
   api.addFiles(['lib/routes.coffee'], ['client','server']);
+  api.addFiles(['public/fonts/relaxandorder-bartender.eot'], ['client']);
+  api.addFiles(['public/fonts/relaxandorder-bartender.svg'], ['client']);
+  api.addFiles(['public/fonts/relaxandorder-bartender.ttf'], ['client']);
+  api.addFiles(['public/fonts/relaxandorder-bartender.woff'], ['client']);
 
   api.export('simpleAnimate', ['client']);
 });

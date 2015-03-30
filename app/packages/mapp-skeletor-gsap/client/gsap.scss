@@ -1,3 +1,14 @@
+@font-face {
+  font-family: 'relaxandorder-bartender';
+  src: url('/packages/mapp-skeletor_gsap/public/fonts/relaxandorder-bartender-webfont.eot');
+  src: url('/packages/mapp-skeletor_gsap/public/fonts/relaxandorder-bartender-webfont.eot?#iefix') format('embedded-opentype'),
+  url('/packages/mapp-skeletor_gsap/public/fonts/relaxandorder-bartender.woff') format('woff'),
+  url('/packages/mapp-skeletor_gsap/public/fonts/relaxandorder-bartender.ttf') format('truetype'),
+  url('/packages/mapp-skeletor_gsap/public/fonts/relaxandorder-bartender.svg#relaxandorder-bartenbartender') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
 #cloudContainer {
   position:relative;
   width:100%;
@@ -19,9 +30,35 @@
 }
 
 #bounceHouse {
-  height: 960px;
+  height: 400px;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
   border: 1px solid #000;
+}
+
+#fontTest {
+  height: 800px;
+}
+
+.gsapBubble {
+  position: absolute;
+  background-color: #7fa3be;
+  border-radius: 50%;
+  text-align: center;
+  padding: 1em;
+  padding-top: 1.5em;
+  opacity: 1;
+//  text-indent: 1%;
+  .fontHolder {
+    display: block;
+    font-family: 'relaxandorder-bartender';
+    font-size: 6em;
+    line-height: 1;
+    margin-bottom: -10%;
+    margin-right: -10%;
+//    border: 1px solid #000;
+    border-radius: 50%;
+    color: #fff;
+  }
 }

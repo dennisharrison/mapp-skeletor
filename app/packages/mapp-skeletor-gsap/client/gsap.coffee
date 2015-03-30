@@ -85,7 +85,7 @@ bounceDown = (timeLine, container, ui) ->
     yoyo: true
     ease: Power1.easeIn)).to bouncer, bouncerTimeline.duration(), {
       x: endingPoint-startLeft
-      startAt: {x: startLeft}
+#      startAt: {x: startLeft}
       opacity: 1
       ease: Linear.easeNone
       onUpdate: updateWhileBouncing
@@ -115,9 +115,57 @@ setBounceOver = (updateParams) ->
 #  console.log($('#bounceHouse').outerWidth())
 
 
+animatedFontString = "a b c d e f g h i j k l m n o p q r s t u v w x y z A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
+animatedFontArray = animatedFontString.split(' ')
+animatedFontUpdater = (target) ->
+  ui = $(target).find('.fontHolder')
+  currentIndex = animatedFontArray.indexOf(ui.text().compact())
+  if currentIndex+1 is animatedFontArray.length
+    newIndex = 0
+  else
+    newIndex = currentIndex+1
+  ui.text(animatedFontArray[newIndex])
+
+Session.setDefault("animatingFont", false)
 
 
 
+
+createWall = (container, rows, cols) ->
+  containerWidth = $(container).innerWidth()
+  bubble = $("<div class='gsapBubble' style='opacity:0;'><span class='fontHolder'>a</span></div>")
+  bubble.appendTo(container)
+  bubbleWidth = bubble.outerWidth()
+  bubbleHeight = bubble.outerHeight()
+  bubble.remove()
+  r = rows
+  while r > -1
+    y = r * bubbleHeight
+    c = 0
+    while c < cols
+      x = c * (bubbleHeight) + getRandom(2, 8)
+      x = if r % 2 == 0 then x else x + bubbleHeight
+      if x > containerWidth - bubbleHeight
+        x = containerWidth-bubbleHeight
+      bubble = $("<div class='gsapBubble'><span class='fontHolder'>a</span></div>")
+      bubble.appendTo(container)
+      bubble.distance = x
+      TweenLite.set bubble,
+        x: x
+        y: y
+      c++
+    r--
+  return
+
+getRandom = (min, max) ->
+  min + Math.random() * (max - min)
+
+animateBubbles = () ->
+  bubbleArray = $('.gsapBubble')
+  bubbleArray.each (bubble) ->
+    Meteor.setInterval ->
+      animatedFontUpdater(bubbleArray[bubble])
+    , 1400
 
 simpleAnimate = (options) ->
   return options
@@ -143,7 +191,37 @@ Template.gsapTest.events
   'click #bounceHouse': (event, template) ->
     bounceLine = new TimelineLite()
     bounceHouse = $("#bounceHouse")
-    bounceThis = $("<img class='bouncyKnob' src='/images/gsapKnob.png' width='90' height='90'/>")
+    bounceThis = $("<img class='bouncyKnob' src='/images/gsapKnob.png' width='50' height='50'/>")
     bounceDown(bounceLine, bounceHouse, bounceThis)
+
+  'click .startFontTestButton': (event, template) ->
+    tl = new TimelineLite
+    bubble = $("<div class='gsapBubble' style='opacity:0;'><span class='fontHolder'>a</span></div>")
+    bubble.appendTo("#fontTest")
+    bubbleWidth = bubble.outerWidth()
+    bubbleHeight = bubble.outerHeight()
+#    console.log(bubbleWidth, bubbleHeight)
+    bubble.remove()
+    columns = Math.floor($("#fontTest").innerWidth()/bubbleHeight)-1
+    rows =  Math.floor($("#fontTest").innerHeight()/bubbleHeight)-1
+    createWall '#fontTest', rows, columns
+    tl.staggerFrom '.gsapBubble', 0.5, {
+      y: -bubbleHeight
+      ease: Power2.easeIn
+      onComplete: animateBubbles
+    }, 0.05
+
+  'click .gsapBubble': (event, template) ->
+    if Session.get('animatingFont') is true
+      Session.set('animatingFont', false)
+      oldTimer = Session.get("_animatingFontTimer")
+      if oldTimer?
+        Meteor.clearInterval(oldTimer)
+    else
+      Session.set('animatingFont', true)
+      animatingFontTimer = Meteor.setInterval ->
+        animatedFontUpdater(event.target)
+      , 30
+      Session.set("_animatingFontTimer", animatingFontTimer)
 
 
