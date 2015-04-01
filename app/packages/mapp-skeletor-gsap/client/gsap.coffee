@@ -165,7 +165,7 @@ animateBubbles = () ->
   bubbleArray.each (bubble) ->
     Meteor.setInterval ->
       animatedFontUpdater(bubbleArray[bubble])
-    , 1400
+    , 900
 
 simpleAnimate = (options) ->
   return options
